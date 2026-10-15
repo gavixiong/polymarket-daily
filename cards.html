@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Polymarket 日报 · 卡片</title>
 <meta name="description" content="小红书图片卡片：1242×1660，每张回答一个问题。无参数为预览全部，?card=cover 单张用于截图。">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 :root{
   --page:#eeede8; --surface:#fcfcfb; --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
@@ -277,9 +278,30 @@ function eligible(key, day) {
   });
   if (card && CARDS[card]) { document.body.classList.add('single'); root.innerHTML = CARDS[card](day); document.title = `卡片 · ${card} · ${date}`; fit(); return; }
   const on = ORDER.filter(([k, , fixed]) => fixed || eligible(k, day));
-  root.innerHTML = `<div class="ghead"><b>${esc(date)}</b> · ${on.length} 张会出：${on.map(o => o[1]).join('、')}。灰色标注的是今天不满足入场条件的浮动卡。单击"单张"得到 1242×1660 原图。</div>
-    <div class="gallery">${ORDER.map(([k, name, fixed], i) => `<div class="thumb"><div class="frame">${CARDS[k](day)}</div><div class="cap"><span>${i + 1}. ${esc(name)} ${fixed ? '' : (eligible(k, day) ? '' : '<span class="off">· 今天不出</span>')}</span><a href="?date=${date}&card=${k}" target="_blank">单张</a></div></div>`).join('')}</div>`;
+  const pngs = await fetch(`cards/${date}/index.json`, { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null);
+  const pngByKey = Object.fromEntries(((pngs && pngs.cards) || []).map(c => [c.key, c.file]));
+  const nPng = Object.keys(pngByKey).length;
+  root.innerHTML = `<div class="ghead"><b>${esc(date)}</b> · ${on.length} 张会出：${on.map(o => o[1]).join('、')}。灰色标注的是今天不满足入场条件的浮动卡。
+      ${nPng ? `已生成 ${nPng} 张 PNG。<button id="dlAll" style="margin-left:8px;font:inherit;padding:3px 12px;border:1px solid var(--grid);border-radius:8px;background:#fff;cursor:pointer">全部下载 zip</button>` : '今天的 PNG 还没生成，"单张"打开后可手动截图。'}</div>
+    <div class="gallery">${ORDER.map(([k, name, fixed], i) => `<div class="thumb"><div class="frame">${CARDS[k](day)}</div><div class="cap"><span>${i + 1}. ${esc(name)} ${fixed ? '' : (eligible(k, day) ? '' : '<span class="off">· 今天不出</span>')}</span><span>${pngByKey[k] ? `<a href="cards/${date}/${pngByKey[k]}" download="polymarket-${date}-${pngByKey[k]}">下载 PNG</a> · ` : ''}<a href="?date=${date}&card=${k}" target="_blank">单张</a></span></div></div>`).join('')}</div>`;
   fit();
+  const dl = document.getElementById('dlAll');
+  if (dl) dl.onclick = async () => {
+    if (typeof JSZip === 'undefined') { alert('打包库没有加载，请逐张下载。'); return; }
+    dl.disabled = true;
+    try {
+      const zip = new JSZip();
+      for (const c of pngs.cards) {
+        dl.textContent = `打包 ${c.file}…`;
+        zip.file(`polymarket-${date}-${c.file}`, await fetch(`cards/${date}/${c.file}`, { cache: 'no-store' }).then(r => r.blob()));
+      }
+      const blob = await zip.generateAsync({ type: 'blob' });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `polymarket-${date}-cards.zip`;
+      document.body.appendChild(a); a.click(); a.remove();
+      dl.textContent = '已下载';
+    } catch (e) { dl.textContent = '失败：' + e.message; }
+    setTimeout(() => { dl.textContent = '全部下载 zip'; dl.disabled = false; }, 2500);
+  };
 })();
 </script>
 </body>
