@@ -97,6 +97,7 @@ PAGES_PER_TAG = 2
 PICKS_MAX = 14
 PER_EVENT_MAX = 2
 PER_DOMAIN_MAX = 5
+CULTURE_MAX = 2          # sports / film / music: at most two, always at the end of the post
 MENTION_DAYS = 7
 MENTION_MIN_MOVE = 0.10
 WEAK_NOUNS = {"Trump", "Iran", "Israel", "Russia", "Ukraine", "China", "United", "States", "America", "American",
@@ -568,12 +569,13 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
         if question not in cands or cands[question]["score"] < score:
             cands[question] = c
 
+    # Culture (sports, film, music) rides along as its own domain with a small cap: it only enters the post
+    # when a market moved, never as a bare headline.
     for cat, ms in day["official"].items():
-        if cat != "culture":
-            for m in ms:
-                ev = by_slug.get(m["eventSlug"])
-                add("official", m["question"], m["yes"], m["change1d"], ev["volume24h"] if ev else 10_000,
-                    OFFICIAL_CATEGORIES[cat], ev, closed=m["closed"], points=m["points"])
+        for m in ms:
+            ev = by_slug.get(m["eventSlug"])
+            add("official", m["question"], m["yes"], m["change1d"], ev["volume24h"] if ev else 10_000,
+                OFFICIAL_CATEGORIES[cat], ev, closed=m["closed"], points=m["points"])
     for m in mv:
         ev = m["event"]
         add("mover", m["question"], m["yes"], m["change1d"], ev["volume24h"], ev["domain"], ev,
@@ -592,10 +594,11 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
     # objective importance signal; they enter as candidates with the odds as the current price.
     for p in posts:
         m = re.search(r"(\d+)%\s*chance", p["text"], re.I)
-        if not m or p["lane"] in ("other", "culture"):
+        if not m or p["lane"] == "other":
             continue
         text = re.sub(r"\s*/\s*\d+% chance\.?.*$", "", p["text"]).strip()
-        add("news", text, int(m.group(1)) / 100, None, 50_000, p["lane"] if p["lane"] in DOMAINS else "politics", None)
+        domain = p["lane"] if p["lane"] in DOMAINS or p["lane"] == "culture" else "politics"
+        add("news", text, int(m.group(1)) / 100, None, 50_000, domain, None)
         if text in cands:
             cands[text]["url"], cands[text]["time"] = p["url"], p["time"]
 
@@ -603,7 +606,8 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
     for c in sorted(cands.values(), key=lambda c: c["score"], reverse=True):
         ek = c["eventSlug"] or c["question"]
         cap = 1 if c["eventKind"] == "ladder" else PER_EVENT_MAX
-        if per_event.get(ek, 0) >= cap or per_domain.get(c["domain"], 0) >= PER_DOMAIN_MAX:
+        domain_cap = CULTURE_MAX if c["domain"] == "culture" else PER_DOMAIN_MAX
+        if per_event.get(ek, 0) >= cap or per_domain.get(c["domain"], 0) >= domain_cap:
             continue
         per_event[ek] = per_event.get(ek, 0) + 1
         per_domain[c["domain"]] = per_domain.get(c["domain"], 0) + 1
