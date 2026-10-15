@@ -7,6 +7,10 @@ const PM = (() => {
   const pt = x => !x ? '' : (x >= 0 ? '+' : '−') + Math.abs(Math.round(x * 100)) + 'pt';
   const usd = x => x >= 1e6 ? '$' + (x / 1e6).toFixed(1) + 'M' : x >= 1e3 ? '$' + Math.round(x / 1e3) + 'k' : '$' + Math.round(x);
   const shortDate = d => { const [, m, dd] = d.split('-'); return `${+m}/${+dd}`; };
+  // "数据截至 北京 10/16 03:27 · 加州 10/15 12:27" from day.generatedAt ("2026-10-16 03:27 +0800").
+  const parseGen = s => new Date(String(s).replace(' ', 'T').replace(/ ([+-]\d{2})(\d{2})$/, '$1:$2'));
+  const inZone = (d, tz) => { const p = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: tz, month: 'numeric', day: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(d).map(x => [x.type, x.value])); return `${p.month}/${p.day} ${p.hour}:${p.minute}`; };
+  const stamp = day => { const d = parseGen(day.generatedAt); return isNaN(d) ? '' : `数据截至 北京 ${inZone(d, 'Asia/Shanghai')} · 加州 ${inZone(d, 'America/Los_Angeles')}`; };
   const cnDate = d => { const [y, m, dd] = d.split('-'); return `${y} 年 ${+m} 月 ${+dd} 日`; };
 
   const DOMAINS = [['politics', '时政'], ['finance', '金融'], ['tech', '科技']];
@@ -129,7 +133,7 @@ const PM = (() => {
     setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 2500);
   }
 
-  return { esc, pct, pt, usd, shortDate, cnDate, DOMAINS, LANES, OFFICIAL_GROUPS, setOverlay, overlay, label, outcomeLabel,
+  return { esc, pct, pt, usd, shortDate, cnDate, stamp, DOMAINS, LANES, OFFICIAL_GROUPS, setOverlay, overlay, label, outcomeLabel,
            shareBar, ladderBars, binaryBar, outcomeChart, changeBar, spark, officialRows, resolvedRows, newRows, feedRows, hotRows,
            loadDay, loadIndex, downloadZip };
 })();

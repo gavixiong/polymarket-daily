@@ -191,7 +191,7 @@ async function show(date) {
   $('#cardsLink').href = `cards.html?date=${date}`;
   const { day, xhs, cards } = await PM.loadDay(date);
   if (!day) { $('#xhsText').textContent = '数据文件缺失。'; return; }
-  $('#gen').textContent = `生成于 ${day.generatedAt}`;
+  $('#gen').textContent = PM.stamp(day) || `生成于 ${day.generatedAt}`;
   document.title = `Polymarket 日报 · ${day.date}`;
   // Freshness badge: the proof that the scheduled run worked. Red when the newest data is over 26 hours old.
   const gen = new Date(day.generatedAt.replace(' ', 'T').replace(/ ([+-]\d{2})(\d{2})$/, '$1:$2'));

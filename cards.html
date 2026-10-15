@@ -69,12 +69,14 @@ svg.spark{width:180px;height:56px;overflow:visible;display:block}
 <body>
 <div id="root"></div>
 <script>
-const { esc, pct, pt, usd, shortDate, cnDate, label, outcomeLabel, outcomeChart, changeBar, spark, officialRows, resolvedRows, newRows, feedRows, hotRows, LANES, overlay } = PM;
+const { esc, pct, pt, usd, shortDate, cnDate, stamp, label, outcomeLabel, outcomeChart, changeBar, spark, officialRows, resolvedRows, newRows, feedRows, hotRows, LANES, overlay } = PM;
 const q = new URLSearchParams(location.search);
 const laneName = Object.fromEntries(LANES);
 
 const brand = (day, right) => `<div class="brand"><span><b><img src="assets/brand/icon-black.png" alt="">Polymarket 日报</b> · ${esc(shortDate(day.date))}</span><span>${esc(right)}</span></div>`;
-const foot = (left, right = '数据 Polymarket · 概率 = Yes 价格') => `<div class="foot"><span>${esc(left)}</span><span><b>${esc(right)}</b></span></div>`;
+// Every card's footer carries the data timestamp in both time zones; the left side is the card's own note.
+let FOOT_DAY = null;
+const foot = (left, right) => `<div class="foot"><span>${esc(left)}</span><span><b>${esc(right || (FOOT_DAY ? stamp(FOOT_DAY) : ''))}</b></span></div>`;
 const zh = s => { const z = label(s); return `${esc(z)}${z !== s ? `<small>${esc(s)}</small>` : ''}`; };
 
 function headlineMarket(day) {
@@ -88,7 +90,7 @@ const CARDS = {
     const hero = o.hero || { value: top ? pt(top.change1d) : '—', label: top ? label(top.question) : '' };
     const headline = o.headline || (day.xhsFirst || '');
     return `<section class="card cover"><div class="big">${esc(shortDate(day.date).replace('/', '.'))}</div>${brand(day, '每日 07:00')}
-      <div class="date">${esc(cnDate(day.date))}</div><h1>${esc(headline)}</h1>
+      <div class="date">${esc(cnDate(day.date))}<span style="display:block;font-size:28px;color:var(--muted);margin-top:8px">${esc(stamp(day))}</span></div><h1>${esc(headline)}</h1>
       <div class="hero"><div class="v">${esc(hero.value)}</div><div class="l">${esc(hero.label)}</div></div>
       <div class="kpis"><div class="kpi"><div class="l">变动 ≥10pt</div><div class="v">${['politics', 'finance', 'tech'].flatMap(g => officialRows(day, g, 99)).filter(m => Math.abs(m.change1d) >= 0.1).length} 个</div></div>
         <div class="kpi"><div class="l">昨日结算</div><div class="v">${resolvedRows(day, 99).length} 个</div></div><div class="kpi"><div class="l">新盘</div><div class="v">${newRows(day, 99).length} 个</div></div></div>
@@ -157,6 +159,7 @@ const fit = () => document.querySelectorAll('.card').forEach(c => { const rows =
 (async () => {
   const idx = await PM.loadIndex(), date = idx.dates.includes(q.get('date')) ? q.get('date') : idx.latest;
   const { day, xhs, cards } = await PM.loadDay(date);
+  FOOT_DAY = day;
   const first = (xhs || '').split('\n').find(l => /^1\./.test(l)); if (first) day.xhsFirst = first.replace(/^1\.\s*\S+\s*/, '');
   const root = document.getElementById('root'), card = q.get('card');
   if (card && CARDS[card]) { document.body.classList.add('single'); root.innerHTML = CARDS[card](day); document.title = `卡片 · ${card} · ${date}`; fit(); return; }

@@ -256,6 +256,22 @@ def delta(x) -> str:
     return "" if not x else f"{x * 100:+.0f}pt"
 
 
+def la_offset(utc: datetime) -> timedelta:
+    """America/Los_Angeles offset without tzdata: PDT (UTC-7) from the 2nd Sunday of March to the 1st Sunday of November."""
+    y = utc.year
+    march = datetime(y, 3, 1, tzinfo=timezone.utc)
+    dst_start = march + timedelta(days=(6 - march.weekday()) % 7 + 7, hours=10)      # 2nd Sunday 02:00 PST
+    nov = datetime(y, 11, 1, tzinfo=timezone.utc)
+    dst_end = nov + timedelta(days=(6 - nov.weekday()) % 7, hours=9)                 # 1st Sunday 02:00 PDT
+    return timedelta(hours=-7) if dst_start <= utc < dst_end else timedelta(hours=-8)
+
+
+def stamp(utc: datetime) -> str:
+    bj = utc.astimezone(TZ)
+    la = utc.astimezone(timezone(la_offset(utc)))
+    return f"数据截至 北京 {bj.month}/{bj.day} {bj:%H:%M} · 加州 {la.month}/{la.day} {la:%H:%M}"
+
+
 def usd(x: float) -> str:
     if x >= 1e6:
         return f"${x / 1e6:.1f}M"
@@ -523,6 +539,8 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
         new_market = points is not None and points < 12 and yes is not None and abs((yes - change) - 0.5) < 0.02
         if kind == "resolved":
             surprise = 0.15                         # unknown prior; keep as filler
+        elif kind == "news":
+            surprise = 0.2                          # Polymarket chose to attach odds to this headline
         elif new_market:
             surprise = 0.08                         # first move of a market listed at 50% is not a move
         else:
@@ -541,7 +559,7 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
             "eventTitle": event_title or (ev["title"] if ev else None), "eventSlug": ev["slug"] if ev else None,
             "eventKind": ev["kind"] if ev else None,
             "yes": yes, "change1d": change,
-            "from": round(yes - change, 3) if (yes is not None and kind != "resolved") else None,
+            "from": round(yes - change, 3) if (yes is not None and kind not in ("resolved", "news")) else None,
             "closed": closed, "newMarket": new_market, "volume24h": vol, "score": score,
             "repeated": repeated, "lastMention": mention["date"] if mention else None,
             "siblings": [{"label": o["label"], "yes": o["yes"]} for o in ev["outcomes"][:4]] if ev and ev["kind"] != "binary" else [],
@@ -570,6 +588,16 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
         for r in rows:
             add("resolved", r["question"], 1.0 if str(r["result"]).lower() == "yes" else 0.0, None, r["volume"],
                 domain, None, closed=True, event_title=r["eventTitle"])
+    # News posts where Polymarket itself attached a market ("… 69% chance.") are the only feed items with an
+    # objective importance signal; they enter as candidates with the odds as the current price.
+    for p in posts:
+        m = re.search(r"(\d+)%\s*chance", p["text"], re.I)
+        if not m or p["lane"] in ("other", "culture"):
+            continue
+        text = re.sub(r"\s*/\s*\d+% chance\.?.*$", "", p["text"]).strip()
+        add("news", text, int(m.group(1)) / 100, None, 50_000, p["lane"] if p["lane"] in DOMAINS else "politics", None)
+        if text in cands:
+            cands[text]["url"], cands[text]["time"] = p["url"], p["time"]
 
     per_event, per_domain, out = {}, {}, []
     for c in sorted(cands.values(), key=lambda c: c["score"], reverse=True):
@@ -593,7 +621,8 @@ def outcomes_line(e: dict, n: int = 3) -> str:
 
 
 def text_summary(day: dict) -> str:
-    L = [f"# Polymarket 数据摘要 {day['date']}（生成于 {day['generatedAt']}）", ""]
+    L = [f"# Polymarket 数据摘要 {day['date']}（生成于 {day['generatedAt']}）",
+         f"正文第二行照抄：{day['stamp']}", ""]
 
     L += ["## 候选条目（已打分、去重、限额；小红书正文从这里选 4–10 条）",
           "格式：排名 [分数] 类型/领域  从→到  标题 | 事件 | 24h 成交 | 备注"]
@@ -687,6 +716,7 @@ def main() -> int:
     day = {
         "date": date,
         "generatedAt": now.astimezone(TZ).strftime("%Y-%m-%d %H:%M %z"),
+        "stamp": stamp(now),
         "stats": {},
         "official": fetch_official(),
         "feed": fetch_feed(now),
