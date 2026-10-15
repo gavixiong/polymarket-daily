@@ -679,6 +679,10 @@ def main() -> int:
 
     events = fetch_events()
     log(f"{len(events)} candidate events after noise filter")
+    if len(events) < 50 or _requests == 0:
+        # Network blocked or API down: never overwrite yesterday's data with an empty day.
+        print(f"[error] fetched {len(events)} events with {_requests} requests; refusing to write data", file=sys.stderr)
+        return 1
     pins = fetch_pins(events)
     day = {
         "date": date,
