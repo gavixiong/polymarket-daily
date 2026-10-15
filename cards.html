@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Polymarket 日报 · 卡片</title>
 <meta name="description" content="小红书图片卡片，1242×1660。无参数为预览全部，?card=cover 单张用于截图。">
+<link rel="icon" type="image/png" href="assets/brand/icon-blue.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="assets/shared.js"></script>
 <style>
@@ -19,7 +20,7 @@ html,body{margin:0;background:var(--page);color:var(--ink);font-family:system-ui
 body.single{background:#fff}
 /* card frame */
 .card{width:1242px;height:1660px;background:var(--surface);position:relative;overflow:hidden;padding:84px 80px 72px;display:flex;flex-direction:column}
-.brand{display:flex;justify-content:space-between;color:var(--muted);font-size:30px;font-weight:500} .brand b{color:var(--ink);font-weight:650}
+.brand{display:flex;justify-content:space-between;color:var(--muted);font-size:30px;font-weight:500} .brand b{color:var(--ink);font-weight:650;display:inline-flex;align-items:center;gap:14px} .brand img{width:38px;height:38px;display:block}
 .card h1{font-size:64px;line-height:1.15;margin:40px 0 10px;font-weight:650;letter-spacing:-.01em}
 .sub{font-size:30px;color:var(--ink-2);margin:0 0 30px;line-height:1.4}
 .foot{margin-top:auto;padding-top:28px;border-top:2px solid var(--grid);display:flex;justify-content:space-between;color:var(--muted);font-size:26px} .foot b{color:var(--ink-2);font-weight:500}
@@ -72,7 +73,7 @@ const { esc, pct, pt, usd, shortDate, cnDate, label, outcomeLabel, outcomeChart,
 const q = new URLSearchParams(location.search);
 const laneName = Object.fromEntries(LANES);
 
-const brand = (day, right) => `<div class="brand"><span><b>Polymarket 日报</b> · ${esc(shortDate(day.date))}</span><span>${esc(right)}</span></div>`;
+const brand = (day, right) => `<div class="brand"><span><b><img src="assets/brand/icon-black.png" alt="">Polymarket 日报</b> · ${esc(shortDate(day.date))}</span><span>${esc(right)}</span></div>`;
 const foot = (left, right = '数据 Polymarket · 概率 = Yes 价格') => `<div class="foot"><span>${esc(left)}</span><span><b>${esc(right)}</b></span></div>`;
 const zh = s => { const z = label(s); return `${esc(z)}${z !== s ? `<small>${esc(s)}</small>` : ''}`; };
 
@@ -86,12 +87,12 @@ const CARDS = {
     const o = overlay(), top = officialRows(day, 'politics', 1)[0];
     const hero = o.hero || { value: top ? pt(top.change1d) : '—', label: top ? label(top.question) : '' };
     const headline = o.headline || (day.xhsFirst || '');
-    return `<section class="card cover"><div class="big">${esc(shortDate(day.date).replace('/', '.'))}</div>${brand(day, '每日 08:00')}
+    return `<section class="card cover"><div class="big">${esc(shortDate(day.date).replace('/', '.'))}</div>${brand(day, '每日 07:00')}
       <div class="date">${esc(cnDate(day.date))}</div><h1>${esc(headline)}</h1>
       <div class="hero"><div class="v">${esc(hero.value)}</div><div class="l">${esc(hero.label)}</div></div>
       <div class="kpis"><div class="kpi"><div class="l">变动 ≥10pt</div><div class="v">${['politics', 'finance', 'tech'].flatMap(g => officialRows(day, g, 99)).filter(m => Math.abs(m.change1d) >= 0.1).length} 个</div></div>
         <div class="kpi"><div class="l">昨日结算</div><div class="v">${resolvedRows(day, 99).length} 个</div></div><div class="kpi"><div class="l">新盘</div><div class="v">${newRows(day, 99).length} 个</div></div></div>
-      ${foot('预测市场里的今日世界', '数据 Polymarket · 每天北京时间 08:00 更新')}</section>`;
+      ${foot('预测市场里的今日世界', '数据 Polymarket · 每天北京时间 07:00 更新')}</section>`;
   },
   headline(day) {
     const m = headlineMarket(day); if (!m) return '';

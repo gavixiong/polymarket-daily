@@ -1,13 +1,13 @@
 # Polymarket 日报
 
-每天北京时间 08:00 抓取 Polymarket 预测市场数据，产出一篇小红书正文（4 到 10 条快讯体）和一组 1242×1660 的图片，并在 Dashboard 上展示官方突发榜、快讯、热门、新上线、结算和资金流向。
+每天北京时间 07:00 抓取 Polymarket 预测市场数据，产出一篇小红书正文（4 到 10 条快讯体）和一组 1242×1660 的图片，并在 Dashboard 上展示官方突发榜、快讯、热门、新上线、结算和资金流向。
 
 线上：https://gavixiong.github.io/polymarket-daily/
 
 ## 流程
 
 ```
-Claude Code 定时任务（云端，每天 00:00 UTC）
+Claude Code 定时任务（云端，每天 23:00 UTC）
    ├─ python3 scripts/fetch.py          → data/<日期>.json（含打分后的候选）
    ├─ 写 reports/<日期>.xhs.md          正文
    ├─ 写 reports/<日期>.zh.json         中文标题、封面文案、已选条目

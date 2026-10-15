@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Polymarket 日报</title>
 <meta name="description" content="每天一份 Polymarket 预测市场的小红书正文和图片，加上官方突发榜、快讯、热门、新上线、结算和资金流向。">
+<link rel="icon" type="image/png" href="assets/brand/icon-blue.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="assets/shared.js"></script>
 <style>
@@ -36,7 +37,10 @@ html,body{margin:0;background:var(--page);color:var(--ink);font:15px/1.55 system
 a{color:inherit;text-decoration:none} a:hover{text-decoration:underline}
 .wrap{max-width:1180px;margin:0 auto;padding:0 16px 48px}
 header{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;padding:22px 0 14px;border-bottom:1px solid var(--grid)}
-header h1{font-size:22px;margin:0;font-weight:650} header .spacer{flex:1}
+header h1{font-size:22px;margin:0;font-weight:650;display:flex;align-items:center;gap:10px}
+header h1 img{width:26px;height:26px;display:block}
+:root[data-theme="dark"] header h1 img{filter:invert(1)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) header h1 img{filter:invert(1)}} header .spacer{flex:1}
 .sub{color:var(--muted);font-size:13px}
 select,button{font:inherit;color:var(--ink);background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:6px 10px;cursor:pointer}
 .tabs{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
@@ -94,7 +98,7 @@ footer{margin-top:36px;color:var(--muted);font-size:12.5px;line-height:1.7}
 <body>
 <div class="wrap">
   <header>
-    <h1>Polymarket 日报</h1><span class="sub" id="gen"></span><span class="spacer"></span>
+    <h1><img src="assets/brand/icon-black.png" alt="">Polymarket 日报</h1><span class="sub" id="gen"></span><span class="sub" id="status"></span><span class="spacer"></span>
     <a class="sub" id="cardsLink" href="cards.html">卡片页 →</a>
     <label class="sub">日期 <select id="date"></select></label>
     <button id="theme" title="切换深浅色">◐</button>
@@ -125,7 +129,7 @@ footer{margin-top:36px;color:var(--muted);font-size:12.5px;line-height:1.7}
     </div>
   </div>
 
-  <footer>数据来自 Polymarket 公开接口与官网，每日北京时间 08:00 抓取。概率 = 市场 Yes 价格，变动为过去 24 小时的百分点。正文与中文标题由 Claude 根据数据撰写，不构成投资建议。</footer>
+  <footer>数据来自 Polymarket 公开接口与官网，每日北京时间 07:00 抓取。概率 = 市场 Yes 价格，变动为过去 24 小时的百分点。正文与中文标题由 Claude 根据数据撰写，不构成投资建议。</footer>
 </div>
 
 <script>
@@ -189,6 +193,12 @@ async function show(date) {
   if (!day) { $('#xhsText').textContent = '数据文件缺失。'; return; }
   $('#gen').textContent = `生成于 ${day.generatedAt}`;
   document.title = `Polymarket 日报 · ${day.date}`;
+  // Freshness badge: the proof that the scheduled run worked. Red when the newest data is over 26 hours old.
+  const gen = new Date(day.generatedAt.replace(' ', 'T').replace(/ ([+-]\d{2})(\d{2})$/, '$1:$2'));
+  const ageH = (Date.now() - gen.getTime()) / 36e5;
+  const stale = !isFinite(ageH) || ageH > 26, st = $('#status');
+  st.textContent = stale ? `⚠ 数据已 ${isFinite(ageH) ? Math.round(ageH) : '?'} 小时未更新` : `● ${ageH < 1 ? '刚更新' : Math.round(ageH) + ' 小时前更新'}${cards.length ? ' · 图片 ' + cards.length + ' 张' : ' · 无图片'}${xhs ? '' : ' · 无正文'}`;
+  st.style.color = stale || !cards.length || !xhs ? 'var(--c8)' : 'var(--good)';
 
   $('#xhsText').textContent = xhs || '今日还没有生成正文。';
   $('#copyXhs').onclick = () => navigator.clipboard?.writeText(xhs || '').then(() => { $('#copyXhs').textContent = '已复制'; setTimeout(() => $('#copyXhs').textContent = '复制', 1500); });
