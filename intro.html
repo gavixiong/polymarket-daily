@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polymarket 日报 · 置顶卡片</title>
+<meta name="description" content="置顶帖用的三张固定卡片：Polymarket 是什么、交易规模、日报怎么做。1242×1660，?card=what 单张用于截图。数字在下方 FACTS 里手工维护。">
+<link rel="icon" type="image/png" href="assets/brand/icon-blue.png">
+<style>
+:root{
+  --page:#eeede8; --surface:#fcfcfb; --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --mid:#f0efec; --chip:#f0efec; --good:#006300; --bad:#b3261e;
+  --c1:#2a78d6; --wash:rgba(42,120,214,.10); --poly:#2E5CFF;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--page);color:var(--ink);font-family:system-ui,-apple-system,"PingFang SC","Hiragino Sans GB","Segoe UI","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+body.single{background:#fff}
+.card{width:1242px;height:1660px;background:var(--surface);position:relative;overflow:hidden;padding:84px 80px 72px;display:flex;flex-direction:column}
+.brand{display:flex;justify-content:space-between;color:var(--muted);font-size:30px;font-weight:500} .brand b{color:var(--ink);font-weight:650;display:inline-flex;align-items:center;gap:14px} .brand img{width:38px;height:38px;display:block}
+.card h1{font-size:64px;line-height:1.15;margin:40px 0 10px;font-weight:650;letter-spacing:-.01em}
+.sub{font-size:30px;color:var(--ink-2);margin:0 0 30px;line-height:1.4}
+.foot{margin-top:auto;padding-top:28px;border-top:2px solid var(--grid);display:flex;justify-content:space-between;color:var(--muted);font-size:26px} .foot b{color:var(--ink-2);font-weight:500}
+.kpis{display:flex;gap:28px;margin-top:30px} .kpi{flex:1;padding:26px 30px;border:2px solid var(--grid);border-radius:18px} .kpi .l{font-size:26px;color:var(--muted)} .kpi .v{font-size:52px;font-weight:650;margin-top:6px;font-variant-numeric:tabular-nums;letter-spacing:-.01em} .kpi .v small{font-size:28px;color:var(--ink-2);font-weight:500;margin-left:4px}
+/* what: a mock market row, then the payoff */
+.market{border:2px solid var(--grid);border-radius:22px;padding:34px 36px;margin-top:10px}
+.market .q{display:flex;justify-content:space-between;align-items:center;font-size:38px;font-weight:600;line-height:1.3}
+.market .q .p{font-size:72px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.market .btns{display:flex;gap:20px;margin-top:26px} .market .btns div{flex:1;text-align:center;font-size:34px;font-weight:650;border-radius:14px;padding:20px 0}
+.market .yes{background:#e3f2e3;color:var(--good)} .market .no{background:#f9e5e3;color:var(--bad)}
+.market .vol{color:var(--muted);font-size:26px;margin-top:22px}
+.payoff{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:30px}
+.payoff div{padding:28px 30px;border-radius:18px;background:var(--mid);font-size:30px;line-height:1.45;color:var(--ink-2)} .payoff b{display:block;color:var(--ink);font-size:44px;margin-bottom:8px;font-variant-numeric:tabular-nums}
+.payoff .win b{color:var(--good)} .payoff .lose b{color:var(--bad)}
+.explain{margin-top:30px;font-size:34px;line-height:1.5} .explain b{color:var(--poly)}
+/* volume chart */
+.chart{margin-top:30px} .chart svg{width:1082px;height:760px;display:block;overflow:visible}
+.note{font-size:26px;color:var(--muted);line-height:1.5;margin-top:22px}
+/* how: pipeline steps */
+.steps{display:flex;flex-direction:column;margin-top:12px}
+.step{display:grid;grid-template-columns:96px 1fr;gap:26px;padding:30px 0;border-bottom:2px solid var(--grid);align-items:start} .step:last-child{border-bottom:0}
+.step .n{width:72px;height:72px;border-radius:50%;background:var(--ink);color:var(--surface);font-size:34px;font-weight:650;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
+.step .t{font-size:36px;font-weight:650;line-height:1.3} .step .d{font-size:29px;color:var(--ink-2);line-height:1.5;margin-top:8px}
+.chips{display:flex;flex-wrap:wrap;gap:12px;margin-top:14px} .chips span{background:var(--chip);border-radius:10px;padding:6px 18px;font-size:26px;color:var(--ink-2);font-weight:600}
+/* gallery */
+.ghead{padding:24px 28px 0;font-size:16px;color:var(--ink-2)} .ghead b{color:var(--ink)}
+.gallery{padding:28px;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:28px}
+.thumb{background:#fff;border-radius:14px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,.08)} .thumb .frame{width:310px;height:414px;overflow:hidden;border-radius:8px;border:1px solid var(--grid)} .thumb .card{transform:scale(.2496);transform-origin:0 0}
+.thumb .cap{display:flex;justify-content:space-between;margin-top:10px;font-size:14px;color:var(--ink-2)} .thumb .cap a{color:var(--c1);text-decoration:none}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+// 手工维护的事实。数字来源见 reports/pinned-intro.md 第四节。
+const FACTS = {
+  asOf: '2026-10-15',
+  founded: '2020 年',
+  iceStake: '23%',
+  peakMonth: { label: '2026 年 3 月单月', value: '105 亿' },
+  volume: [ // 年成交，亿美元
+    { y: '2023', v: 0.73 }, { y: '2024', v: 90 }, { y: '2025', v: 215 },
+  ],
+  example: { q: '美联储 10 月维持利率不变？', yes: 0.72, vol: '$42M 成交量' },
+};
+
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const brand = right => `<div class="brand"><span><b><img src="assets/brand/icon-black.png" alt="">Polymarket 日报</b> · 置顶</span><span>${esc(right)}</span></div>`;
+const foot = (left, right = `数据截至 ${FACTS.asOf}`) => `<div class="foot"><span>${esc(left)}</span><span><b>${esc(right)}</b></span></div>`;
+
+const CARDS = {
+  what() {
+    const e = FACTS.example, yes = Math.round(e.yes * 100), no = 100 - yes;
+    return `<section class="card">${brand('1 / 3')}<h1>Polymarket 是什么</h1><p class="sub">一个押"某件事会不会发生"的市场。价格就是概率。</p>
+      <div class="market"><div class="q"><span>${esc(e.q)}</span><span class="p">${yes}%</span></div>
+        <div class="btns"><div class="yes">买 是 ${yes}¢</div><div class="no">买 否 ${no}¢</div></div><div class="vol">${esc(e.vol)} · 真实盘口样式，数字为示例</div></div>
+      <div class="payoff"><div class="win"><b>发生 → 结算 $1.00</b>花 ${(e.yes).toFixed(2)} 美元买一份"是"，赚 ${Math.round((1 / e.yes - 1) * 100)}%</div><div class="lose"><b>没发生 → 归零</b>这 ${(e.yes).toFixed(2)} 美元全部亏掉</div></div>
+      <div class="explain">所以一份合约卖 <b>0.72 美元</b>，就等于市场用真金白银说：<b>72%</b> 的可能会发生。用户之间互相成交，平台不坐庄。</div>
+      <div class="kpis"><div class="kpi"><div class="l">创立于纽约</div><div class="v">${esc(FACTS.founded)}</div></div><div class="kpi"><div class="l">纽交所母公司 ICE 持股</div><div class="v">约 ${esc(FACTS.iceStake)}</div></div><div class="kpi"><div class="l">${esc(FACTS.peakMonth.label)}</div><div class="v">${esc(FACTS.peakMonth.value)}<small>美元</small></div></div></div>
+      ${foot('全球最大的预测市场')}</section>`;
+  },
+  volume() {
+    const W = 1082, H = 760, pl = 40, pr = 40, ptop = 90, pb = 80, data = FACTS.volume;
+    const max = Math.max(...data.map(d => d.v)), plotH = H - ptop - pb, bw = 200, gap = (W - pl - pr - bw * data.length) / (data.length - 1);
+    const Y = v => ptop + (1 - v / max) * plotH;
+    const ticks = [0, 50, 100, 150, 200];
+    const bars = data.map((d, i) => {
+      const x = pl + i * (bw + gap), y = Y(d.v), h = Math.max(H - pb - y, 4);
+      return `<rect x="${x}" y="${y.toFixed(1)}" width="${bw}" height="${h.toFixed(1)}" rx="4" fill="var(--c1)"/>
+        <rect x="${x}" y="${(H - pb - 4).toFixed(1)}" width="${bw}" height="4" fill="var(--c1)"/>
+        <text x="${x + bw / 2}" y="${(y - 18).toFixed(1)}" text-anchor="middle" font-size="44" font-weight="700" fill="var(--ink)">${d.v < 10 ? d.v.toFixed(2) : d.v} 亿</text>
+        <text x="${x + bw / 2}" y="${H - pb + 48}" text-anchor="middle" font-size="32" fill="var(--ink-2)">${d.y} 年</text>`;
+    }).join('');
+    const grid = ticks.map(t => `<line x1="${pl}" x2="${W - pr}" y1="${Y(t).toFixed(1)}" y2="${Y(t).toFixed(1)}" stroke="var(--grid)" stroke-width="2"/>`).join('');
+    return `<section class="card">${brand('2 / 3')}<h1>两年涨了 300 倍</h1><p class="sub">Polymarket 年成交额，亿美元</p>
+      <div class="chart"><svg viewBox="0 0 ${W} ${H}">${grid}<line x1="${pl}" x2="${W - pr}" y1="${H - pb}" y2="${H - pb}" stroke="var(--axis)" stroke-width="2"/>${bars}</svg></div>
+      <div class="kpis"><div class="kpi"><div class="l">${esc(FACTS.peakMonth.label)}</div><div class="v">${esc(FACTS.peakMonth.value)}<small>美元</small></div></div><div class="kpi"><div class="l">2025 年 10 月</div><div class="v">ICE 投资<small>最多 20 亿</small></div></div></div>
+      <div class="note">2024 年靠美国大选起量，2025 年起体育、财经、科技盘全面铺开。2023 与 2024 来自 Sacra，2025 来自 Keyrock / Dune 年报，不同口径略有出入。</div>
+      ${foot('纽交所母公司入股后，数据开始进入华尔街终端')}</section>`;
+  },
+  how() {
+    const steps = [
+      ['每天北京时间 8 点自动运行', 'AI 代理抓 Polymarket 公开接口和官方 X 账号，不用人工筛选。', ['官方突发榜', '官方快讯', '热门盘', '新盘', '结算', '万元级大单']],
+      ['只看三类', '币价和体育不写。', ['时政与全球', '财经', '科技']],
+      ['打分挑条目', '意外程度 × 关注度 × 新鲜度。7 天内报过的不重复，每天 4 到 10 条。', []],
+      ['每条一句话，必须有数字', '先说发生了什么，句尾给市场数字："从多少到多少"。不编原因，只写能对上官方快讯的原因。', []],
+      ['配图', '固定四张：封面、头条走势、突发榜、长期盘。大单、结算、新盘、快讯有料才出。', []],
+    ];
+    return `<section class="card">${brand('3 / 3')}<h1>这份日报怎么做</h1><p class="sub">把美国人真金白银押出来的概率，每天翻译成中文</p>
+      <div class="steps">${steps.map(([t, d, chips], i) => `<div class="step"><div class="n">${i + 1}</div><div><div class="t">${esc(t)}</div><div class="d">${esc(d)}</div>${chips.length ? `<div class="chips">${chips.map(c => `<span>${esc(c)}</span>`).join('')}</div>` : ''}</div></div>`).join('')}</div>
+      ${foot('不是投资建议，不教开户', '数据 Polymarket · 每天北京时间 08:00 更新')}</section>`;
+  },
+};
+const ORDER = [['what', 'Polymarket 是什么'], ['volume', '交易规模'], ['how', '日报怎么做']];
+const q = new URLSearchParams(location.search), root = document.getElementById('root');
+if (q.get('card')) {
+  document.body.classList.add('single'); document.title = `置顶卡片 · ${q.get('card')}`;
+  root.innerHTML = CARDS[q.get('card')] ? CARDS[q.get('card')]() : '<p style="padding:20px">没有这张卡。</p>';
+} else {
+  root.innerHTML = `<div class="ghead"><b>置顶卡片</b> · 三张固定图，数字在 intro.html 的 FACTS 里改。</div><div class="gallery">${ORDER.map(([k, name]) => `<div class="thumb"><div class="frame">${CARDS[k]()}</div><div class="cap"><span>${esc(name)}</span><a href="?card=${k}" target="_blank">单张 →</a></div></div>`).join('')}</div>`;
+}
+</script>
+</body>
+</html>

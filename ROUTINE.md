@@ -79,7 +79,7 @@ python3 -m pip install -q playwright && python3 -m playwright install chromium  
 python3 scripts/render_cards.py
 ```
 
-输出 `cards/<日期>/`。固定四张（封面、头条走势、突发榜、长期盘）加满足条件的浮动卡（结算、新盘、快讯），通常 6 到 7 张。失败就跳过并汇报，不阻塞提交。
+输出 `cards/<日期>/`。固定四张（封面、头条走势、突发榜、长期盘）加满足条件的浮动卡（结算、新盘），每天 4 到 6 张。快讯卡只在 Dashboard 预览，不渲染。失败就跳过并汇报，不阻塞提交。
 
 ## 5. 提交推送
 
