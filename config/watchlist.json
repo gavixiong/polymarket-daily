@@ -1,0 +1,15 @@
+{
+  "_comment": "固定关注池：每天固定报概率的长期事件。slug 来自 polymarket.com/event/<slug>。show = 显示前几个选项。",
+  "events": [
+    {"slug": "fed-decision-in-october-20260617190323537", "category": "finance", "show": 3, "note": "10 月 FOMC"},
+    {"slug": "fed-decision-in-december-20260729232808632", "category": "finance", "show": 3, "note": "12 月 FOMC"},
+    {"slug": "what-price-will-bitcoin-hit-before-2027", "category": "finance", "show": 4, "note": "BTC 年内目标"},
+    {"slug": "largest-company-end-of-december-2026", "category": "finance", "show": 3, "note": "年底全球市值第一"},
+    {"slug": "which-company-has-best-ai-model-end-of-2026", "category": "tech", "show": 3, "note": "年底最佳 AI 模型"},
+    {"slug": "presidential-election-winner-2028", "category": "politics", "show": 4, "note": "2028 美国大选"},
+    {"slug": "balance-of-power-2026-midterms", "category": "politics", "show": 3, "note": "2026 中期选举"},
+    {"slug": "us-iran-ceasefire-continues-throughptptpt", "category": "politics", "show": 3, "note": "美伊停火"},
+    {"slug": "brazil-presidential-election", "category": "politics", "show": 2, "note": "巴西大选"},
+    {"slug": "next-french-presidential-election", "category": "politics", "show": 3, "note": "法国大选"}
+  ]
+}
