@@ -134,6 +134,11 @@ h2.sec{font-size:17px;margin:30px 0 12px;font-weight:650}
     <div class="tiles" id="tiles"></div>
   </div>
 
+  <div class="grid hero" id="xhsWrap" style="display:none">
+    <article class="card" id="xhs"><h2>小红书正文 <button id="copyXhs" style="float:right;padding:2px 10px;font-size:12.5px">复制</button></h2><pre id="xhsText" style="white-space:pre-wrap;font:inherit;margin:0;line-height:1.7"></pre></article>
+    <article class="card" id="cardsStrip"><h2>今日图片 <span class="src" id="cardsMeta"></span></h2><div id="cardsGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px"></div></article>
+  </div>
+
   <h2 class="sec">官方突发榜 <span class="src">polymarket.com/breaking · 过去 24 小时变动最大</span></h2>
   <div class="subtabs" id="offtabs"></div>
   <div class="card scroll" id="official"></div>
@@ -326,11 +331,24 @@ function render(day, md) {
 async function loadDay(date) {
   location.hash = date;
   $('#cardsLink').href = `cards.html?date=${date}`;
-  const [day, md] = await Promise.all([
+  const [day, md, xhs, cards] = await Promise.all([
     fetch(`data/${date}.json`, { cache: 'no-store' }).then(r => r.json()),
     fetch(`reports/${date}.md`, { cache: 'no-store' }).then(r => r.ok ? r.text() : null).catch(() => null),
+    fetch(`reports/${date}.xhs.md`, { cache: 'no-store' }).then(r => r.ok ? r.text() : null).catch(() => null),
+    fetch(`cards/${date}/index.json`, { cache: 'no-store' }).then(r => r.ok ? r.json() : null).catch(() => null),
   ]);
   render(day, md);
+  const wrap = $('#xhsWrap');
+  if (xhs || cards) {
+    wrap.style.display = '';
+    $('#xhsText').textContent = xhs || '今日没有生成小红书正文。';
+    $('#copyXhs').onclick = () => { navigator.clipboard?.writeText(xhs || '').then(() => { $('#copyXhs').textContent = '已复制'; setTimeout(() => $('#copyXhs').textContent = '复制', 1500); }); };
+    const list = (cards && cards.cards) || [];
+    $('#cardsMeta').textContent = list.length ? `${list.length} 张 · 1242×1660 · 点开另存` : '尚未生成';
+    $('#cardsGrid').innerHTML = list.map((c, i) => `<a href="cards/${date}/${c.file}" target="_blank" rel="noopener" title="${esc(c.key)}"><img src="cards/${date}/${c.file}" alt="${esc(c.key)}" style="width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;border:1px solid var(--border);display:block"></a>`).join('');
+  } else {
+    wrap.style.display = 'none';
+  }
 }
 (async () => {
   try {

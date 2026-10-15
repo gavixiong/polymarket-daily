@@ -1,0 +1,38 @@
+{
+ "date": "2026-10-16",
+ "engine": "chrome",
+ "cards": [
+  {
+   "key": "cover",
+   "file": "01-cover.png"
+  },
+  {
+   "key": "headline",
+   "file": "02-headline.png"
+  },
+  {
+   "key": "breaking",
+   "file": "03-breaking.png"
+  },
+  {
+   "key": "watch",
+   "file": "04-watch.png"
+  },
+  {
+   "key": "whales",
+   "file": "05-whales.png"
+  },
+  {
+   "key": "resolved",
+   "file": "06-resolved.png"
+  },
+  {
+   "key": "new",
+   "file": "07-new.png"
+  },
+  {
+   "key": "feed",
+   "file": "08-feed.png"
+  }
+ ]
+}

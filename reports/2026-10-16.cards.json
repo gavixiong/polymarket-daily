@@ -60,5 +60,15 @@
   },
   "feedLabels": {
     "2110768465267023975": "索尼发布 5900 美元镀金 Walkman，用 AI 增强音质"
-  }
+  },
+  "picked": [
+    {"question": "Will PPI YoY be 5.9% or more in September?", "yes": 1.0},
+    {"question": "How high will 10-year Treasury yield go before 2027?", "yes": 0.28},
+    {"question": "What will WTI Crude Oil (WTI) hit in October 2026?", "yes": 0.69},
+    {"question": "Will there be 4 or more North Korea tests in October 2026?", "yes": 0.65},
+    {"question": "Israel x Iran ceasefire continues through October 18?", "yes": 0.92},
+    {"question": "Will Luiz Inácio Lula da Silva win the 2026 Brazilian presidential election?", "yes": 0.24},
+    {"question": "Next Fable Model (5.2+) released by October 17, 2026?", "yes": 0.07},
+    {"question": "Will the next Claude Opus model debut with a Humanity’s Last Exam score of 45% or higher?", "yes": 1.0}
+  ]
 }

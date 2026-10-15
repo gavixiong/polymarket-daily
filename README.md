@@ -37,12 +37,20 @@ python3 -m http.server 8080
 - 分类标签与噪音黑名单：同文件的 `CATEGORIES` 与 `NOISE`。
 - 短报写法：`ROUTINE.md`。
 
+## 小红书
+
+每天三样产出：`reports/<日期>.xhs.md` 是 4 到 10 条快讯体正文，`cards/<日期>/` 是 1242×1660 的图片（固定四张：封面、头条走势、突发榜、长期盘；浮动四张：大单、结算、新盘、快讯，满足条件才出），`cards.html` 是图片的源页面。
+正文的候选由 `scripts/fetch.py` 打分（意外 × 关注 × 新鲜）并按 `reports/*.cards.json` 里的 `picked` 做 7 天去重，最终挑选由写作代理完成。图片用 `scripts/render_cards.py` 生成，优先 Playwright，没有就用本机 Chrome。
+
 ## 目录
 
 | 路径 | 内容 |
 |---|---|
 | `index.html` | Dashboard 单页，无构建 |
-| `scripts/fetch.py` | 数据抓取，纯标准库 |
+| `cards.html` | 小红书卡片页，`?card=cover` 单张 |
+| `scripts/fetch.py` | 数据抓取与候选打分，纯标准库 |
+| `scripts/render_cards.py` | 卡片截图成 PNG |
+| `cards/` | 每日图片 |
 | `config/watchlist.json` | 固定关注池 |
 | `data/` | 每日结构化数据 |
 | `reports/` | 每日中文短报 |

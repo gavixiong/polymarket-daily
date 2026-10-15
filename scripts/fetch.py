@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import html
 import json
+import math
 import re
 import sys
 import time
@@ -530,6 +531,143 @@ def fetch_column(now: datetime) -> list[dict]:
     return out
 
 
+# ----------------------------------------------------------------------------- ranked candidates for the short post
+REPORTS = ROOT / "reports"
+MENTION_DAYS = 7
+MENTION_MIN_MOVE = 0.10
+PICKS_MAX = 14
+PER_EVENT_MAX = 2
+PER_DOMAIN_MAX = 5
+# recurring daily markets ("... on October 14, 2026?") resolve every day; never news on their own
+DAILY_RE = re.compile(r"\bon (January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}(, \d{4})?\?$")
+# nouns too common to link a market to a news post by themselves
+WEAK_NOUNS = {"Trump", "Iran", "Israel", "Russia", "Ukraine", "China", "United", "States", "America", "American",
+              "Democratic", "Republican", "Anthropic", "Google", "OpenAI", "Bitcoin", "Federal", "Reserve",
+              "Congress", "Court", "Supreme", "Biden", "Harris", "Election", "Party", "Government", "Military",
+              "Treasury", "Senate", "House", "White", "Republicans", "Democrats", "Europe", "European"}
+_STOP = {"Will", "What", "Which", "Who", "When", "Where", "How", "Yes", "The", "October", "November", "December",
+         "January", "February", "March", "April", "May", "June", "July", "August", "September", "Before", "After",
+         "Next", "Another", "Does", "Did", "Does", "Market", "President", "Senate", "House"}
+
+
+def recent_mentions(today: str) -> dict[str, dict]:
+    """Questions used in the short post over the last MENTION_DAYS days, from reports/<date>.cards.json 'picked'."""
+    out = {}
+    cutoff = (datetime.strptime(today, "%Y-%m-%d") - timedelta(days=MENTION_DAYS)).strftime("%Y-%m-%d")
+    for f in sorted(REPORTS.glob("????-??-??.cards.json")):
+        d = f.name[:10]
+        if d >= today or d < cutoff:
+            continue
+        try:
+            for p in json.loads(f.read_text()).get("picked", []):
+                if p.get("question"):
+                    out[p["question"]] = {"date": d, "yes": p.get("yes")}
+        except (ValueError, OSError):
+            continue
+    return out
+
+
+def proper_nouns(text: str) -> set[str]:
+    return {w.strip("'’?,.:;()\"") for w in re.findall(r"\b[A-Z][A-Za-z\-]{3,}\b", text or "")} - _STOP
+
+
+def ladder_summary(ev: dict | None) -> dict | None:
+    """For threshold ladders, the rungs nearest 50% are the market's median estimate."""
+    if not ev or ev.get("marketCount", 0) < 2:
+        return None
+    leaders = ev.get("leaders") or []
+    total = sum(l["yes"] or 0 for l in leaders) if leaders else 0
+    if ev.get("marketCount", 0) > 1 and total > 1.5:
+        return {"type": "ladder", "rungs": [{"label": l["label"], "yes": l["yes"]} for l in leaders[:4]]}
+    return {"type": "exclusive", "rungs": [{"label": l["label"], "yes": l["yes"]} for l in leaders[:3]]}
+
+
+def build_picks(day: dict, events: dict[str, dict]) -> list[dict]:
+    by_slug = {e["slug"]: e for e in events.values()}
+    prev = recent_mentions(day["date"])
+    feed = day.get("feed") or []
+    cands: dict[str, dict] = {}
+
+    def add(kind, question, yes, change, vol, domain, ev, closed=False, label=None, event_title=None, points=None):
+        if not question or is_noise(question) or DAILY_RE.search(question):
+            return
+        if closed and (yes or 0) < 0.5:
+            return  # a rung / market resolving No on its own is never news
+        change = change or 0
+        # A market listed today starts at 50%; its first move is not a move.
+        new_market = (points is not None and points < 12 and yes is not None and abs((yes - change) - 0.5) < 0.02)
+        if kind == "resolved":
+            surprise = 0.15  # we do not know how surprised the market was; keep these as fillers
+        elif new_market:
+            surprise = 0.08
+        else:
+            surprise = abs(change) + (0.3 if closed else 0)
+        attention = max(1.0, math.log10(max(vol or 0, 1000)) - 2)  # $1k -> 1, $1M -> 4
+        mention = prev.get(question)
+        repeated = bool(mention and yes is not None and mention.get("yes") is not None
+                        and abs(yes - mention["yes"]) < MENTION_MIN_MOVE)
+        fresh = 0.2 if repeated else 1.0
+        score = round(surprise * attention * fresh, 3)
+        nouns = proper_nouns(question) | (proper_nouns(event_title or "") if event_title else set())
+        strong = nouns - WEAK_NOUNS
+        causes = []
+        for p in feed:
+            if p["kind"] != "breaking":
+                continue
+            pn = proper_nouns(p["text"])
+            if (strong & pn) or len(nouns & pn) >= 2:
+                causes.append({"time": p["time"], "text": p["text"], "url": p["url"]})
+            if len(causes) >= 2:
+                break
+        c = {
+            "kind": kind, "domain": domain, "question": question, "label": label,
+            "eventTitle": event_title or (ev["title"] if ev else None), "eventSlug": ev["slug"] if ev else None,
+            "yes": yes, "change1d": change,
+            "from": round(yes - change, 3) if (yes is not None and kind != "resolved") else None,
+            "closed": closed, "volume24h": vol, "score": score, "newMarket": new_market,
+            "repeated": repeated, "lastMention": mention["date"] if mention else None,
+            "siblings": ladder_summary(ev), "causes": causes,
+            "url": ev["url"] if ev else None,
+        }
+        if question not in cands or cands[question]["score"] < score:
+            cands[question] = c
+
+    for cat, ms in (day.get("official") or {}).items():
+        if cat == "culture":
+            continue
+        for m in ms:
+            ev = by_slug.get(m.get("eventSlug"))
+            add("official", m["question"], m["yes"], m["change1d"], ev["volume24h"] if ev else 10_000,
+                OFFICIAL_CATEGORIES[cat], ev, m["closed"], points=len(m.get("sparkline") or []))
+    for cat in CATEGORIES:
+        for m in day["categories"][cat]["movers"]:
+            add("mover", m["question"], m["yes"], m["change1d"], m.get("eventVolume24h"), cat,
+                by_slug.get(m.get("eventSlug")), False, m["label"], m["eventTitle"])
+        for e in day["categories"][cat]["hot"]:
+            for l in e["leaders"][:3]:
+                if l.get("change1d") and abs(l["change1d"]) >= 0.05:
+                    add("hot", l["question"], l["yes"], l["change1d"], e["volume24h"], cat,
+                        by_slug.get(e["slug"]), False, l["label"], e["title"])
+        for r in day["categories"][cat]["resolved"]:
+            yes = 1.0 if str(r.get("result")).lower() == "yes" else 0.0
+            add("resolved", r["question"], yes, None, r["volume"], cat, None, True, None, r.get("eventTitle"))
+
+    ranked = sorted(cands.values(), key=lambda c: c["score"], reverse=True)
+    per_event, per_domain, out = {}, {}, []
+    for c in ranked:
+        ek = c["eventSlug"] or c["question"]
+        is_ladder = bool(c["siblings"] and c["siblings"]["type"] == "ladder")
+        if per_event.get(ek, 0) >= (1 if is_ladder else PER_EVENT_MAX) or per_domain.get(c["domain"], 0) >= PER_DOMAIN_MAX:
+            continue
+        per_event[ek] = per_event.get(ek, 0) + 1
+        per_domain[c["domain"]] = per_domain.get(c["domain"], 0) + 1
+        c["rank"] = len(out) + 1
+        out.append(c)
+        if len(out) >= PICKS_MAX:
+            break
+    return out
+
+
 # ----------------------------------------------------------------------------- summary
 def pct(x) -> str:
     return "—" if x is None else f"{x * 100:.0f}%"
@@ -549,6 +687,32 @@ def usd(x: float) -> str:
 
 def text_summary(day: dict) -> str:
     L = [f"# Polymarket 数据摘要 {day['date']}（生成于 {day['generatedAt']}）", ""]
+
+    L.append("## 候选条目（已打分、去重、限额；小红书正文从这里选 4–10 条）")
+    L.append("格式：排名 [分数] 类型/领域  从→到  标题 | 事件 | 24h 成交 | 备注")
+    for p in day.get("picks", []):
+        frm = pct(p["from"]) if p["from"] is not None else "—"
+        title = p["label"] if p["label"] and p["label"] not in ("Yes", p["question"]) else p["question"]
+        notes = []
+        if p["closed"]:
+            notes.append("已结算")
+        if p.get("newMarket"):
+            notes.append("今天新上线的档位，起点 50% 是默认值，不算变动")
+        if p["repeated"]:
+            notes.append(f"7 天内报过（{p['lastMention']}），数值没怎么变，慎用")
+        elif p["lastMention"]:
+            notes.append(f"上次报 {p['lastMention']}，这次变了")
+        if p["siblings"] and p["siblings"]["type"] == "ladder":
+            notes.append("梯子市场，整体看：" + "; ".join(f"{r['label']} {pct(r['yes'])}" for r in p["siblings"]["rungs"]))
+        elif p["siblings"]:
+            notes.append("同事件其他选项：" + "; ".join(f"{r['label']} {pct(r['yes'])}" for r in p["siblings"]["rungs"]))
+        L.append(f"{p['rank']:>2}. [{p['score']:.2f}] {p['kind']}/{p['domain']}  {frm}→{pct(p['yes'])}  {title}"
+                 + (f" | {p['eventTitle']}" if p["eventTitle"] and p["eventTitle"] != title else "")
+                 + (f" | {usd(p['volume24h'])}" if p["volume24h"] else "")
+                 + (f" | {'；'.join(notes)}" if notes else ""))
+        for c in p["causes"]:
+            L.append(f"      ↳ 可能的原因（快讯 {c['time'][6:]}）：{c['text'][:160]}")
+    L.append("")
 
     L.append("## 官方突发榜（polymarket.com/breaking，24h 变动最大）")
     groups = {"politics": "时政与全球", "finance": "金融与加密", "tech": "科技", "culture": "文化体育"}
@@ -669,6 +833,9 @@ def main() -> int:
         "whales": fetch_whales(events, now),
         "watchlist": fetch_watchlist(),
     }
+    day["picks"] = build_picks(day, events)
+    print(f"[info] picks: {len(day['picks'])} ranked candidates "
+          f"({sum(1 for p in day['picks'] if p['repeated'])} repeated from last {MENTION_DAYS} days)", file=sys.stderr)
     day["stats"]["requests"] = _session_requests
 
     DATA_DIR.mkdir(exist_ok=True)
