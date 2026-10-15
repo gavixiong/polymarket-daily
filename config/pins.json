@@ -1,0 +1,8 @@
+{
+  "_comment": "钉在热门板块最前面的长期事件，不受成交量影响。slug 取自 polymarket.com/event/<slug>。",
+  "slugs": [
+    "balance-of-power-2026-midterms",
+    "presidential-election-winner-2028",
+    "us-iran-ceasefire-continues-throughptptpt"
+  ]
+}

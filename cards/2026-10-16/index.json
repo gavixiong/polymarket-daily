@@ -15,24 +15,20 @@
    "file": "03-breaking.png"
   },
   {
-   "key": "watch",
-   "file": "04-watch.png"
-  },
-  {
-   "key": "whales",
-   "file": "05-whales.png"
+   "key": "hot",
+   "file": "04-hot.png"
   },
   {
    "key": "resolved",
-   "file": "06-resolved.png"
+   "file": "05-resolved.png"
   },
   {
    "key": "new",
-   "file": "07-new.png"
+   "file": "06-new.png"
   },
   {
    "key": "feed",
-   "file": "08-feed.png"
+   "file": "07-feed.png"
   }
  ]
 }
