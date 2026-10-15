@@ -124,6 +124,7 @@ h2.sec{font-size:17px;margin:30px 0 12px;font-weight:650}
     <h1>Polymarket 日报</h1>
     <span class="sub" id="gen"></span>
     <span class="spacer"></span>
+    <a class="sub" id="cardsLink" href="cards.html">小红书卡片 →</a>
     <label class="sub">日期 <select id="date"></select></label>
     <button id="theme" title="切换深浅色">◐</button>
   </header>
@@ -324,6 +325,7 @@ function render(day, md) {
 
 async function loadDay(date) {
   location.hash = date;
+  $('#cardsLink').href = `cards.html?date=${date}`;
   const [day, md] = await Promise.all([
     fetch(`data/${date}.json`, { cache: 'no-store' }).then(r => r.json()),
     fetch(`reports/${date}.md`, { cache: 'no-store' }).then(r => r.ok ? r.text() : null).catch(() => null),

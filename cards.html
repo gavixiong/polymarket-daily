@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Polymarket 日报 · 卡片</title>
+<meta name="description" content="小红书图片卡片：1242×1660，每张回答一个问题。无参数为预览全部，?card=cover 单张用于截图。">
+<style>
+:root{
+  --page:#eeede8; --surface:#fcfcfb; --ink:#0b0b0b; --ink-2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --s1:#2a78d6; --s1-wash:rgba(42,120,214,.10); --track:#cde2fb;
+  --up:#2a78d6; --down:#e34948; --mid:#f0efec; --good:#006300; --chip:#f0efec; --accent:#2a78d6;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--page);color:var(--ink);font-family:system-ui,-apple-system,"PingFang SC","Hiragino Sans GB","Segoe UI","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased}
+.card{width:1242px;height:1660px;background:var(--surface);position:relative;overflow:hidden;padding:84px 80px 72px;display:flex;flex-direction:column}
+.card .brand{display:flex;justify-content:space-between;align-items:baseline;color:var(--muted);font-size:30px;font-weight:500;letter-spacing:.02em}
+.card .brand b{color:var(--ink);font-weight:650}
+.card h1{font-size:64px;line-height:1.15;margin:40px 0 10px;font-weight:650;letter-spacing:-.01em}
+.card .sub{font-size:30px;color:var(--ink-2);margin:0 0 36px;line-height:1.4}
+.card .foot{margin-top:auto;padding-top:28px;border-top:2px solid var(--grid);display:flex;justify-content:space-between;color:var(--muted);font-size:26px}
+.card .foot b{color:var(--ink-2);font-weight:500}
+.rows{display:flex;flex-direction:column}
+.row{display:grid;align-items:center;gap:24px;padding:18px 0;border-bottom:2px solid var(--grid);font-size:34px;line-height:1.3}
+.row:last-child{border-bottom:0}
+.row .n{color:var(--muted);font-size:28px;width:40px;text-align:right;font-variant-numeric:tabular-nums}
+.row .t{min-width:0}
+.row .t small{display:block;color:var(--muted);font-size:24px;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.row .p{font-weight:650;font-variant-numeric:tabular-nums;text-align:right;font-size:40px}
+.row .d{font-variant-numeric:tabular-nums;text-align:right;font-size:30px;color:var(--ink-2);white-space:nowrap}
+.bar{position:relative;height:18px;width:220px;border-radius:6px;background:var(--mid)}
+.bar::after{content:"";position:absolute;left:50%;top:-4px;bottom:-4px;width:2px;background:var(--axis)}
+.bar i{position:absolute;top:0;bottom:0}
+.bar i.up{left:50%;background:var(--up);border-radius:0 6px 6px 0}
+.bar i.down{right:50%;background:var(--down);border-radius:6px 0 0 6px}
+svg.spark{width:180px;height:56px;overflow:visible;display:block}
+.chip{display:inline-block;background:var(--chip);border-radius:10px;padding:4px 16px;font-size:26px;color:var(--ink-2);font-weight:600;white-space:nowrap}
+.chip.yes{color:var(--good)}
+.chip.lane{font-weight:500;font-size:24px;margin-right:12px}
+.delta{font-size:28px;color:var(--ink-2);margin-left:10px;font-variant-numeric:tabular-nums}
+.tag{display:inline-block;font-size:26px;color:var(--muted);border:2px solid var(--grid);border-radius:10px;padding:2px 14px;margin-left:12px;vertical-align:middle}
+/* cover */
+.cover h1{font-size:72px;margin-top:120px;min-height:260px}
+.cover .hero{margin-top:110px;padding:56px 0 0;border-top:4px solid var(--ink)}
+.cover .hero .v{font-size:176px;font-weight:700;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.cover .hero .l{font-size:36px;color:var(--ink-2);margin-top:28px;line-height:1.4}
+.cover .date{font-size:40px;color:var(--ink-2);margin-top:30px}
+.cover .foot{margin-top:0}
+.cover .big{position:absolute;right:-60px;top:-80px;font-size:520px;font-weight:800;color:var(--s1);opacity:.07;line-height:1;letter-spacing:-.05em;pointer-events:none}
+/* headline chart */
+.chart{margin-top:10px}
+.chart svg{width:1082px;height:700px;display:block;overflow:visible}
+.chart .cause{margin-top:34px;font-size:34px;line-height:1.5;color:var(--ink-2);padding:26px 32px;background:var(--mid);border-radius:18px}
+.chart .cause b{color:var(--ink)}
+.kpis{display:flex;gap:28px;margin:30px 0 0}
+.kpi{flex:1;padding:26px 30px;border:2px solid var(--grid);border-radius:18px}
+.kpi .l{font-size:26px;color:var(--muted)}
+.kpi .v{font-size:56px;font-weight:650;margin-top:6px;font-variant-numeric:tabular-nums}
+/* watch */
+.watch .row{grid-template-columns:1fr auto;padding:15px 0}
+.watch .leaders{display:flex;flex-direction:row;gap:34px;align-items:baseline;justify-content:flex-end}
+.watch .leaders span{font-size:30px;color:var(--ink-2);white-space:nowrap}
+.watch .leaders span b{color:var(--ink);font-size:36px;font-variant-numeric:tabular-nums;margin-left:12px}
+/* feed */
+.feed .row{grid-template-columns:120px 1fr;align-items:start;font-size:32px}
+.feed time{color:var(--muted);font-variant-numeric:tabular-nums;font-size:28px;padding-top:4px}
+/* gallery */
+.gallery{padding:28px;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:28px}
+.thumb{background:#fff;border-radius:14px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.thumb .frame{width:310px;height:414px;overflow:hidden;border-radius:8px;border:1px solid var(--grid)}
+.thumb .card{transform:scale(.2496);transform-origin:0 0}
+.thumb .cap{display:flex;justify-content:space-between;align-items:center;margin-top:10px;font-size:14px;color:var(--ink-2)}
+.thumb .cap a{color:var(--accent);text-decoration:none}
+.thumb .cap .off{color:var(--muted)}
+.ghead{padding:24px 28px 0;font-size:16px;color:var(--ink-2)}
+.ghead b{color:var(--ink)}
+body.single{background:#fff}
+body.single .card{margin:0}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+const q = new URLSearchParams(location.search);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const pct = x => x == null ? '—' : Math.round(x * 100) + '%';
+const pt = x => x == null ? '' : (x >= 0 ? '+' : '−') + Math.abs(Math.round(x * 100)) + 'pt';
+const usd = x => x >= 1e6 ? '$' + (x / 1e6).toFixed(1) + 'M' : x >= 1e3 ? '$' + Math.round(x / 1e3) + 'k' : '$' + Math.round(x);
+const NOISE = /price of \w+ be above|be above \$[\d,]+ on|Up or Down|temperature/i;
+const LANE_CN = { politics: '政经', finance: '财经', tech: '科技', culture: '文体', other: '其他', new: '新盘' };
+
+let L = {}; // Chinese overlay
+const label = s => L.labels?.[s] || s;
+const cnDate = d => { const [y, m, dd] = d.split('-'); return `${y} 年 ${+m} 月 ${+dd} 日`; };
+const shortDate = d => { const [, m, dd] = d.split('-'); return `${+m}/${+dd}`; };
+
+function brand(day, right) { return `<div class="brand"><span><b>Polymarket 日报</b> · ${esc(shortDate(day.date))}</span><span>${esc(right || '')}</span></div>`; }
+function foot(left, right) { return `<div class="foot"><span>${esc(left)}</span><span><b>${esc(right || '数据 Polymarket · 概率 = Yes 价格')}</b></span></div>`; }
+
+function divBar(ch, max) {
+  const w = Math.min(50, Math.abs(ch) / max * 50);
+  return `<div class="bar"><i class="${ch >= 0 ? 'up' : 'down'}" style="width:${w}%"></i></div>`;
+}
+function spark(pts, W = 180, H = 56) {
+  if (!pts || pts.length < 2) return `<svg class="spark" viewBox="0 0 ${W} ${H}"></svg>`;
+  const ys = pts.map(p => p[1]); const lo = Math.min(...ys), hi = Math.max(...ys), span = (hi - lo) || 0.01;
+  const xy = pts.map((p, i) => [i / (pts.length - 1) * W, H - 6 - (p[1] - lo) / span * (H - 12)]);
+  const d = xy.map((p, i) => (i ? 'L' : 'M') + p[0].toFixed(1) + ',' + p[1].toFixed(1)).join('');
+  const [ex, ey] = xy[xy.length - 1];
+  return `<svg class="spark" viewBox="0 0 ${W} ${H}"><path d="${d}" fill="none" stroke="var(--s1)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="${ex.toFixed(1)}" cy="${ey.toFixed(1)}" r="8" fill="var(--s1)" stroke="var(--surface)" stroke-width="4"/></svg>`;
+}
+
+// ---------- data shaping
+function officialTop(day, n = 8) {
+  const skip = new Set(L.skip || []);
+  const rows = Object.entries(day.official || {}).filter(([c]) => c !== 'culture').flatMap(([, ms]) => ms)
+    .filter(m => !skip.has(m.question) && !NOISE.test(m.question))
+    .sort((a, b) => Math.abs(b.change1d) - Math.abs(a.change1d));
+  const seen = new Set(), out = [];
+  for (const m of rows) { if (seen.has(m.question)) continue; seen.add(m.question); out.push(m); if (out.length >= n) break; }
+  return out;
+}
+function headlineMarket(day) {
+  const all = Object.values(day.official || {}).flat();
+  if (L.headlineQuestion) { const m = all.find(x => x.question === L.headlineQuestion); if (m) return m; }
+  return all.filter(m => (m.history7d || []).length >= 20).sort((a, b) => Math.abs(b.change1d) - Math.abs(a.change1d))[0] || officialTop(day, 1)[0];
+}
+function resolvedTop(day, n = 8) {
+  const seen = new Set();
+  return ['politics', 'finance', 'tech'].flatMap(c => day.categories[c].resolved).filter(r => !NOISE.test(r.question) && !seen.has(r.question) && seen.add(r.question))
+    .sort((a, b) => b.volume - a.volume).slice(0, n);
+}
+function newTop(day, n = 6) {
+  const posts = (day.feed || []).filter(p => p.kind === 'new').map(p => ({ title: p.text, leaders: [], official: true }));
+  const seen = new Set(posts.map(p => p.title));
+  const evs = ['politics', 'finance', 'tech'].flatMap(c => day.categories[c].new).filter(e => !NOISE.test(e.title) && !seen.has(e.title) && seen.add(e.title));
+  return posts.concat(evs).slice(0, n);
+}
+function feedTop(day, n = 10) {
+  return (day.feed || []).filter(p => p.kind !== 'new' && p.lane !== 'other').slice(0, n);
+}
+
+// ---------- cards
+const CARDS = {
+  cover(day) {
+    const hero = L.hero || (() => { const m = officialTop(day, 1)[0]; return m ? { value: pt(m.change1d), label: label(m.question) } : { value: '—', label: '' }; })();
+    const headline = L.headline || day.digestHeadline || '';
+    return `<section class="card cover"><div class="big">${esc(shortDate(day.date).replace('/', '.'))}</div>${brand(day, '每日 08:00')}
+      <div class="date">${esc(cnDate(day.date))}</div>
+      <h1>${esc(headline)}</h1>
+      <div class="hero"><div class="v">${esc(hero.value)}</div><div class="l">${esc(hero.label)}</div></div>
+      <div class="kpis" style="margin-top:auto;margin-bottom:28px">
+        <div class="kpi"><div class="l">变动 ≥10pt</div><div class="v">${officialTop(day, 60).filter(m => Math.abs(m.change1d) >= 0.10).length} 个</div></div>
+        <div class="kpi"><div class="l">昨日结算</div><div class="v">${resolvedTop(day, 50).length} 个</div></div>
+        <div class="kpi"><div class="l">万元大单</div><div class="v">${(day.whales || []).length} 笔</div></div>
+      </div>
+      ${foot('预测市场里的今日世界', '数据 Polymarket · 每天北京时间 08:00 更新')}</section>`;
+  },
+  headline(day) {
+    const m = headlineMarket(day);
+    if (!m) return '';
+    const pts = (m.history7d && m.history7d.length >= 2) ? m.history7d : (m.sparkline || []);
+    const W = 1082, H = 700, padL = 110, padR = 40, padT = 40, padB = 70;
+    const x0 = pts[0][0], x1 = pts[pts.length - 1][0];
+    const X = t => padL + (t - x0) / ((x1 - x0) || 1) * (W - padL - padR);
+    const Y = p => padT + (1 - p) * (H - padT - padB);
+    const path = pts.map((p, i) => (i ? 'L' : 'M') + X(p[0]).toFixed(1) + ',' + Y(p[1]).toFixed(1)).join('');
+    const area = path + `L${X(x1).toFixed(1)},${Y(0).toFixed(1)}L${X(x0).toFixed(1)},${Y(0).toFixed(1)}Z`;
+    // biggest single step = the jump to annotate
+    let jump = 0, ji = 1;
+    for (let i = 1; i < pts.length; i++) { const d = Math.abs(pts[i][1] - pts[i - 1][1]); if (d > jump) { jump = d; ji = i; } }
+    const days = []; for (let t = x0; t <= x1; t += 86400) days.push(t);
+    const ticks = days.filter((_, i) => i % Math.ceil(days.length / 7) === 0);
+    const fmt = t => { const d = new Date(t * 1000); return `${d.getMonth() + 1}/${d.getDate()}`; };
+    const last = pts[pts.length - 1][1], first = pts[0][1];
+    const svg = `<svg viewBox="0 0 ${W} ${H}">
+      ${[0, .25, .5, .75, 1].map(v => `<line x1="${padL}" x2="${W - padR}" y1="${Y(v)}" y2="${Y(v)}" stroke="var(--grid)" stroke-width="2"/><text x="${padL - 18}" y="${Y(v) + 10}" text-anchor="end" font-size="26" fill="var(--muted)">${v * 100}%</text>`).join('')}
+      ${ticks.map(t => `<text x="${X(t)}" y="${H - 22}" text-anchor="middle" font-size="26" fill="var(--muted)">${fmt(t)}</text>`).join('')}
+      <path d="${area}" fill="var(--s1-wash)"/>
+      <path d="${path}" fill="none" stroke="var(--s1)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+      ${jump >= 0.05 ? `<line x1="${X(pts[ji][0])}" x2="${X(pts[ji][0])}" y1="${padT}" y2="${Y(0)}" stroke="var(--axis)" stroke-width="2" stroke-dasharray="0"/>` : ''}
+      <circle cx="${X(x1)}" cy="${Y(last)}" r="12" fill="var(--s1)" stroke="var(--surface)" stroke-width="5"/>
+      <text x="${Math.min(X(x1), W - padR - 90)}" y="${Y(last) - 26}" text-anchor="middle" font-size="40" font-weight="700" fill="var(--ink)">${pct(last)}</text>
+      <text x="${X(x0) + 8}" y="${Y(first) - 20}" font-size="28" font-weight="600" fill="var(--ink-2)" style="paint-order:stroke" stroke="var(--surface)" stroke-width="8">${pct(first)}</text>
+    </svg>`;
+    return `<section class="card chart">${brand(day, '今日头条')}
+      <h1>${esc(L.headlineTitle || label(m.question))}</h1>
+      <p class="sub">${esc(m.question)}</p>
+      ${svg}
+      <div class="kpis"><div class="kpi"><div class="l">现在</div><div class="v">${pct(m.yes)}</div></div><div class="kpi"><div class="l">24 小时</div><div class="v">${pt(m.change1d)}</div></div><div class="kpi"><div class="l">7 天前</div><div class="v">${pct(first)}</div></div></div>
+      ${L.headlineCause ? `<div class="cause"><b>为什么：</b>${esc(L.headlineCause)}</div>` : ''}
+      ${foot('近 7 天 Yes 概率', m.closed ? '已结算' : '未结算')}</section>`;
+  },
+  breaking(day) {
+    const rows = officialTop(day, 8);
+    const max = Math.max(...rows.map(m => Math.abs(m.change1d)));
+    return `<section class="card">${brand(day, '突发榜')}
+      <h1>今天概率变得最厉害的市场</h1><p class="sub">官方 Breaking 榜 · 过去 24 小时 · 已剔除无信息量的档位</p>
+      <div class="rows">${rows.map((m, i) => `<div class="row" style="grid-template-columns:40px 1fr 110px 220px 180px">
+        <div class="n">${i + 1}</div>
+        <div class="t">${esc(label(m.question))}${m.closed ? '<span class="tag">已结算</span>' : ''}${L.labels?.[m.question] ? `<small>${esc(m.question)}</small>` : ''}</div>
+        <div class="p">${pct(m.yes)}</div>
+        <div><div class="d" style="text-align:left;margin-bottom:6px">${pt(m.change1d)}</div>${divBar(m.change1d, max)}</div>
+        <div>${spark(m.sparkline)}</div></div>`).join('')}</div>
+      ${foot('变动条 = 24 小时概率变化 · 走势 = 24 小时')}</section>`;
+  },
+  watch(day) {
+    const rows = (day.watchlist || []).slice(0, 10);
+    return `<section class="card watch">${brand(day, '长期盘')}
+      <h1>长期盘今天怎么看</h1><p class="sub">固定关注池 · 每天都在 · 括号为 24 小时变动</p>
+      <div class="rows">${rows.map(e => `<div class="row"><div class="t">${esc(e.note || e.title)}<small>${esc(e.title)}</small></div>
+        <div class="leaders">${e.leaders.slice(0, 2).map(l => `<span>${esc(l.label)}<b>${pct(l.yes)}</b>${l.change1d && Math.abs(l.change1d) >= 0.005 ? `<em class="delta" style="font-style:normal">${pt(l.change1d)}</em>` : ''}</span>`).join('')}</div></div>`).join('')}</div>
+      ${foot('领先的两个选项')}</section>`;
+  },
+  whales(day) {
+    const rows = (day.whales || []).slice(0, 7);
+    return `<section class="card">${brand(day, '大单')}
+      <h1>今天谁押得最重</h1><p class="sub">单笔 ≥ $10k · 过去 24 小时 · 仅时政 / 金融 / 科技</p>
+      <div class="rows">${rows.map(w => `<div class="row" style="grid-template-columns:150px 1fr">
+        <div class="p" style="text-align:left">${usd(w.usd)}</div>
+        <div class="t"><span class="chip ${w.side === 'BUY' ? '' : ''}">${w.side === 'BUY' ? '买入' : '卖出'} ${esc(w.outcome)} @${w.price.toFixed(2)}</span> ${esc(label(w.title))}<small>${esc(w.trader)}${L.labels?.[w.title] ? ' · ' + esc(w.title) : ''}</small></div></div>`).join('')}</div>
+      ${foot('金额 = 份数 × 价格')}</section>`;
+  },
+  resolved(day) {
+    const rows = resolvedTop(day, 8);
+    return `<section class="card">${brand(day, '结算')}
+      <h1>昨天出了结果的问题</h1><p class="sub">过去 36 小时结算 · 按成交量</p>
+      <div class="rows">${rows.map(r => `<div class="row" style="grid-template-columns:110px 1fr 140px">
+        <div><span class="chip ${/^yes$/i.test(r.result) ? 'yes' : ''}">${esc(r.result)}</span></div>
+        <div class="t">${esc(label(r.question))}${L.labels?.[r.question] ? `<small>${esc(r.question)}</small>` : ''}</div>
+        <div class="d">${usd(r.volume)}</div></div>`).join('')}</div>
+      ${foot('Yes / No = 最终归一的选项')}</section>`;
+  },
+  new(day) {
+    const rows = newTop(day, 6);
+    return `<section class="card">${brand(day, '新盘')}
+      <h1>今天新开的盘</h1><p class="sub">官方公告 + 过去 24 小时新上线 · 首日概率</p>
+      <div class="rows">${rows.map(e => `<div class="row" style="grid-template-columns:1fr">
+        <div class="t">${esc(label(e.title))}${e.official ? '<span class="tag">官方公告</span>' : ''}${e.leaders && e.leaders.length ? `<small style="white-space:normal">${e.leaders.slice(0, 3).map(l => `${esc(l.label)} ${pct(l.yes)}`).join(' · ')}</small>` : ''}</div></div>`).join('')}</div>
+      ${foot('新市场往往就是新闻本身')}</section>`;
+  },
+  feed(day) {
+    const rows = feedTop(day, 10);
+    return `<section class="card feed">${brand(day, '快讯')}
+      <h1>@Polymarket 今天说了什么</h1><p class="sub">官方 X 账号 · 北京时间 · 正文没放下的</p>
+      <div class="rows">${rows.map(p => `<div class="row"><time>${esc(p.time.slice(6))}</time><div class="t"><span class="chip lane">${esc(LANE_CN[p.lane] || p.lane)}</span>${esc(L.feedLabels?.[p.id] || p.text)}</div></div>`).join('')}</div>
+      ${foot('来源 x.com/polymarket')}</section>`;
+  },
+};
+const ORDER = [['cover', '封面', 1], ['headline', '头条走势', 1], ['breaking', '突发榜', 1], ['watch', '长期盘', 1], ['whales', '大单', 0], ['resolved', '结算', 0], ['new', '新盘', 0], ['feed', '快讯', 0]];
+// floating cards: show only when they have enough content
+function eligible(key, day) {
+  if (key === 'whales') { const w = day.whales || []; return w.length >= 4 && w[0].usd >= 50000; }
+  if (key === 'resolved') return resolvedTop(day).length >= 3;
+  if (key === 'new') return newTop(day).length >= 3;
+  if (key === 'feed') return feedTop(day).length >= 6;
+  return true;
+}
+
+(async () => {
+  const idx = await fetch('data/index.json', { cache: 'no-store' }).then(r => r.json());
+  const date = idx.dates.includes(q.get('date')) ? q.get('date') : idx.latest;
+  const [day, md, overlay] = await Promise.all([
+    fetch(`data/${date}.json`, { cache: 'no-store' }).then(r => r.json()),
+    fetch(`reports/${date}.md`, { cache: 'no-store' }).then(r => r.ok ? r.text() : '').catch(() => ''),
+    fetch(`reports/${date}.cards.json`, { cache: 'no-store' }).then(r => r.ok ? r.json() : {}).catch(() => ({})),
+  ]);
+  L = overlay || {};
+  const m = md.match(/\*\*一句话\*\*[：:]\s*(.+)/); if (m) day.digestHeadline = m[1].trim();
+  const root = document.getElementById('root');
+  const card = q.get('card');
+  // Fixed-size cards: if a list does not fit, drop rows from the bottom (never shrink type).
+  const fit = () => document.querySelectorAll('.card').forEach(c => {
+    const rows = c.querySelector('.rows'); if (!rows) return;
+    let guard = 40;
+    while (c.scrollHeight > c.offsetHeight && rows.children.length > 3 && guard--) rows.removeChild(rows.lastElementChild);
+  });
+  if (card && CARDS[card]) { document.body.classList.add('single'); root.innerHTML = CARDS[card](day); document.title = `卡片 · ${card} · ${date}`; fit(); return; }
+  const on = ORDER.filter(([k, , fixed]) => fixed || eligible(k, day));
+  root.innerHTML = `<div class="ghead"><b>${esc(date)}</b> · ${on.length} 张会出：${on.map(o => o[1]).join('、')}。灰色标注的是今天不满足入场条件的浮动卡。单击"单张"得到 1242×1660 原图。</div>
+    <div class="gallery">${ORDER.map(([k, name, fixed], i) => `<div class="thumb"><div class="frame">${CARDS[k](day)}</div><div class="cap"><span>${i + 1}. ${esc(name)} ${fixed ? '' : (eligible(k, day) ? '' : '<span class="off">· 今天不出</span>')}</span><a href="?date=${date}&card=${k}" target="_blank">单张</a></div></div>`).join('')}</div>`;
+  fit();
+})();
+</script>
+</body>
+</html>

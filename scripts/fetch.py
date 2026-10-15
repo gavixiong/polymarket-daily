@@ -429,6 +429,12 @@ def fetch_official_movers() -> dict[str, list[dict]]:
             ev = (m.get("events") or [{}])[0]
             hist = m.get("history") or []
             step = max(1, len(hist) // 24)
+            raw_ids = m.get("clobTokenIds") or []
+            try:
+                ids = json.loads(raw_ids) if isinstance(raw_ids, str) else list(raw_ids)
+            except (ValueError, TypeError):
+                ids = []
+            token = str(ids[0]) if ids else None
             items.append({
                 "question": m.get("question"),
                 "yes": m.get("currentPrice"),
@@ -437,8 +443,21 @@ def fetch_official_movers() -> dict[str, list[dict]]:
                 "eventSlug": ev.get("slug"),
                 "url": f"https://polymarket.com/event/{ev.get('slug')}" if ev.get("slug") else None,
                 "sparkline": [[h["t"], round(h["p"], 3)] for h in hist[::step]],
+                "yesTokenId": token,
             })
         out[cat] = items
+    # 7-day history for the three biggest moves outside culture: feeds the headline chart card
+    top = sorted((m for c, ms in out.items() if c != "culture" for m in ms),
+                 key=lambda m: abs(m["change1d"] or 0), reverse=True)
+    seen = set()
+    for m in top:
+        if m["question"] in seen or not m.get("yesTokenId"):
+            continue
+        seen.add(m["question"])
+        d = get(f"{CLOB}/prices-history", {"market": m["yesTokenId"], "interval": "1w", "fidelity": 120})
+        m["history7d"] = [[h["t"], round(h["p"], 3)] for h in ((d or {}).get("history") or [])]
+        if len(seen) >= 3:
+            break
     return out
 
 
