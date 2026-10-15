@@ -104,7 +104,18 @@ svg.spark{display:block;width:96px;height:26px;overflow:visible}
 footer{margin-top:36px;color:var(--muted);font-size:12.5px;line-height:1.7}
 .empty{color:var(--muted);font-size:13.5px;padding:6px 0}
 h2.sec{font-size:17px;margin:30px 0 12px;font-weight:650}
-.src{color:var(--muted);font-size:12.5px}
+.src{color:var(--muted);font-size:12.5px;font-weight:400}
+.subtabs{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+.subtabs button{border-radius:999px;padding:4px 12px;font-size:13px}
+.subtabs button[aria-selected="true"]{background:var(--ink);color:var(--page);border-color:var(--ink)}
+.feed{list-style:none;margin:0;padding:0}
+.feed li{display:grid;grid-template-columns:52px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid var(--grid);font-size:14px;line-height:1.5}
+.feed li:last-child{border-bottom:0}
+.feed time{color:var(--muted);font-variant-numeric:tabular-nums;font-size:12.5px;padding-top:2px}
+.feed .lane{display:inline-block;font-size:11px;color:var(--ink-2);background:var(--chip);border-radius:4px;padding:0 6px;margin-right:6px;vertical-align:1px}
+.feed .odds{color:var(--good);font-weight:600}
+.closedtag{font-size:11px;color:var(--ink-2);background:var(--chip);border-radius:4px;padding:0 6px;margin-left:6px}
+.column{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:13.5px;color:var(--ink-2)}
 </style>
 </head>
 <body>
@@ -122,7 +133,17 @@ h2.sec{font-size:17px;margin:30px 0 12px;font-weight:650}
     <div class="tiles" id="tiles"></div>
   </div>
 
-  <div class="tabs" role="tablist" id="tabs"></div>
+  <h2 class="sec">官方突发榜 <span class="src">polymarket.com/breaking · 过去 24 小时变动最大</span></h2>
+  <div class="subtabs" id="offtabs"></div>
+  <div class="card scroll" id="official"></div>
+
+  <h2 class="sec">快讯 <span class="src">@Polymarket 过去 24 小时 · 按道分组（关键词粗分，日报里由模型重新归道）</span></h2>
+  <div class="subtabs" id="lanetabs"></div>
+  <div class="card" id="feed"></div>
+  <div class="column" id="column" style="margin-top:10px"></div>
+
+  <h2 class="sec">三类市场 <span class="src">自算：变动 · 热门 · 新上线 · 刚结算</span></h2>
+  <div class="tabs" role="tablist" id="tabs" style="margin-top:0"></div>
   <div id="panels"></div>
 
   <h2 class="sec">大单追踪 <span class="src">单笔 ≥ $10k · 过去 24 小时 · 仅时政/金融/科技</span></h2>
@@ -221,7 +242,47 @@ function renderWatch(wl) {
     e.leaders.map(l => `<div class="wl"><span>${esc(l.label)}</span><span><b>${pct(l.yes)}</b>${l.change1d && Math.abs(l.change1d) >= 0.005 ? `<small>${pt(l.change1d)}</small>` : ''}</span></div>`).join('')}</article>`).join('');
 }
 
+const OFF_GROUPS = [['politics', '时政与全球', ['politics', 'world']], ['finance', '金融与加密', ['finance', 'crypto']], ['tech', '科技', ['tech']], ['culture', '文化体育', ['culture']]];
+function renderOfficial(off, group) {
+  const g = OFF_GROUPS.find(x => x[0] === group);
+  const seen = new Set(), rows = [];
+  g[2].flatMap(c => off[c] || []).sort((a, b) => Math.abs(b.change1d) - Math.abs(a.change1d)).forEach(m => {
+    if (seen.has(m.question)) return; seen.add(m.question); rows.push(m);
+  });
+  if (!rows.length) return '<p class="empty">今日此组为空。</p>';
+  const max = Math.max(...rows.map(m => Math.abs(m.change1d)));
+  return `<table><thead><tr><th>市场</th><th>现在</th><th>24h 变动</th><th></th><th>24h 走势</th></tr></thead><tbody>${rows.map(m => `<tr>
+    <td>${m.url ? `<a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.question)}</a>` : esc(m.question)}${m.closed ? '<span class="closedtag">已结算</span>' : ''}</td>
+    <td class="num"><b>${pct(m.yes)}</b></td>
+    <td class="num">${pt(m.change1d)}</td>
+    <td>${divBar(m.change1d, max)}</td>
+    <td>${spark(m.sparkline)}</td></tr>`).join('')}</tbody></table>`;
+}
+const LANES = [['all', '全部'], ['politics', '政经'], ['finance', '财经'], ['tech', '科技'], ['culture', '文体'], ['other', '猎奇与其他'], ['new', '新盘公告']];
+function renderFeed(feed, lane) {
+  const rows = feed.filter(p => lane === 'all' || p.lane === lane);
+  if (!rows.length) return '<p class="empty">这一道过去 24 小时没有内容。</p>';
+  const label = Object.fromEntries(LANES);
+  return `<ul class="feed">${rows.map(p => `<li><time>${esc(p.time.slice(6))}</time><div>${lane === 'all' ? `<span class="lane">${esc(label[p.lane] || p.lane)}</span>` : ''}<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.text).replace(/(\d+% chance)/i, '<span class="odds">$1</span>')}</a></div></li>`).join('')}</ul>`;
+}
+function renderColumn(col) {
+  if (!col || !col.length) return '';
+  return `<span>Polymarket 专栏最近：</span>${col.slice(0, 3).map(c => `<a href="${esc(c.link)}" target="_blank" rel="noopener">${esc(c.date)} · ${esc(c.title)}${c.fresh ? ' <b>新</b>' : ''}</a>`).join('')}`;
+}
+function subtabs(el, items, onPick, initial) {
+  el.innerHTML = items.map(([k, l, n]) => `<button data-k="${k}" aria-selected="${k === initial}">${esc(l)}${n != null ? ` <small>${n}</small>` : ''}</button>`).join('');
+  el.querySelectorAll('button').forEach(b => b.onclick = () => {
+    el.querySelectorAll('button').forEach(x => x.setAttribute('aria-selected', x === b));
+    onPick(b.dataset.k);
+  });
+  onPick(initial);
+}
+
 function render(day, md) {
+  const off = day.official || {}, feed = day.feed || [];
+  subtabs($('#offtabs'), OFF_GROUPS.map(g => [g[0], g[1], new Set(g[2].flatMap(c => (off[c] || []).map(m => m.question))).size]), k => { $('#official').innerHTML = renderOfficial(off, k); }, 'politics');
+  subtabs($('#lanetabs'), LANES.map(([k, l]) => [k, l, k === 'all' ? feed.length : feed.filter(p => p.lane === k).length]), k => { $('#feed').innerHTML = renderFeed(feed, k); }, 'all');
+  $('#column').innerHTML = renderColumn(day.column);
   $('#gen').textContent = `生成于 ${day.generatedAt}`;
   // digest
   const dg = $('#digest');

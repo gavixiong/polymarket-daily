@@ -121,3 +121,13 @@ GET /holders?market=<conditionId>&limit=10
 | 大单追踪 | Data API `filterAmount=10000` | 过去 24h，排除体育 |
 | 临近结算 | Gamma `endDate` | 未来 7 天到期且仍有争议（price 0.2~0.8） |
 | 固定关注池 | 手动维护 event slug 列表 | Fed、美国大选、中美、AI 公司等，每天固定报概率 |
+
+## 6. 官网非公开接口（2026-10-16 补充，需浏览器 User-Agent）
+
+| 接口 | 返回 | 备注 |
+|---|---|---|
+| `GET https://polymarket.com/api/biggest-movers?locale=en&category=<politics\|world\|finance\|tech\|crypto\|culture>` | `{"markets":[{question,currentPrice,oneDayPriceChange,closed,events[{slug}],history[47 点],clobTokenIds}]}` | 就是 polymarket.com/breaking 页面的数据。含刚结算跳到 100% 的市场。不带 category 时返回全站前 25 |
+| `GET https://polymarket.com/breaking`（HTML） | 页面内嵌 @Polymarket 过去约 24 小时的 X 帖子：`<a href="https://x.com/polymarket/status/<id>">`，含 "Breaking news" / "New polymarket" 两种类型、UTC 时间、正文、配图 | 没有 JSON 接口；正则见 `scripts/fetch.py` 的 `_POST_RE`。实测一天约 66 条，63 条快讯 + 3 条新盘，只有 1 条带概率 |
+| `GET https://news.polymarket.com/feed` | 标准 RSS，Polymarket 专栏，约每周 2 篇 | pubDate 带 `GMT` 后缀，`%z` 解析前要替换成 `+0000` |
+
+首页"热门"列表翻页请求实测为 `gamma-api.polymarket.com/events/keyset?order=volume24hr&ascending=false`，即纯 24 小时成交量倒序；首屏精选与"中期选举焦点"卡片是编辑置顶。

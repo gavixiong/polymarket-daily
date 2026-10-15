@@ -11,7 +11,16 @@ Claude Code 定时任务（云端，每天 00:00 UTC）
    └─ git commit && git push        → GitHub Pages 自动更新 index.html
 ```
 
-数据全部来自 Polymarket 的三个公开接口（Gamma、CLOB、Data API），不需要 API key，不需要钱包。接口说明、标签 ID 和已知坑见 [docs/api-research.md](docs/api-research.md)。
+数据来源，全部无需 API key：
+
+| 来源 | 用途 |
+|---|---|
+| Gamma / CLOB / Data API（公开接口） | 市场、概率、成交量、走势、大单、持仓 |
+| `polymarket.com/api/biggest-movers?category=` | 官方"Breaking"突发榜，按类别，含 24h 走势 |
+| `polymarket.com/breaking` 页面内嵌的 @Polymarket X 镜像 | 官方 X 快讯（约 60 条/天）与新盘公告，脚本按关键词粗分为政经 / 科技 / 文体 / 其他 |
+| `news.polymarket.com/feed` | Polymarket 自己的专栏 RSS |
+
+接口说明、标签 ID 和已知坑见 [docs/api-research.md](docs/api-research.md)。日报结构与写作规则见 [ROUTINE.md](ROUTINE.md)。
 
 ## 本地运行
 

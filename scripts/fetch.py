@@ -10,6 +10,7 @@ Outputs:
 """
 from __future__ import annotations
 
+import html
 import json
 import re
 import sys
@@ -27,6 +28,61 @@ CONFIG = ROOT / "config" / "watchlist.json"
 GAMMA = "https://gamma-api.polymarket.com"
 CLOB = "https://clob.polymarket.com"
 DATA_API = "https://data-api.polymarket.com"
+SITE = "https://polymarket.com"  # un-documented site endpoints: /api/biggest-movers, /breaking (X feed mirror)
+NEWS_RSS = "https://news.polymarket.com/feed"
+
+API_UA = "polymarket-daily-digest/1.0"
+BROWSER_UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
+              "(KHTML, like Gecko) Chrome/127.0 Safari/537.36")
+
+# Official "Breaking" board categories -> our digest group
+OFFICIAL_CATEGORIES = {
+    "politics": "politics", "world": "politics",
+    "finance": "finance", "crypto": "finance",
+    "tech": "tech", "culture": "culture",
+}
+
+# Lanes for the @Polymarket X feed (keyword first-match, order matters).
+# This is a coarse pass for the dashboard filter; the digest writer re-curates by hand.
+def _kw(*words: str) -> re.Pattern:
+    """Whole-word, case-insensitive alternation ("NFL" must not match "coNFLict")."""
+    return re.compile(r"\b(?:" + "|".join(words) + r")\b", re.I)
+
+
+LANES = [
+    ("other", _kw(
+        "smuggl\\w*", "poison\\w*", "snakes?", "lizards?", "manure", "hazmat", "Animal of the Year", "cognitive test",
+        "freaking genius", "toothbrush", "curry", "bizarre", "weird", "viral", "prank", "zoo", "sharks?", "alligators?",
+        "bears?", "UFO", "aliens?", "salmon", "byproducts")),
+    ("culture", _kw(
+        "NFL", "NBA", "MLB", "NHL", "FIFA", "World Cup", "Super Bowl", "soccer", "football", "basketball", "tennis",
+        "golf", "Olympics?", "UFC", "boxing", "coach", "quarterback", "Ballon d'Or", "Grammys?", "Oscars?", "Emmys?",
+        "box office", "movie", "film", "trailer", "album", "Spotify", "concert", "MrBeast", "YouTube", "streamer",
+        "celebrity", "Taylor Swift", "Rihanna", "Kardashian", "Netflix", "Rotten Tomatoes", "GTA", "video game",
+        "Nintendo", "PlayStation", "Xbox", "Pokémon", "documentary", "49ers", "Cowboys", "Lakers", "Yankees")),
+    ("tech", _kw(
+        "AI", "OpenAI", "Anthropic", "Claude", "Gemini", "Google", "Apple", "iPhone", "Microsoft", "Nvidia", "Tesla",
+        "SpaceX", "Starship", "xAI", "Grok", "Musk", "Amazon", "Meta", "TikTok", "robots?", "chips?", "semiconductors?",
+        "smartphones?", "software", "apps?", "startups?", "data centers?", "GPUs?", "Walkman", "Sony", "Samsung",
+        "Intel", "AMD", "crypto", "Bitcoin", "Ethereum", "tokens?", "blockchain", "quantum", "wearables?")),
+    ("finance", _kw(
+        "Fed", "Federal Reserve", "Powell", "Warsh", "rates?", "inflation", "CPI", "PPI", "GDP", "jobs report",
+        "unemployment", "Treasury", "yields?", "bonds?", "stocks?", "S&P", "Nasdaq", "Dow", "market cap", "IPO",
+        "earnings", "revenue", "banks?", "tariffs?", "oil", "OPEC", "gold", "dollar", "billion", "trillion",
+        "recession", "economy", "economic", "trade deal", "shipments", "layoffs", "producer prices", "merger",
+        "prices?", "gas prices")),
+    ("politics", _kw(
+        "Trump", "White House", "Congress", "Senate", "House", "Democrats?", "Democratic", "Republicans?", "GOP",
+        "elections?", "votes?", "voters?", "polls?", "governor", "mayor", "president", "prime minister", "minister",
+        "parliament", "government", "FBI", "DOJ", "Supreme Court", "court", "judge", "indict\\w*", "charged",
+        "charges", "sanctions?", "ceasefire", "war", "military", "missiles?", "strikes?", "troops", "soldiers",
+        "Iran", "Israel", "Gaza", "Hamas", "Houthis?", "Yemen", "Russia", "Ukraine", "Putin", "Zelensky", "China",
+        "Xi", "Taiwan", "North Korea", "Kim Jong Un", "Venezuela", "Maduro", "Brazil", "Lula", "Bolsonaro",
+        "Mexico", "Canada", "UK", "France", "Germany", "EU", "NATO", "UN", "immigration", "ICE", "border",
+        "pardon", "impeach\\w*", "Pentagon", "Secretary", "Chief of Staff", "Press Secretary", "midterms?",
+        "campaign", "Obama", "Harris", "Biden", "Navy", "police", "arrests?")),
+]
+LANE_LABELS = {"politics": "政经", "finance": "政经", "tech": "科技", "culture": "文体", "other": "猎奇与其他", "new": "新盘公告"}
 
 TZ = timezone(timedelta(hours=8))  # Asia/Shanghai, no tzdata dependency
 
@@ -44,7 +100,8 @@ NOISE = re.compile(
     r"dozen eggs|Week of|first half|second half|halftime|\(BO\d\)|"
     # short-dated price ladders: "Bitcoin above ___ on October 15?", "price on October 15?",
     # "hit October 12-18?", "closes above ___ on October 15?"
-    r"above ___ on|price on \w+ \d{1,2}\??$|hit on \w+ \d{1,2}\??$|hit \w+ \d{1,2}-\d{1,2}|closes above ___ on",
+    r"above ___ on|price on \w+ \d{1,2}\??$|hit on \w+ \d{1,2}\??$|hit \w+ \d{1,2}-\d{1,2}|closes above ___ on|"
+    r"price of \w+ be above|be above \$[\d,]+ on",
     re.IGNORECASE,
 )
 
@@ -65,17 +122,18 @@ _session_requests = 0
 
 
 # ----------------------------------------------------------------------------- http
-def get(url: str, params: dict | None = None, retries: int = 3):
+def get(url: str, params: dict | None = None, retries: int = 3, ua: str = API_UA, raw: bool = False):
     global _session_requests
     if params:
         url = url + "?" + urllib.parse.urlencode(params)
     for attempt in range(retries):
         try:
-            req = urllib.request.Request(url, headers={"User-Agent": "polymarket-daily-digest/1.0"})
+            req = urllib.request.Request(url, headers={"User-Agent": ua, "Accept": "text/html,application/json"})
             with urllib.request.urlopen(req, timeout=30) as r:
                 _session_requests += 1
                 time.sleep(0.2)
-                return json.loads(r.read().decode())
+                body = r.read().decode("utf-8", errors="ignore")
+                return body if raw else json.loads(body)
         except (urllib.error.URLError, TimeoutError, json.JSONDecodeError) as e:
             if attempt == retries - 1:
                 print(f"[warn] giving up on {url}: {e}", file=sys.stderr)
@@ -357,6 +415,102 @@ def strip(e: dict) -> dict:
     return {k: v for k, v in e.items() if not k.startswith("_")}
 
 
+# ----------------------------------------------------------------------------- official breaking board
+def fetch_official_movers() -> dict[str, list[dict]]:
+    """Polymarket's own 'Breaking' board (polymarket.com/breaking), per category."""
+    out: dict[str, list[dict]] = {}
+    for cat in OFFICIAL_CATEGORIES:
+        d = get(f"{SITE}/api/biggest-movers", {"locale": "en", "category": cat}, ua=BROWSER_UA)
+        rows = (d or {}).get("markets") or []
+        items = []
+        for m in rows:
+            if is_noise(m.get("question")):
+                continue
+            ev = (m.get("events") or [{}])[0]
+            hist = m.get("history") or []
+            step = max(1, len(hist) // 24)
+            items.append({
+                "question": m.get("question"),
+                "yes": m.get("currentPrice"),
+                "change1d": m.get("oneDayPriceChange"),
+                "closed": bool(m.get("closed")),
+                "eventSlug": ev.get("slug"),
+                "url": f"https://polymarket.com/event/{ev.get('slug')}" if ev.get("slug") else None,
+                "sparkline": [[h["t"], round(h["p"], 3)] for h in hist[::step]],
+            })
+        out[cat] = items
+    return out
+
+
+# ----------------------------------------------------------------------------- @Polymarket X feed (mirror on /breaking)
+_POST_RE = re.compile(
+    r'<a href="https://x\.com/polymarket/status/(\d+)"[^>]*>.*?font-medium">([^<]*)</p>'
+    r'<div class="text-body-sm text-pk-content-secondary">([^<]*)</div>.*?break-words">(.*?)</p>',
+    re.S,
+)
+
+
+def lane_for(text: str) -> str:
+    for lane, rx in LANES:
+        if rx.search(text):
+            return lane
+    return "other"
+
+
+def fetch_x_feed(now: datetime) -> list[dict]:
+    html_doc = get(f"{SITE}/breaking", ua=BROWSER_UA, raw=True) or ""
+    posts = []
+    for pid, kind, ts, body in _POST_RE.findall(html_doc):
+        text = html.unescape(html.unescape(re.sub(r"<[^>]+>", "", body))).strip()  # source is double-escaped
+        text = re.sub(r"\s*\n\s*", " / ", text)
+        # SSR timestamps are UTC, e.g. "Oct 15, 4:23 PM"; year is the current one
+        when = None
+        try:
+            when = datetime.strptime(f"{ts.strip()} {now.year}", "%b %d, %I:%M %p %Y").replace(tzinfo=timezone.utc)
+        except ValueError:
+            pass
+        if when and when > now + timedelta(days=1):  # year rollover
+            when = when.replace(year=now.year - 1)
+        if when and when < now - timedelta(hours=LOOKBACK_H + 2):
+            continue
+        is_new = kind.lower().startswith("new")
+        posts.append({
+            "id": pid,
+            "url": f"https://x.com/polymarket/status/{pid}",
+            "kind": "new" if is_new else "breaking",
+            "lane": "new" if is_new else lane_for(text),
+            "time": when.astimezone(TZ).strftime("%m-%d %H:%M") if when else ts,
+            "timestamp": int(when.timestamp()) if when else None,
+            "text": text,
+            "odds": bool(re.search(r"\d+%\s*chance", text, re.I)),
+        })
+    posts.sort(key=lambda p: p["timestamp"] or 0, reverse=True)
+    return posts
+
+
+# ----------------------------------------------------------------------------- Polymarket's own column (RSS)
+def fetch_column(now: datetime) -> list[dict]:
+    xml = get(NEWS_RSS, ua=BROWSER_UA, raw=True) or ""
+    out = []
+    for item in re.findall(r"<item>(.*?)</item>", xml, re.S)[:5]:
+        def grab(tag):
+            m = re.search(rf"<{tag}>(?:<!\[CDATA\[)?(.*?)(?:\]\]>)?</{tag}>", item, re.S)
+            return html.unescape(m.group(1).strip()) if m else None
+        pub = grab("pubDate")
+        try:
+            when = datetime.strptime(pub.replace(" GMT", " +0000"), "%a, %d %b %Y %H:%M:%S %z") if pub else None
+        except ValueError:
+            when = None
+        out.append({
+            "title": grab("title"),
+            "link": grab("link"),
+            "date": when.astimezone(TZ).strftime("%Y-%m-%d") if when else pub,
+            "fresh": bool(when and when > now - timedelta(hours=LOOKBACK_H + 2)),
+            "summary": re.sub(r"<[^>]+>", "", grab("description") or "")[:200],
+        })
+    return out
+
+
 # ----------------------------------------------------------------------------- summary
 def pct(x) -> str:
     return "—" if x is None else f"{x * 100:.0f}%"
@@ -376,6 +530,44 @@ def usd(x: float) -> str:
 
 def text_summary(day: dict) -> str:
     L = [f"# Polymarket 数据摘要 {day['date']}（生成于 {day['generatedAt']}）", ""]
+
+    L.append("## 官方突发榜（polymarket.com/breaking，24h 变动最大）")
+    groups = {"politics": "时政与全球", "finance": "金融与加密", "tech": "科技", "culture": "文化体育"}
+    for grp, label in groups.items():
+        rows = [m for cat, g in OFFICIAL_CATEGORIES.items() if g == grp for m in day["official"].get(cat, [])]
+        seen, uniq = set(), []
+        for m in sorted(rows, key=lambda m: abs(m["change1d"] or 0), reverse=True):
+            if m["question"] in seen:
+                continue
+            seen.add(m["question"])
+            uniq.append(m)
+        L.append(f"### {label}")
+        for m in uniq[:8]:
+            tag = "（已结算）" if m["closed"] else ""
+            L.append(f"- {delta(m['change1d'])} → {pct(m['yes'])}  {m['question']}{tag}")
+    L.append("")
+
+    L.append("## @Polymarket 快讯（24h，按道分组，时间为北京时间）")
+    for lane, label in [("politics", "政经"), ("finance", "政经·财经"), ("tech", "科技"), ("culture", "文体"), ("other", "猎奇与其他")]:
+        rows = [p for p in day["feed"] if p["lane"] == lane]
+        if not rows:
+            continue
+        L.append(f"### {label}（{len(rows)} 条）")
+        for p in rows:
+            L.append(f"- {p['time']}  {p['text']}")
+    news_posts = [p for p in day["feed"] if p["kind"] == "new"]
+    if news_posts:
+        L.append("### 官方新盘公告")
+        for p in news_posts:
+            L.append(f"- {p['time']}  {p['text']}")
+    L.append("")
+    fresh = [c for c in day["column"] if c["fresh"]]
+    if fresh:
+        L.append("## Polymarket 专栏新文章（news.polymarket.com）")
+        for c in fresh:
+            L.append(f"- {c['date']}  {c['title']}  {c['link']}")
+        L.append("")
+
     for cat, cfg in CATEGORIES.items():
         c = day["categories"][cat]
         L.append(f"## {cfg['label']}")
@@ -434,14 +626,27 @@ def main() -> int:
         print(f"[info] {cat}: movers={len(movers)} hot={len(categories[cat]['hot'])} "
               f"new={len(categories[cat]['new'])} resolved={len(categories[cat]['resolved'])}", file=sys.stderr)
 
+    official = fetch_official_movers()
+    feed = fetch_x_feed(now)
+    column = fetch_column(now)
+    print(f"[info] official movers: " + ", ".join(f"{k}={len(v)}" for k, v in official.items()), file=sys.stderr)
+    lanes = {}
+    for p in feed:
+        lanes[p["lane"]] = lanes.get(p["lane"], 0) + 1
+    print(f"[info] x feed: {len(feed)} posts, lanes={lanes}", file=sys.stderr)
+
     day = {
         "date": date,
         "generatedAt": now.astimezone(TZ).strftime("%Y-%m-%d %H:%M %z"),
         "stats": {
             "eventsScanned": len(events),
+            "feedPosts": len(feed),
             "requests": None,
         },
         "categories": categories,
+        "official": official,
+        "feed": feed,
+        "column": column,
         "whales": fetch_whales(events, now),
         "watchlist": fetch_watchlist(),
     }
