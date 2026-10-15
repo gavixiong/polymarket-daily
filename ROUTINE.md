@@ -75,7 +75,7 @@ Dashboard 和卡片页用它把英文换成中文。结构：
 ## 4. 生成图片
 
 ```bash
-pip install -q playwright && python3 -m playwright install chromium   # 环境里没装过才需要
+python3 -m pip install -q playwright && python3 -m playwright install chromium   # 环境里没装过才需要
 python3 scripts/render_cards.py
 ```
 
