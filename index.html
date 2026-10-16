@@ -156,7 +156,7 @@ const render = {
   hot(day, domain) {
     const rows = day.hot[domain];
     if (!rows.length) return '<p class="empty">无数据。</p>';
-    return `<ul class="list">${rows.map(e => `<li><div class="row"><div class="t">${e.pinned ? '<span class="pin">★</span>' : ''}${link(e.url, zhTitle(e.title))}</div><div class="v">${usd(e.volume24h)}</div></div>${outcomeChart(e)}</li>`).join('')}</ul>`;
+    return `<ul class="list">${rows.map(e => `<li><div class="row"><div class="t">${link(e.url, PM.hotTitle(e))}${label(e.title) !== e.title ? `<span class="ev">${esc(e.title)}</span>` : ''}</div><div class="v">${usd(e.volume24h)}</div></div>${outcomeChart(e)}</li>`).join('')}</ul>`;
   },
   new(day, domain) {
     const rows = day.new[domain];

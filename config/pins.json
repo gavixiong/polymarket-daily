@@ -1,8 +1,5 @@
 {
-  "_comment": "钉在热门板块最前面的长期事件，不受成交量影响。slug 取自 polymarket.com/event/<slug>。",
-  "slugs": [
-    "balance-of-power-2026-midterms",
-    "presidential-election-winner-2028",
-    "us-iran-ceasefire-continues-throughptptpt"
-  ]
+  "_comment": "长期盘默认全自动：过去 7 天里有 70% 的日子进入所在领域成交量前十的事件，取前 5。两个名单都可留空。always 强制纳入，never 强制排除，可以贴 polymarket.com/event/<slug> 链接或 slug。",
+  "always": [],
+  "never": []
 }

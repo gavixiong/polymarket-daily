@@ -66,6 +66,13 @@ const PM = (() => {
 
   const outcomeChart = e => e.kind === 'exclusive' ? shareBar(e) : e.kind === 'ladder' ? ladderBars(e) : binaryBar(e);
 
+  /* Long-running panel decoration: ★ for rule-selected persistent events, a countdown when the end is within 30 days. */
+  const daysLeft = e => { if (!e.endDate) return null; const d = Math.ceil((new Date(e.endDate) - Date.now()) / 864e5); return d >= 0 && d <= 30 ? d : null; };
+  const hotTitle = e => {
+    const left = daysLeft(e);
+    return `${e.pinned ? '<span class="pin" title="持续上榜">★</span>' : ''}${esc(label(e.title))}${left != null ? `<span class="tag">${left === 0 ? '今天截止' : '还有 ' + left + ' 天'}</span>` : ''}`;
+  };
+
   /* Diverging change bar centred at zero. */
   function changeBar(ch, max) {
     const w = Math.min(50, Math.abs(ch) / (max || 1) * 50);
@@ -132,6 +139,6 @@ const PM = (() => {
   }
 
   return { esc, pct, pt, usd, shortDate, cnDate, stamp, DOMAINS, OFFICIAL_GROUPS, setOverlay, overlay, label, outcomeLabel,
-           shareBar, ladderBars, binaryBar, outcomeChart, changeBar, spark, officialRows, resolvedRows, newRows, hotRows,
+           shareBar, ladderBars, binaryBar, outcomeChart, changeBar, spark, daysLeft, hotTitle, officialRows, resolvedRows, newRows, hotRows,
            loadDay, loadIndex, downloadZip };
 })();

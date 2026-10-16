@@ -35,7 +35,7 @@ Claude Code 定时任务（云端，每天 23:00 UTC）
 | `assets/shared.js` | 两个页面共用：格式化、中文覆盖、份额条 / 档位条 / 走势图、下载 |
 | `index.html` | Dashboard |
 | `cards.html` | 卡片页，`?card=cover` 单张 |
-| `config/pins.json` | 钉在热门最前面的长期事件 |
+| `config/pins.json` | 长期盘的 always / never 覆盖，默认空 |
 | `data/` `reports/` `cards/` | 每日数据、正文与覆盖文件、图片 |
 
 ## 本地
@@ -48,6 +48,6 @@ python3 -m http.server 8080
 
 ## 调整
 
-- 钉住的长期盘：`config/pins.json`。
+- 长期盘默认按规则自动选（7 天里 70% 的日子进成交量前十，取 5 个）；`config/pins.json` 的 always / never 可强制纳入或排除。
 - 阈值、分类标签、噪音黑名单、打分参数：`scripts/fetch.py` 顶部 config 段。
 - 卡片样式：`cards.html` 的 CSS；图表画法：`assets/shared.js`。

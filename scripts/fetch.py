@@ -12,7 +12,7 @@ Schema of data/<date>.json
   official  {category: [market]}   Polymarket's own "Breaking" board, 24h biggest movers
   feed      [post]                 @Polymarket X posts mirrored on /breaking (internal: causes, odds posts, new-market posts)
   column    [article]              news.polymarket.com RSS
-  hot       {domain: [event]}      top events by 24h volume + pinned events (the long-running panel)
+  hot       {domain: [event]}      top events by 24h volume; `pinned` marks the rule-selected long-running panel
   new       {domain: [event]}      events created in the last 24h
   resolved  {domain: [market]}     markets closed in the last 36h
   flows     [market]               net money by market from >= $10k trades
@@ -82,6 +82,9 @@ DAILY = re.compile(r"\bon (January|February|March|April|May|June|July|August|Sep
 LOOKBACK_H = 24
 RESOLVED_LOOKBACK_H = 36
 HOT_PER_DOMAIN = 10
+PERSIST_DAYS = 7           # look-back window for the long-running panel
+PERSIST_MIN_SHARE = 0.7    # must be in a domain top-10 on 70% of those days
+PERSIST_MAX = 5            # rule-selected long-running events (plus any `always` pins)
 NEW_PER_DOMAIN = 8
 RESOLVED_PER_DOMAIN = 8
 HOT_MIN_VOL24H = 20_000
@@ -263,36 +266,91 @@ def fetch_events() -> dict[str, dict]:
     return seen
 
 
-def fetch_pins(events: dict[str, dict]) -> list[dict]:
-    """Hand-pinned events (config/pins.json) that must always sit in the hot panel."""
+def slug_of(s: str) -> str:
+    """Accept a bare slug or a polymarket.com/event/<slug> URL."""
+    return s.rstrip("/").split("/event/")[-1].split("?")[0]
+
+
+def load_pins() -> tuple[set[str], set[str]]:
+    """config/pins.json: {"always": [...], "never": [...]} — both optional, URLs or slugs."""
     try:
-        slugs = json.loads(PINS_FILE.read_text()).get("slugs", [])
+        cfg = json.loads(PINS_FILE.read_text())
     except (FileNotFoundError, ValueError):
-        return []
-    by_slug = {e["slug"]: e for e in events.values()}
-    out = []
-    for slug in slugs:
-        e = by_slug.get(slug)
-        if not e:
-            rows = get(f"{GAMMA}/events", {"slug": slug}) or []
-            if not rows:
-                print(f"[warn] pinned slug not found: {slug}", file=sys.stderr)
-                continue
-            e = event_brief(rows[0], "politics")
-        e["pinned"] = True
-        out.append(e)
-    return out
+        return set(), set()
+    return {slug_of(x) for x in cfg.get("always", [])}, {slug_of(x) for x in cfg.get("never", [])}
 
 
-def hot_panel(events: dict[str, dict], pins: list[dict]) -> dict[str, list[dict]]:
-    out = {}
+def persistence(today: str) -> tuple[dict[str, int], int]:
+    """How many of the previous PERSIST_DAYS-1 days each event sat in its domain's volume top-10.
+
+    Read from the archived data/<date>.json files, so no extra state. Returns (counts, days_seen).
+    """
+    counts: dict[str, int] = {}
+    days = 0
+    for f in sorted(DATA_DIR.glob("????-??-??.json"), reverse=True):
+        if f.name[:10] >= today:
+            continue
+        try:
+            hot = json.loads(f.read_text()).get("hot")
+        except (ValueError, OSError):
+            continue
+        if not hot:
+            continue
+        days += 1
+        for evs in hot.values():
+            for e in evs:
+                rank = e.get("volRank")
+                if rank is not None and rank <= 10:
+                    counts[e["slug"]] = counts.get(e["slug"], 0) + 1
+        if days >= PERSIST_DAYS - 1:
+            break
+    return counts, days
+
+
+def hot_panel(events: dict[str, dict], today: str) -> dict[str, list[dict]]:
+    """Top events by 24h volume per domain. The long-running panel ("pinned") is rule-based:
+    events that have been in a top-10 on at least 70% of the last 7 days, best 5 by persistence then volume.
+    Nothing about end dates: a big event stays until it resolves, then drops out through the resolved card.
+    config/pins.json `always` forces inclusion, `never` forces exclusion."""
+    counts, hist_days = persistence(today)
+    always, never = load_pins()
+    # Bootstrap: with under three days of history every top-10 event qualifies; the volume tiebreak decides.
+    need = 1 if hist_days < 2 else max(2, math.ceil(PERSIST_MIN_SHARE * (hist_days + 1)))
+
+    ranked: dict[str, list[dict]] = {}
     for domain in DOMAINS:
-        rows = [e for e in pins if e["domain"] == domain]
-        pinned = {e["slug"] for e in rows}
-        rest = sorted((e for e in events.values()
-                       if e["domain"] == domain and e["slug"] not in pinned and e["volume24h"] >= HOT_MIN_VOL24H),
-                      key=lambda e: e["volume24h"], reverse=True)
-        out[domain] = [public(e) for e in (rows + rest)[:HOT_PER_DOMAIN]]
+        lst = sorted((e for e in events.values() if e["domain"] == domain and e["slug"] not in never
+                      and e["volume24h"] >= HOT_MIN_VOL24H), key=lambda e: e["volume24h"], reverse=True)
+        for i, e in enumerate(lst, 1):
+            e["volRank"] = i
+            e["persistDays"] = counts.get(e["slug"], 0) + (1 if i <= 10 else 0)
+        ranked[domain] = lst
+
+    # forced events that are not in today's pool at all
+    by_slug = {e["slug"]: e for e in events.values()}
+    for slug in always - set(by_slug):
+        rows = get(f"{GAMMA}/events", {"slug": slug}) or []
+        if rows:
+            e = event_brief(rows[0], "politics")
+            e["volRank"], e["persistDays"] = None, counts.get(slug, 0)
+            ranked[e["domain"]].insert(0, e)
+            by_slug[slug] = e
+        else:
+            print(f"[warn] always-pin not found: {slug}", file=sys.stderr)
+
+    cands = [e for lst in ranked.values() for e in lst[:10]
+             if e["persistDays"] >= need or e["slug"] in always]
+    cands.sort(key=lambda e: (e["slug"] in always, e["persistDays"], e["volume24h"]), reverse=True)
+    pinned = {e["slug"] for e in cands[:PERSIST_MAX + len(always)]}
+    print(f"[info] long-running panel: {len(pinned)} events (history {hist_days} days, need {need})", file=sys.stderr)
+
+    out = {}
+    for domain, lst in ranked.items():
+        head = [e for e in lst if e["slug"] in pinned]
+        tail = [e for e in lst if e["slug"] not in pinned]
+        for e in head:
+            e["pinned"] = True
+        out[domain] = [public(e) for e in (head + tail)[:HOT_PER_DOMAIN]]
     return out
 
 
@@ -672,7 +730,6 @@ def main() -> int:
         # Network blocked or API down: never overwrite yesterday's data with an empty day.
         print(f"[error] fetched {len(events)} events with {_requests} requests; refusing to write data", file=sys.stderr)
         return 1
-    pins = fetch_pins(events)
     day = {
         "date": date,
         "generatedAt": now.astimezone(TZ).strftime("%Y-%m-%d %H:%M %z"),
@@ -681,7 +738,7 @@ def main() -> int:
         "official": fetch_official(),
         "feed": fetch_feed(now),
         "column": fetch_column(now),
-        "hot": hot_panel(events, pins),
+        "hot": hot_panel(events, date),
         "new": new_panel(events, now),
         "resolved": fetch_resolved(now),
         "flows": fetch_flows(events, now),

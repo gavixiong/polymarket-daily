@@ -18,10 +18,12 @@ import subprocess
 import sys
 import threading
 import time
+from datetime import datetime, timedelta
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 W, H = 1242, 1660
+KEEP_DAYS = 90   # prune cards/<date> folders older than this
 FIXED = ["cover", "headline", "breaking", "hot", "resolved"]   # the five images a post ships, same order every day
 FLOATING: list[str] = []   # "new" and "feed" stay dashboard-only previews
 CHROME = ["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "/Applications/Chromium.app/Contents/MacOS/Chromium",
@@ -96,6 +98,13 @@ def main() -> int:
             render_chrome(base, date, keys, out, chrome)
     finally:
         srv.shutdown()
+
+    # Housekeeping: PNGs are ~1.5 MB a day; keep the last KEEP_DAYS days in the repo, data JSON stays forever.
+    cutoff = (datetime.strptime(date, "%Y-%m-%d") - timedelta(days=KEEP_DAYS)).strftime("%Y-%m-%d")
+    for old in (ROOT / "cards").iterdir():
+        if old.is_dir() and old.name < cutoff:
+            shutil.rmtree(old)
+            print(f"[info] pruned cards/{old.name}", file=sys.stderr)
 
     made = [{"key": k, "file": f"{i:02d}-{k}.png"} for i, k in enumerate(keys, 1) if (out / f"{i:02d}-{k}.png").exists()]
     (out / "index.json").write_text(json.dumps({"date": date, "engine": engine, "cards": made}, ensure_ascii=False, indent=1))

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify that every row the six Xiaohongshu cards will show has a Chinese label.
+"""Verify that every row the five Xiaohongshu cards will show has a Chinese label.
 
     python3 scripts/check_zh.py [YYYY-MM-DD]
 
@@ -23,7 +23,13 @@ BUILTIN = {"Yes", "No", "No change", "Democratic Party", "Republican Party", "De
            "50+ bps decrease", "Other"}
 DATE = re.compile(r"^(January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}(, \d{4})?$")
 NUMERIC = re.compile(r"^[↑↓<>≥≤]?\s*[\$€£]?[\d.,]+[%+kKMB]*(\s*[-–]\s*[\$]?[\d.,]+[%kKMB]*)?\+?$")
-PROPER = re.compile(r"^(?:[A-Z][\w'’.\-]*)(?:\s(?:de|da|do|von|van|of|the|bin|al|el|&|[A-Z][\w'’.\-]*))*$")
+PARTICLES = {"de", "da", "do", "von", "van", "of", "the", "bin", "al", "el", "&", "y", "la", "le"}
+
+
+def is_proper_noun(label: str) -> bool:
+    """Every word capitalised (unicode-aware, so Édouard counts) apart from name particles."""
+    words = label.replace("-", " ").split()
+    return bool(words) and all(w[0].isupper() or w.lower() in PARTICLES for w in words)
 
 
 def by_abs_change(rows):
@@ -74,7 +80,7 @@ def new_rows(day, n=6):
 
 def outcome_ok(label: str, zh: dict) -> bool:
     return (label in BUILTIN or label in zh.get("outcomes", {}) or bool(DATE.match(label))
-            or bool(NUMERIC.match(label)) or bool(PROPER.match(label)) or bool(re.search(r"[一-鿿]", label)))
+            or bool(NUMERIC.match(label)) or is_proper_noun(label) or bool(re.search(r"[一-鿿]", label)))
 
 
 def main() -> int:
@@ -110,7 +116,7 @@ def main() -> int:
             missing_labels.append((card, q))
 
     if not (missing_labels or missing_outcomes or missing_fields):
-        print(f"[ok] {date}: 六张图上的 {len(need)} 行都有中文", file=sys.stderr)
+        print(f"[ok] {date}: 五张图上的 {len(need)} 行都有中文", file=sys.stderr)
         return 0
     print(f"[fail] {date}: 中文覆盖不完整，把下面的内容补进 reports/{date}.zh.json", file=sys.stderr)
     if missing_fields:

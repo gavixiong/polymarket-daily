@@ -125,8 +125,8 @@ const CARDS = {
   },
   hot(day) {
     const rows = hotRows(day, 8);
-    return `<section class="card hot">${brand(day, '长期盘')}<h1>长期盘今天怎么看</h1><p class="sub">★ 钉住 · 其余按成交量 · 括号为 24 小时变动</p>
-      <div class="rows">${rows.map(e => `<div class="row"><div class="title"><span>${e.pinned ? '<span class="pin">★</span>' : ''}${esc(label(e.title))}</span><small>${usd(e.volume24h)}</small></div>${outcomeChart(e)}</div>`).join('')}</div>
+    return `<section class="card hot">${brand(day, '长期盘')}<h1>长期盘今天怎么看</h1><p class="sub">★ 连续多日高关注 · 其余按成交量 · 临近截止的标倒计时</p>
+      <div class="rows">${rows.map(e => `<div class="row"><div class="title"><span>${PM.hotTitle(e)}</span><small>${usd(e.volume24h)}</small></div>${outcomeChart(e)}</div>`).join('')}</div>
       ${foot('互斥选项画成份额，日期/价格档位各画一条')}</section>`;
   },
   resolved(day) {
