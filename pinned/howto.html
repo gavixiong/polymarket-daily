@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>置顶 · 这份日报有什么</title>
+<style>
+:root{--surface:#fcfcfb;--ink:#0b0b0b;--ink-2:#52514e;--muted:#898781;--grid:#e1e0d9;--c1:#2a78d6}
+*{box-sizing:border-box}
+html,body{margin:0;background:#fff;font-family:system-ui,-apple-system,"PingFang SC","Hiragino Sans GB","Segoe UI","Microsoft YaHei",sans-serif;-webkit-font-smoothing:antialiased;color:var(--ink)}
+.card{width:1242px;height:1660px;background:var(--surface);padding:84px 80px 72px;display:flex;flex-direction:column}
+.brand{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:30px;font-weight:500}
+.brand b{color:var(--ink);font-weight:650;display:inline-flex;align-items:center;gap:14px}
+.brand img{width:38px;height:38px;display:block}
+h1{font-size:68px;line-height:1.15;margin:44px 0 10px;font-weight:650;letter-spacing:-.01em}
+.sub{font-size:30px;color:var(--ink-2);margin:0 0 40px;line-height:1.4}
+.rows{display:flex;flex-direction:column}
+.row{display:grid;grid-template-columns:96px 1fr;gap:28px;align-items:start;padding:34px 0;border-bottom:2px solid var(--grid)}
+.row:last-child{border-bottom:0}
+.n{width:72px;height:72px;border-radius:50%;background:var(--ink);color:#fff;font-size:34px;font-weight:650;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.n.text{background:var(--c1)}
+.t{font-size:40px;font-weight:650;line-height:1.25}
+.d{font-size:31px;color:var(--ink-2);line-height:1.45;margin-top:8px}
+.foot{margin-top:auto;padding-top:28px;border-top:2px solid var(--grid);display:flex;justify-content:space-between;color:var(--muted);font-size:26px}
+.foot b{color:var(--ink-2);font-weight:500}
+</style>
+</head>
+<body>
+<section class="card">
+  <div class="brand"><span><b><img src="../assets/brand/icon-black.png" alt="">Polymarket 日报</b> · 置顶</span><span>每天都有什么</span></div>
+  <h1>一段正文，五张图</h1>
+  <p class="sub">每天早上 7 点，把过去 24 小时概率变化最大的事翻成中文</p>
+  <div class="rows">
+    <div class="row"><div class="n text">文</div><div><div class="t">正文</div><div class="d">4 到 10 条，每条先说发生了什么，再说市场的判断从多少变到多少。</div></div></div>
+    <div class="row"><div class="n">1</div><div><div class="t">封面</div><div class="d">当天最意外的一件事，一句话加一个大数字。</div></div></div>
+    <div class="row"><div class="n">2</div><div><div class="t">头条走势</div><div class="d">第一条市场过去 7 天的概率曲线，看它怎么跳到今天这个数。</div></div></div>
+    <div class="row"><div class="n">3</div><div><div class="t">突发榜</div><div class="d">过去 24 小时概率变动最大的 8 个市场。</div></div></div>
+    <div class="row"><div class="n">4</div><div><div class="t">长期盘</div><div class="d">连续多日大家都在押的几件大事，临近截止标倒计时。</div></div></div>
+    <div class="row"><div class="n">5</div><div><div class="t">昨日结算</div><div class="d">昨天出了结果的问题，市场原本给多少，答案是什么。</div></div></div>
+  </div>
+  <div class="foot"><span>不是投资建议，不教开户</span><span><b>数据 Polymarket · 每天北京时间 07:00 更新</b></span></div>
+</section>
+</body>
+</html>
