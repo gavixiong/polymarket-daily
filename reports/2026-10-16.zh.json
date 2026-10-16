@@ -1,6 +1,9 @@
 {
   "headline": "Fable 5.2 没能在 10/16 前发布，该盘从 28% 跌到 2%；整体看 10/31 前发布仍有 86%。",
-  "hero": {"value": "28% → 2%", "label": "Fable 5.2 在 10 月 16 日前发布"},
+  "hero": {
+    "value": "28% → 2%",
+    "label": "Fable 5.2 在 10 月 16 日前发布"
+  },
   "headlineQuestion": "Next Fable Model (5.2+) released by October 16, 2026?",
   "headlineTitle": "Fable 5.2 在 10 月 16 日前发布",
   "skip": [
@@ -60,18 +63,51 @@
     "Bank of England decision in December?": "12 月英国央行利率决议",
     "OpenRouter AI token usage Oct 26 to Nov 22?": "OpenRouter AI 用量 10/26 到 11/22",
     "Will Micron Q1 DRAM revenue be above __?": "美光 Q1 DRAM 营收",
-    "Walmart (WMT) Q3 US comparable sales (ex-fuel) growth?": "沃尔玛 Q3 美国可比销售增速"
+    "Walmart (WMT) Q3 US comparable sales (ex-fuel) growth?": "沃尔玛 Q3 美国可比销售增速",
+    "Will the Bank of Israel make no change to the Bank of Israel Interest Rate after the October decision?": "以色列央行 10 月按兵不动",
+    "Next Fable Model (5.2+) released by October 14, 2026?": "下一代 Fable 模型 10 月 14 日前发布",
+    "Will the next Claude Opus model debut with a Humanity’s Last Exam score of 60% or higher?": "下一代 Claude Opus 首发 HLE ≥60%",
+    "Will Katie Zacharia give another press briefing as Press Secretary?": "Katie Zacharia 再次以新闻秘书身份开简报",
+    "Will Trump pardon anyone by...?": "Trump 年底前赦免任何人",
+    "Will the White House call a full lid by 6:30 PM on October 18?": "白宫 10 月 18 日傍晚前宣布当日无安排"
   },
   "outcomes": {},
   "picked": [
-    {"question": "Next Fable Model (5.2+) released by October 16, 2026?", "yes": 0.02},
-    {"question": "Next DeepSeek Flash released by November 30, 2026?", "yes": 0.93},
-    {"question": "Tesla's Roadster projected to take flight at tonight's unveiling, as Elon Musk describes the vehicle as \"beyond human.\"", "yes": 0.69},
-    {"question": "US x Iran ceasefire continues through October 15?", "yes": 1.0},
-    {"question": "President Lula makes a late surge in Brazil's presidential election odds with just 10 days until the runoff.", "yes": 0.25},
-    {"question": "What will WTI Crude Oil (WTI) hit in October 2026?", "yes": 0.66},
-    {"question": "Will the 5-year Treasury yield dip below 4.50% before 2027?", "yes": 0.34},
-    {"question": "Another GTA VI trailer released by October 31?", "yes": 1.0},
-    {"question": "Will Daniel Craig be nominated for Best Supporting Actor at the 99th Academy Awards?", "yes": 0.01}
+    {
+      "question": "Next Fable Model (5.2+) released by October 16, 2026?",
+      "yes": 0.02
+    },
+    {
+      "question": "Next DeepSeek Flash released by November 30, 2026?",
+      "yes": 0.93
+    },
+    {
+      "question": "Tesla's Roadster projected to take flight at tonight's unveiling, as Elon Musk describes the vehicle as \"beyond human.\"",
+      "yes": 0.69
+    },
+    {
+      "question": "US x Iran ceasefire continues through October 15?",
+      "yes": 1.0
+    },
+    {
+      "question": "President Lula makes a late surge in Brazil's presidential election odds with just 10 days until the runoff.",
+      "yes": 0.25
+    },
+    {
+      "question": "What will WTI Crude Oil (WTI) hit in October 2026?",
+      "yes": 0.66
+    },
+    {
+      "question": "Will the 5-year Treasury yield dip below 4.50% before 2027?",
+      "yes": 0.34
+    },
+    {
+      "question": "Another GTA VI trailer released by October 31?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Daniel Craig be nominated for Best Supporting Actor at the 99th Academy Awards?",
+      "yes": 0.01
+    }
   ]
 }
