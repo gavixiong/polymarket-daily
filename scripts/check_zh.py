@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Verify that every row the five Xiaohongshu cards will show has a Chinese label.
+"""Verify that every row the five Xiaohongshu cards will show has a Chinese label,
+that the day has a news-style title, and that no betting jargon reaches readers.
 
     python3 scripts/check_zh.py [YYYY-MM-DD]
 
@@ -24,6 +25,11 @@ BUILTIN = {"Yes", "No", "No change", "Democratic Party", "Republican Party", "De
 DATE = re.compile(r"^(January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}(, \d{4})?$")
 NUMERIC = re.compile(r"^[↑↓<>≥≤]?\s*[\$€£]?[\d.,]+[%+kKMB]*(\s*[-–]\s*[\$]?[\d.,]+[%kKMB]*)?\+?$")
 PARTICLES = {"de", "da", "do", "von", "van", "of", "the", "bin", "al", "el", "&", "y", "la", "le"}
+# Betting jargon that must not reach readers. "开盘 / 收盘" (market open/close) are allowed, so match the
+# gambling senses only: a market called a "盘", plus 押注 / 下注 / 赌 / 赔率.
+JARGON = re.compile(r"(这个|那个|的|个|该|此|新|长期|梯子|热门|冷门)盘|盘口|押注|下注|赌|赔率")
+TITLE_MAX = 20  # Xiaohongshu title limit
+
 
 
 def is_proper_noun(label: str) -> bool:
@@ -93,16 +99,37 @@ def main() -> int:
         print(f"[error] {zh_path.name} 不存在", file=sys.stderr)
         return 1
     labels, skip = zh.get("labels", {}), set(zh.get("skip", []))
-    missing_labels, missing_outcomes, missing_fields = [], [], []
+    missing_labels, missing_outcomes, missing_fields, wording = [], [], [], []
 
-    for key in ("headline", "hero", "headlineQuestion", "headlineTitle"):
+    for key in ("title", "headline", "hero", "headlineQuestion", "headlineTitle"):
         if not zh.get(key):
             missing_fields.append(key)
+    title = str(zh.get("title") or "")
+    if title and len(title) > TITLE_MAX:
+        wording.append(f"title 有 {len(title)} 字，上限 {TITLE_MAX}：{title}")
+
+    # Reader-facing strings: the post text and every Chinese value in the overlay.
+    xhs_path = ROOT / "reports" / f"{date}.xhs.md"
+    texts = []
+    if xhs_path.exists():
+        lines = xhs_path.read_text().splitlines()
+        if lines and (not lines[0].strip() or lines[0].startswith("Polymarket") or len(lines[0].strip()) > TITLE_MAX):
+            wording.append(f"正文第一行应是 12 到 20 字的新闻标题，现在是：{lines[0].strip()!r}")
+        texts += [(xhs_path.name, l) for l in lines]
+    else:
+        missing_fields.append(f"{xhs_path.name}（文件不存在）")
+    texts += [("zh.json " + k, str(zh.get(k) or "")) for k in ("title", "headline", "headlineTitle", "headlineCause")]
+    texts.append(("zh.json hero.label", str((zh.get("hero") or {}).get("label") or "")))
+    texts += [("zh.json labels", v) for v in labels.values()] + [("zh.json outcomes", v) for v in zh.get("outcomes", {}).values()]
+    for where, t in texts:
+        m = JARGON.search(t)
+        if m:
+            wording.append(f"{where} 出现博彩词「{m.group(0)}」：{t.strip()[:60]}")
 
     need = []
     need += [("突发榜", m["question"]) for m in breaking_rows(day, skip)]
     for e in hot_rows(day):
-        need.append(("长期盘", e["title"]))
+        need.append(("长期关注", e["title"]))
         rungs = e["outcomes"][:3] if e["kind"] == "exclusive" else e["outcomes"][:4]
         for o in rungs:
             if o["label"] and not outcome_ok(o["label"], zh):
@@ -115,12 +142,16 @@ def main() -> int:
         if q not in labels or not re.search(r"[一-鿿]", labels[q]):
             missing_labels.append((card, q))
 
-    if not (missing_labels or missing_outcomes or missing_fields):
-        print(f"[ok] {date}: 五张图上的 {len(need)} 行都有中文", file=sys.stderr)
+    if not (missing_labels or missing_outcomes or missing_fields or wording):
+        print(f"[ok] {date}: 五张图上的 {len(need)} 行都有中文，标题和用词合格", file=sys.stderr)
         return 0
-    print(f"[fail] {date}: 中文覆盖不完整，把下面的内容补进 reports/{date}.zh.json", file=sys.stderr)
+    print(f"[fail] {date}: 中文覆盖或用词不合格，按下面修改 reports/{date}.zh.json 和 .xhs.md", file=sys.stderr)
     if missing_fields:
         print("缺少字段: " + ", ".join(missing_fields))
+    if wording:
+        print("用词 / 标题问题（改成\"市场\"\"概率\"或直接说事件）:")
+        for w in wording:
+            print("  " + w)
     if missing_labels:
         print('"labels" 需要补:')
         for card, q in missing_labels:

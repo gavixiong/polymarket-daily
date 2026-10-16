@@ -42,7 +42,8 @@ svg.spark{width:180px;height:56px;overflow:visible;display:block}
 .rung{display:contents} .rl{color:var(--ink-2);white-space:nowrap} .rt{height:16px;background:var(--mid);border-radius:6px;overflow:hidden} .rt i{display:block;height:100%;background:var(--c1);border-radius:0 6px 6px 0}
 .rv{font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap} .rv small{color:var(--muted);margin-left:6px;font-size:24px}
 /* cover */
-.cover h1{font-size:72px;margin-top:120px;min-height:260px}
+.cover h1{font-size:84px;margin-top:110px;line-height:1.2;letter-spacing:-.02em}
+.cover .lede{font-size:36px;line-height:1.5;color:var(--ink-2);margin:26px 0 0;min-height:110px}
 .cover .date{font-size:40px;color:var(--ink-2);margin-top:30px}
 .cover .hero{margin-top:110px;padding-top:56px;border-top:4px solid var(--ink)}
 .cover .hero .v{font-size:176px;font-weight:700;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
@@ -85,12 +86,12 @@ const CARDS = {
   cover(day) {
     const o = overlay(), top = officialRows(day, 'politics', 1)[0];
     const hero = o.hero || { value: top ? pt(top.change1d) : '—', label: top ? label(top.question) : '' };
-    const headline = o.headline || (day.xhsFirst || '');
+    const headline = o.headline || (day.xhsFirst || ''), title = o.title || '';
     return `<section class="card cover"><div class="big">${esc(shortDate(day.date).replace('/', '.'))}</div>${brand(day, '每日 07:00')}
-      <div class="date">${esc(cnDate(day.date))}<span style="display:block;font-size:28px;color:var(--muted);margin-top:8px">${esc(stamp(day))}</span></div><h1>${esc(headline)}</h1>
+      <div class="date">${esc(cnDate(day.date))}<span style="display:block;font-size:28px;color:var(--muted);margin-top:8px">${esc(stamp(day))}</span></div><h1>${esc(title || headline)}</h1>${title ? `<p class="lede">${esc(headline)}</p>` : ''}
       <div class="hero"><div class="v">${esc(hero.value)}</div><div class="l">${esc(hero.label)}</div></div>
       <div class="kpis"><div class="kpi"><div class="l">变动 ≥10pt</div><div class="v">${['politics', 'finance', 'tech'].flatMap(g => officialRows(day, g, 99)).filter(m => Math.abs(m.change1d) >= 0.1).length} 个</div></div>
-        <div class="kpi"><div class="l">昨日结算</div><div class="v">${resolvedRows(day, 99).length} 个</div></div><div class="kpi"><div class="l">新盘</div><div class="v">${newRows(day, 99).length} 个</div></div></div>
+        <div class="kpi"><div class="l">昨日结算</div><div class="v">${resolvedRows(day, 99).length} 个</div></div><div class="kpi"><div class="l">新上线</div><div class="v">${newRows(day, 99).length} 个</div></div></div>
       ${foot('预测市场里的今日世界', '数据 Polymarket · 每天北京时间 07:00 更新')}</section>`;
   },
   headline(day) {
@@ -125,7 +126,7 @@ const CARDS = {
   },
   hot(day) {
     const rows = hotRows(day, 8);
-    return `<section class="card hot">${brand(day, '长期盘')}<h1>长期盘今天怎么看</h1><p class="sub">★ 连续多日高关注 · 其余按成交量 · 临近截止的标倒计时</p>
+    return `<section class="card hot">${brand(day, '长期关注')}<h1>长期关注的市场今天怎么看</h1><p class="sub">★ 连续多日高关注 · 其余按成交量 · 临近截止的标倒计时</p>
       <div class="rows">${rows.map(e => `<div class="row"><div class="title"><span>${PM.hotTitle(e)}</span><small>${usd(e.volume24h)}</small></div>${outcomeChart(e)}</div>`).join('')}</div>
       ${foot('互斥选项画成份额，日期/价格档位各画一条')}</section>`;
   },
@@ -137,13 +138,13 @@ const CARDS = {
   },
   new(day) {
     const rows = newRows(day, 6);
-    return `<section class="card">${brand(day, '新盘')}<h1>今天新开的盘</h1><p class="sub">官方公告 + 过去 24 小时新上线 · 首日概率</p>
+    return `<section class="card">${brand(day, '新上线')}<h1>今天新上线的市场</h1><p class="sub">官方公告 + 过去 24 小时新上线 · 首日概率</p>
       <div class="rows">${rows.map(e => `<div class="row" style="grid-template-columns:1fr"><div class="t">${esc(label(e.title))}${e.official ? '<span class="tag">官方公告</span>' : ''}${e.outcomes && e.outcomes.length ? `<small style="white-space:normal">${e.outcomes.slice(0, 3).map(o => `${esc(outcomeLabel(o.label))} ${pct(o.yes)}`).join(' · ')}</small>` : ''}</div></div>`).join('')}</div>
       ${foot('新市场往往就是新闻本身')}</section>`;
   },
 };
 // A post ships the first five, same order every day. "new" and "feed" are dashboard-only previews.
-const ORDER = [['cover', '封面', true], ['headline', '头条走势', true], ['breaking', '突发榜', true], ['hot', '长期盘', true], ['resolved', '结算', true], ['new', '新盘（仅 Dashboard）', false]];
+const ORDER = [['cover', '封面', true], ['headline', '头条走势', true], ['breaking', '突发榜', true], ['hot', '长期关注', true], ['resolved', '结算', true], ['new', '新上线（仅 Dashboard）', false]];
 const eligible = k => k !== 'new';
 // Fixed-size cards: when a list does not fit, drop rows from the bottom rather than shrink type.
 const fit = () => document.querySelectorAll('.card').forEach(c => { const rows = c.querySelector('.rows'); let g = 40; while (rows && c.scrollHeight > c.offsetHeight && rows.children.length > 3 && g--) rows.removeChild(rows.lastElementChild); });

@@ -10,7 +10,7 @@
 - `assets/shared.js` — 两个页面共用的格式化、中文覆盖、图表（份额条、档位条、走势图）。
 - `index.html` Dashboard、`cards.html` 卡片页，都是静态页，无构建。
 - `reports/<日期>.xhs.md` 正文、`reports/<日期>.zh.json` 中文覆盖与已选条目，由定时代理按 `ROUTINE.md` 写。
-- `config/pins.json` 长期盘的 always / never 覆盖（默认空，规则自动选）。`docs/api-research.md` 接口实测说明。
+- `config/pins.json` 长期关注市场的 always / never 覆盖（默认空，规则自动选）。`docs/api-research.md` 接口实测说明。
 
 ## 命令
 
