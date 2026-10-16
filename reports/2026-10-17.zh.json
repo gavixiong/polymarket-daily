@@ -1,0 +1,70 @@
+{
+  "title": "白宫新闻秘书下台成定局，原先仅 9%",
+  "headline": "Katie Zacharia 在 10 月底前下台已成定局，市场原本只给 9%，一夜升到 100%。",
+  "hero": {
+    "value": "9% → 100%",
+    "label": "白宫新闻秘书 10 月底前下台，市场原本只给 9%"
+  },
+  "headlineQuestion": "Katie Zacharia out as Press Secretary by October 31?",
+  "headlineTitle": "白宫新闻秘书 10 月底前下台",
+  "skip": [],
+  "labels": {
+    "Katie Zacharia out as Press Secretary by October 31?": "白宫新闻秘书 10 月底前下台",
+    "Will the Tesla Roadster's 0-60 time be less than 1 second?": "Roadster 0-60 英里加速不到 1 秒",
+    "Will STRC hit $100 by October 31?": "STRC 10 月底前涨到 100 美元",
+    "Will SB Energy not IPO before January 2027?": "SB Energy 2027 年前不上市",
+    "US bank failure by December 31, 2026?": "美国年底前有银行倒闭",
+    "Will the Ornn A100 Index be between $0.75 and $1.00 on November 30, 2026?": "Ornn A100 指数 11 月底在 0.75 到 1 美元",
+    "Will Ukraine target Moscow on October 17, 2026?": "乌克兰 10 月 17 日打击莫斯科",
+    "Will the median home value in the DC Metro be less than $503,000 on December 31?": "华盛顿都会区年底房价中位数低于 50.3 万美元",
+    "US-Iran ceasefire continues through...?": "美伊停火持续到何时",
+    "Brazil Presidential Election": "巴西总统选举",
+    "Republican Presidential Nominee 2028": "2028 年共和党总统候选人",
+    "Fed Decision in October?": "10 月美联储利率决议",
+    "What price will Bitcoin hit in October?": "比特币 10 月触及价位",
+    "What will WTI Crude Oil (WTI) hit in October 2026?": "WTI 原油 10 月触及价位",
+    "Which company has the best AI model end of October?": "10 月底最强 AI 模型属于哪家",
+    "US announces end of Iranian blockade by October 15, 2026?": "美国 10 月 15 日前宣布结束封锁伊朗",
+    "US x Iran ceasefire continues through October 15?": "美伊停火持续到 10 月 15 日",
+    "US x Yemen ceasefire continues through October 15?": "美国与也门停火持续到 10 月 15 日",
+    "Israel x Iran ceasefire continues through October 15?": "以伊停火持续到 10 月 15 日",
+    "Will the Tesla Roadster fly for 1s+?": "Tesla Roadster 能否飞行 1 秒以上",
+    "US x Iran ceasefire continues through October 16?": "美伊停火持续到 10 月 16 日",
+    "Katie Zacharia out as Press Secretary by December 31?": "白宫新闻秘书年底前下台"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Katie Zacharia out as Press Secretary by October 31?",
+      "yes": 1.0
+    },
+    {
+      "question": "US x Iran ceasefire continues through October 16?",
+      "yes": 1.0
+    },
+    {
+      "question": "Democratic Socialist Claire Valdez, who called ICE a “militarized terrorist organization,” is projected to be elected into U.S. Congress.",
+      "yes": 0.97
+    },
+    {
+      "question": "Will there be no change in Fed interest rates after the October 2026 meeting?",
+      "yes": 0.86
+    },
+    {
+      "question": "What will WTI Crude Oil (WTI) hit in October 2026?",
+      "yes": 0.87
+    },
+    {
+      "question": "Will Bitcoin dip to $80,000 in October?",
+      "yes": 0.72
+    },
+    {
+      "question": "Will \"The Social Reckoning\" 2nd Weekend Box Office be between 1m and 2m?",
+      "yes": 0.91
+    },
+    {
+      "question": "Will \"Grand Theft Auto VI Launch Trailer\" get between 20 and 40 million views on day 1?",
+      "yes": 1.0
+    }
+  ]
+}
