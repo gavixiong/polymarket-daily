@@ -10,7 +10,7 @@ Writes  data/<date>.json   structured data (schema below)
 Schema of data/<date>.json
   date, generatedAt, stats
   official  {category: [market]}   Polymarket's own "Breaking" board, 24h biggest movers
-  feed      [post]                 @Polymarket X posts mirrored on /breaking, with a coarse lane
+  feed      [post]                 @Polymarket X posts mirrored on /breaking (internal: causes, odds posts, new-market posts)
   column    [article]              news.polymarket.com RSS
   hot       {domain: [event]}      top events by 24h volume + pinned events (the long-running panel)
   new       {domain: [event]}      events created in the last 24h
@@ -107,43 +107,6 @@ WEAK_NOUNS = {"Trump", "Iran", "Israel", "Russia", "Ukraine", "China", "United",
 STOP_NOUNS = {"Will", "What", "Which", "Who", "When", "Where", "How", "Yes", "The", "Before", "After", "Next",
               "Another", "Does", "Did", "Market", "President", "January", "February", "March", "April", "May",
               "June", "July", "August", "September", "October", "November", "December"}
-
-# X-feed lanes, first match wins. Coarse, for the dashboard filter; the writer re-curates.
-def _kw(*words: str) -> re.Pattern:
-    return re.compile(r"\b(?:" + "|".join(words) + r")\b", re.I)
-
-
-LANES = [
-    ("other", _kw("smuggl\\w*", "poison\\w*", "snakes?", "lizards?", "manure", "hazmat", "Animal of the Year",
-                  "cognitive test", "freaking genius", "toothbrush", "curry", "bizarre", "weird", "viral", "prank",
-                  "zoo", "sharks?", "alligators?", "bears?", "UFO", "aliens?", "salmon", "byproducts")),
-    ("culture", _kw("NFL", "NBA", "MLB", "NHL", "FIFA", "World Cup", "Super Bowl", "soccer", "football", "basketball",
-                    "tennis", "golf", "Olympics?", "UFC", "boxing", "coach", "quarterback", "Ballon d'Or", "Grammys?",
-                    "Oscars?", "Emmys?", "box office", "movie", "film", "trailer", "album", "Spotify", "concert",
-                    "MrBeast", "YouTube", "streamer", "celebrity", "Taylor Swift", "Rihanna", "Kardashian", "Netflix",
-                    "Rotten Tomatoes", "GTA", "video game", "Nintendo", "PlayStation", "Xbox", "Pokémon",
-                    "documentary", "49ers", "Cowboys", "Lakers", "Yankees")),
-    ("tech", _kw("AI", "OpenAI", "Anthropic", "Claude", "Gemini", "Google", "Apple", "iPhone", "Microsoft", "Nvidia",
-                 "Tesla", "SpaceX", "Starship", "xAI", "Grok", "Musk", "Amazon", "Meta", "TikTok", "robots?", "chips?",
-                 "semiconductors?", "smartphones?", "software", "apps?", "startups?", "data centers?", "GPUs?",
-                 "Walkman", "Sony", "Samsung", "Intel", "AMD", "crypto", "Bitcoin", "Ethereum", "tokens?",
-                 "blockchain", "quantum", "wearables?")),
-    ("finance", _kw("Fed", "Federal Reserve", "Powell", "Warsh", "rates?", "inflation", "CPI", "PPI", "GDP",
-                    "jobs report", "unemployment", "Treasury", "yields?", "bonds?", "stocks?", "S&P", "Nasdaq", "Dow",
-                    "market cap", "IPO", "earnings", "revenue", "banks?", "tariffs?", "oil", "OPEC", "gold", "dollar",
-                    "billion", "trillion", "recession", "economy", "economic", "trade deal", "shipments", "layoffs",
-                    "producer prices", "merger", "prices?", "gas prices")),
-    ("politics", _kw("Trump", "White House", "Congress", "Senate", "House", "Democrats?", "Democratic", "Republicans?",
-                     "GOP", "elections?", "votes?", "voters?", "polls?", "governor", "mayor", "president",
-                     "prime minister", "minister", "parliament", "government", "FBI", "DOJ", "Supreme Court", "court",
-                     "judge", "indict\\w*", "charged", "charges", "sanctions?", "ceasefire", "war", "military",
-                     "missiles?", "strikes?", "troops", "soldiers", "Iran", "Israel", "Gaza", "Hamas", "Houthis?",
-                     "Yemen", "Russia", "Ukraine", "Putin", "Zelensky", "China", "Xi", "Taiwan", "North Korea",
-                     "Kim Jong Un", "Venezuela", "Maduro", "Brazil", "Lula", "Bolsonaro", "Mexico", "Canada", "UK",
-                     "France", "Germany", "EU", "NATO", "UN", "immigration", "ICE", "border", "pardon", "impeach\\w*",
-                     "Pentagon", "Secretary", "Chief of Staff", "Press Secretary", "midterms?", "campaign", "Obama",
-                     "Harris", "Biden", "Navy", "police", "arrests?")),
-]
 
 _requests = 0
 
@@ -450,7 +413,6 @@ def fetch_feed(now: datetime) -> list[dict]:
         posts.append({
             "id": pid, "url": f"https://x.com/polymarket/status/{pid}",
             "kind": "new" if is_new else "breaking",
-            "lane": "new" if is_new else next((lane for lane, rx in LANES if rx.search(text)), "other"),
             "time": when.astimezone(TZ).strftime("%m-%d %H:%M"), "timestamp": int(when.timestamp()),
             "text": text, "odds": bool(re.search(r"\d+%\s*chance", text, re.I)),
         })
@@ -594,10 +556,12 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
     # objective importance signal; they enter as candidates with the odds as the current price.
     for p in posts:
         m = re.search(r"(\d+)%\s*chance", p["text"], re.I)
-        if not m or p["lane"] == "other":
+        if not m:
             continue
         text = re.sub(r"\s*/\s*\d+% chance\.?.*$", "", p["text"]).strip()
-        domain = p["lane"] if p["lane"] in DOMAINS or p["lane"] == "culture" else "politics"
+        words = nouns(text)
+        hit = next((e for e in by_slug.values() if words & nouns(e["title"])), None)  # domain from a matching event
+        domain = hit["domain"] if hit else "politics"
         add("news", text, int(m.group(1)) / 100, None, 50_000, domain, None)
         if text in cands:
             cands[text]["url"], cands[text]["time"] = p["url"], p["time"]
@@ -668,14 +632,6 @@ def text_summary(day: dict) -> str:
             L.append(f"- {delta(m['change1d'])} → {pct(m['yes'])}  {m['question']}{'（已结算）' if m['closed'] else ''}")
     L.append("")
 
-    L.append("## @Polymarket 快讯（24h，按道分组，北京时间）")
-    for lane, label in [("politics", "政经"), ("finance", "政经·财经"), ("tech", "科技"),
-                        ("culture", "文体"), ("other", "猎奇与其他"), ("new", "官方新盘公告")]:
-        rows = [p for p in day["feed"] if p["lane"] == lane]
-        if rows:
-            L.append(f"### {label}（{len(rows)} 条）")
-            L += [f"- {p['time']}  {p['text']}" for p in rows]
-    L.append("")
     fresh = [c for c in day["column"] if c["fresh"]]
     if fresh:
         L.append("## Polymarket 专栏新文章（news.polymarket.com）")

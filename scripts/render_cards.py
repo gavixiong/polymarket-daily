@@ -34,8 +34,6 @@ def eligible(key: str, day: dict) -> bool:
         return len({r["question"] for d in domains for r in day["resolved"][d]}) >= 3
     if key == "new":
         return sum(1 for p in day["feed"] if p["kind"] == "new") + sum(len(day["new"][d]) for d in domains) >= 3
-    if key == "feed":
-        return sum(1 for p in day["feed"] if p["kind"] != "new" and p["lane"] != "other") >= 6
     return True
 
 

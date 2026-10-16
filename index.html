@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Polymarket 日报</title>
-<meta name="description" content="每天一份 Polymarket 预测市场的小红书正文和图片，加上官方突发榜、快讯、热门、新上线、结算和资金流向。">
+<meta name="description" content="每天一份 Polymarket 预测市场的小红书正文和图片，加上官方突发榜、热门、新上线、结算和资金流向。">
 <link rel="icon" type="image/png" href="assets/brand/icon-blue.png">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="assets/shared.js"></script>
@@ -81,10 +81,6 @@ ul.list{list-style:none;padding:0;margin:0} ul.list li{padding:10px 0;border-bot
 .rung{display:contents} .rl{color:var(--ink-2);white-space:nowrap} .rt{height:8px;background:var(--mid);border-radius:4px;overflow:hidden} .rt i{display:block;height:100%;background:var(--c1);border-radius:0 4px 4px 0}
 .rv{font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap} .rv small{color:var(--muted);margin-left:3px}
 .result{display:inline-block;min-width:34px;text-align:center;border-radius:6px;padding:1px 7px;font-size:12.5px;font-weight:600;background:var(--chip)} .result.yes{color:var(--good)}
-.feed{list-style:none;margin:0;padding:0} .feed li{display:grid;grid-template-columns:52px 1fr;gap:10px;padding:8px 0;border-bottom:1px solid var(--grid);font-size:14px} .feed li:last-child{border-bottom:0}
-.feed time{color:var(--muted);font-variant-numeric:tabular-nums;font-size:12.5px;padding-top:2px}
-.feed .lane{display:inline-block;font-size:11px;color:var(--ink-2);background:var(--chip);border-radius:4px;padding:0 6px;margin-right:6px}
-.feed .odds{color:var(--good);font-weight:600}
 .column{font-size:13px;color:var(--ink-2);margin-top:10px} .column a{margin-right:14px}
 pre.xhs{white-space:pre-wrap;font:inherit;margin:0;line-height:1.7}
 .pngs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
@@ -113,9 +109,6 @@ footer{margin-top:36px;color:var(--muted);font-size:12.5px;line-height:1.7}
   <div class="tabs" id="offTabs"></div>
   <div class="card scroll" id="official"></div>
 
-  <h2 class="sec">快讯 <span class="src">@Polymarket 过去 24 小时 · 关键词粗分，正文里由模型重新归道</span></h2>
-  <div class="tabs" id="laneTabs"></div>
-  <div class="card" id="feed"></div>
   <div class="column" id="column"></div>
 
   <h2 class="sec">市场 <span class="src">热门按 24 小时成交，★ 为钉住的长期盘</span></h2>
@@ -133,7 +126,7 @@ footer{margin-top:36px;color:var(--muted);font-size:12.5px;line-height:1.7}
 </div>
 
 <script>
-const { esc, pct, pt, usd, DOMAINS, LANES, OFFICIAL_GROUPS, label, outcomeChart, changeBar, spark, officialRows, overlay } = PM;
+const { esc, pct, pt, usd, DOMAINS, OFFICIAL_GROUPS, label, outcomeChart, changeBar, spark, officialRows, overlay } = PM;
 const $ = s => document.querySelector(s);
 
 $('#theme').onclick = () => {
@@ -159,11 +152,6 @@ const render = {
     return `<table><thead><tr><th>市场</th><th>现在</th><th>24h 变动</th><th></th><th>24h 走势</th></tr></thead><tbody>${rows.map(m => `<tr>
       <td>${link(m.url, zhTitle(m.question))}${m.closed ? '<span class="tag">已结算</span>' : ''}</td>
       <td class="num"><b>${pct(m.yes)}</b></td><td class="num">${pt(m.change1d)}</td><td>${changeBar(m.change1d, max)}</td><td>${spark(m.sparkline)}</td></tr>`).join('')}</tbody></table>`;
-  },
-  feed(day, lane) {
-    const rows = day.feed.filter(p => lane === 'all' || p.lane === lane), name = Object.fromEntries(LANES);
-    if (!rows.length) return '<p class="empty">这一道过去 24 小时没有内容。</p>';
-    return `<ul class="feed">${rows.map(p => `<li><time>${esc(p.time.slice(6))}</time><div>${lane === 'all' ? `<span class="lane">${esc(name[p.lane] || p.lane)}</span>` : ''}<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.text).replace(/(\d+% chance)/i, '<span class="odds">$1</span>')}</a></div></li>`).join('')}</ul>`;
   },
   hot(day, domain) {
     const rows = day.hot[domain];
@@ -207,7 +195,6 @@ async function show(date) {
   const dl = $('#dlAll'); if (dl) dl.onclick = () => PM.downloadZip(date, cards, dl);
 
   tabs($('#offTabs'), OFFICIAL_GROUPS.map(g => [g[0], g[1], officialRows(day, g[0], 99).length]), k => $('#official').innerHTML = render.official(day, k), 'politics');
-  tabs($('#laneTabs'), LANES.map(([k, l]) => [k, l, k === 'all' ? day.feed.length : day.feed.filter(p => p.lane === k).length]), k => $('#feed').innerHTML = render.feed(day, k), 'all');
   $('#column').innerHTML = day.column.length ? 'Polymarket 专栏最近：' + day.column.slice(0, 3).map(c => `<a href="${esc(c.link)}" target="_blank" rel="noopener">${esc(c.date)} · ${esc(c.title)}${c.fresh ? ' <b>新</b>' : ''}</a>`).join('') : '';
   tabs($('#domTabs'), DOMAINS.map(([k, l]) => [k, l, day.hot[k].length]), k => {
     $('#hot').innerHTML = render.hot(day, k); $('#new').innerHTML = render.new(day, k); $('#resolved').innerHTML = render.resolved(day, k);

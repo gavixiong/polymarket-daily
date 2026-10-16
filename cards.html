@@ -57,8 +57,6 @@ svg.spark{width:180px;height:56px;overflow:visible;display:block}
 /* hot (long-running panel) */
 .hot .row{grid-template-columns:1fr;padding:16px 0} .hot .title{display:flex;justify-content:space-between;font-size:32px} .hot .title small{color:var(--muted);font-size:24px}
 .hot .pin{color:var(--c4);margin-right:8px}
-/* feed */
-.feed .row{grid-template-columns:120px 1fr;align-items:start;font-size:32px} .feed time{color:var(--muted);font-variant-numeric:tabular-nums;font-size:28px;padding-top:4px}
 /* gallery */
 .ghead{padding:24px 28px 0;font-size:16px;color:var(--ink-2)} .ghead b{color:var(--ink)} .ghead button{font:inherit;padding:3px 12px;border:1px solid var(--grid);border-radius:8px;background:#fff;cursor:pointer;margin-left:8px}
 .gallery{padding:28px;display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:28px}
@@ -69,9 +67,8 @@ svg.spark{width:180px;height:56px;overflow:visible;display:block}
 <body>
 <div id="root"></div>
 <script>
-const { esc, pct, pt, usd, shortDate, cnDate, stamp, label, outcomeLabel, outcomeChart, changeBar, spark, officialRows, resolvedRows, newRows, feedRows, hotRows, LANES, overlay } = PM;
+const { esc, pct, pt, usd, shortDate, cnDate, stamp, label, outcomeLabel, outcomeChart, changeBar, spark, officialRows, resolvedRows, newRows, hotRows, overlay } = PM;
 const q = new URLSearchParams(location.search);
-const laneName = Object.fromEntries(LANES);
 
 const brand = (day, right) => `<div class="brand"><span><b><img src="assets/brand/icon-black.png" alt="">Polymarket 日报</b> · ${esc(shortDate(day.date))}</span><span>${esc(right)}</span></div>`;
 // Every card's footer carries the data timestamp in both time zones; the left side is the card's own note.
@@ -144,16 +141,10 @@ const CARDS = {
       <div class="rows">${rows.map(e => `<div class="row" style="grid-template-columns:1fr"><div class="t">${esc(label(e.title))}${e.official ? '<span class="tag">官方公告</span>' : ''}${e.outcomes && e.outcomes.length ? `<small style="white-space:normal">${e.outcomes.slice(0, 3).map(o => `${esc(outcomeLabel(o.label))} ${pct(o.yes)}`).join(' · ')}</small>` : ''}</div></div>`).join('')}</div>
       ${foot('新市场往往就是新闻本身')}</section>`;
   },
-  feed(day) {
-    const rows = feedRows(day, 10);
-    return `<section class="card feed">${brand(day, '快讯')}<h1>@Polymarket 今天说了什么</h1><p class="sub">官方 X 账号 · 北京时间 · 正文没放下的</p>
-      <div class="rows">${rows.map(p => `<div class="row"><time>${esc(p.time.slice(6))}</time><div class="t"><span class="chip lane">${esc(laneName[p.lane] || p.lane)}</span>${esc((overlay().feedLabels || {})[p.id] || p.text)}</div></div>`).join('')}</div>
-      ${foot('来源 x.com/polymarket')}</section>`;
-  },
 };
 // A post ships the first five, same order every day. "new" and "feed" are dashboard-only previews.
-const ORDER = [['cover', '封面', true], ['headline', '头条走势', true], ['breaking', '突发榜', true], ['hot', '长期盘', true], ['resolved', '结算', true], ['new', '新盘（仅 Dashboard）', false], ['feed', '快讯（仅 Dashboard）', false]];
-const eligible = (k, day) => !['new', 'feed'].includes(k);
+const ORDER = [['cover', '封面', true], ['headline', '头条走势', true], ['breaking', '突发榜', true], ['hot', '长期盘', true], ['resolved', '结算', true], ['new', '新盘（仅 Dashboard）', false]];
+const eligible = k => k !== 'new';
 // Fixed-size cards: when a list does not fit, drop rows from the bottom rather than shrink type.
 const fit = () => document.querySelectorAll('.card').forEach(c => { const rows = c.querySelector('.rows'); let g = 40; while (rows && c.scrollHeight > c.offsetHeight && rows.children.length > 3 && g--) rows.removeChild(rows.lastElementChild); });
 

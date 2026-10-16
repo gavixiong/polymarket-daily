@@ -21,7 +21,7 @@ Claude Code 定时任务（云端，每天 23:00 UTC）
 |---|---|
 | Gamma / CLOB / Data API（公开接口） | 事件、概率、成交量、7 天走势、大单 |
 | `polymarket.com/api/biggest-movers?category=` | 官方"Breaking"突发榜，含 24 小时走势 |
-| `polymarket.com/breaking` 内嵌的 @Polymarket X 镜像 | 官方快讯（约 60 条/天）与新盘公告，按关键词粗分道 |
+| `polymarket.com/breaking` 内嵌的 @Polymarket X 镜像 | 只在内部使用：给市场变动匹配原因、识别官方挂了概率的快讯、新盘公告 |
 | `news.polymarket.com/feed` | Polymarket 专栏 RSS |
 
 接口细节与已知坑见 [docs/api-research.md](docs/api-research.md)，写作规则见 [ROUTINE.md](ROUTINE.md)。

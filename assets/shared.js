@@ -14,7 +14,6 @@ const PM = (() => {
   const cnDate = d => { const [y, m, dd] = d.split('-'); return `${y} 年 ${+m} 月 ${+dd} 日`; };
 
   const DOMAINS = [['politics', '时政'], ['finance', '金融'], ['tech', '科技']];
-  const LANES = [['all', '全部'], ['politics', '政经'], ['finance', '财经'], ['tech', '科技'], ['culture', '文体'], ['other', '猎奇与其他'], ['new', '新盘公告']];
   const OFFICIAL_GROUPS = [['politics', '时政与全球', ['politics', 'world']], ['finance', '金融与加密', ['finance', 'crypto']], ['tech', '科技', ['tech']], ['culture', '文化体育', ['culture']]];
 
   // Chinese overlay written daily by the writing agent (reports/<date>.zh.json). Missing keys fall back to English.
@@ -102,7 +101,6 @@ const PM = (() => {
     const seen = new Set(posts.map(p => p.title));
     return posts.concat(DOMAINS.flatMap(([d]) => day.new[d]).filter(e => !seen.has(e.title) && seen.add(e.title))).slice(0, n);
   };
-  const feedRows = (day, n = 10) => day.feed.filter(p => p.kind !== 'new' && p.lane !== 'other').slice(0, n);
   const hotRows = (day, n = 10) => DOMAINS.flatMap(([d]) => day.hot[d].filter(e => e.pinned)).concat(DOMAINS.flatMap(([d]) => day.hot[d].filter(e => !e.pinned).slice(0, 3))).slice(0, n);
 
   /* Load one day: data + overlay + post text + rendered PNG index. */
@@ -133,7 +131,7 @@ const PM = (() => {
     setTimeout(() => { btn.textContent = orig; btn.disabled = false; }, 2500);
   }
 
-  return { esc, pct, pt, usd, shortDate, cnDate, stamp, DOMAINS, LANES, OFFICIAL_GROUPS, setOverlay, overlay, label, outcomeLabel,
-           shareBar, ladderBars, binaryBar, outcomeChart, changeBar, spark, officialRows, resolvedRows, newRows, feedRows, hotRows,
+  return { esc, pct, pt, usd, shortDate, cnDate, stamp, DOMAINS, OFFICIAL_GROUPS, setOverlay, overlay, label, outcomeLabel,
+           shareBar, ladderBars, binaryBar, outcomeChart, changeBar, spark, officialRows, resolvedRows, newRows, hotRows,
            loadDay, loadIndex, downloadZip };
 })();
