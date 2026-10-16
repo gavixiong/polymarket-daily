@@ -90,6 +90,8 @@ RESOLVED_PER_DOMAIN = 8
 HOT_MIN_VOL24H = 20_000
 RESOLVED_MIN_VOL = 2_000
 MOVER_MIN_CHANGE = 0.05
+YOUNG_H = 23                # an event created less than this many hours ago has no trustworthy 24h change
+OPEN_SETTLE_S = 3600        # a 24h-ago price that did not hold for an hour is not a baseline (see settle_spike)
 MOVER_PRICE_RANGE = (0.03, 0.97)
 MOVER_MIN_VOL24H = 5_000
 WHALE_MIN_USD = 10_000
@@ -410,6 +412,27 @@ def movers(events: dict[str, dict]) -> list[dict]:
     return out
 
 
+def settle_spike(hist: list[dict], yes: float | None, official_change: float | None) -> dict:
+    """Re-base a 24h change that starts from a price that did not exist for more than a few minutes.
+
+    The board's oneDayPriceChange runs from the first print in its window. On a market listed inside the
+    window that is the opening print of a thin book (11% for half an hour, then 88% all day); on an older
+    market it can be a blip that reverted within the hour. Either way the "jump" never happened. If the
+    opening price held for the rest of the first hour it was real and nothing changes. Otherwise the
+    baseline becomes the median price of hours 1 to 6, and the board's figure is kept for the writer."""
+    if len(hist) < 4 or yes is None:
+        return {}
+    t0, p0 = hist[0]["t"], hist[0]["p"]
+    held = [h["p"] for h in hist[1:] if h["t"] <= t0 + OPEN_SETTLE_S]
+    if any(abs(p - p0) < 0.10 for p in held):
+        return {}
+    window = [h["p"] for h in hist if t0 + OPEN_SETTLE_S <= h["t"] <= t0 + 6 * OPEN_SETTLE_S] or [hist[min(3, len(hist) - 1)]["p"]]
+    base = sorted(window)[len(window) // 2]
+    if abs(p0 - base) < 0.15:
+        return {}
+    return {"rebased": "spike", "firstPrint": round(p0, 3), "officialChange1d": official_change, "change1d": round(yes - base, 4)}
+
+
 def fetch_official() -> dict[str, list[dict]]:
     """Polymarket's own 'Breaking' board, per category, plus a 7-day curve for the top three."""
     out = {}
@@ -423,13 +446,15 @@ def fetch_official() -> dict[str, list[dict]]:
             hist = m.get("history") or []
             ids = m.get("clobTokenIds") or []
             ids = json.loads(ids) if isinstance(ids, str) else list(ids)
-            items.append({
+            row = {
                 "question": m.get("question"), "yes": m.get("currentPrice"), "change1d": m.get("oneDayPriceChange"),
                 "closed": bool(m.get("closed")), "eventSlug": ev.get("slug"),
                 "url": f"https://polymarket.com/event/{ev.get('slug')}" if ev.get("slug") else None,
                 "sparkline": [[h["t"], round(h["p"], 3)] for h in hist[::max(1, len(hist) // 24)]],
                 "points": len(hist), "yesTokenId": str(ids[0]) if ids else None,
-            })
+            }
+            row.update(settle_spike(hist, row["yes"], row["change1d"]))
+            items.append(row)
         out[cat] = items
     top = sorted((m for c, ms in out.items() if c != "culture" for m in ms),
                  key=lambda m: abs(m["change1d"] or 0), reverse=True)
@@ -551,9 +576,17 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
     posts = [p for p in day["feed"] if p["kind"] == "breaking"]
     cands: dict[str, dict] = {}
 
-    def add(kind, question, yes, change, vol, domain, ev, *, closed=False, label=None, event_title=None, points=None):
+    young_cut = datetime.now(TZ) - timedelta(hours=YOUNG_H)
+
+    def add(kind, question, yes, change, vol, domain, ev, *, closed=False, label=None, event_title=None, points=None,
+            young=None):
         if not question or is_noise(question) or DAILY.search(question):
             return
+        if young is None:  # Gamma rows carry no price path; go by the event's listing time
+            created = parse_iso(ev.get("createdAt")) if ev else None
+            if created and created.tzinfo is None:
+                created = created.replace(tzinfo=timezone.utc)
+            young = {"listedAgoH": round((datetime.now(TZ) - created).total_seconds() / 3600, 1)} if created and created > young_cut else None
         if closed and (yes or 0) < 0.5:
             return                                  # a rung resolving No on its own is never news
         change = change or 0
@@ -564,6 +597,8 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
             surprise = 0.2                          # Polymarket chose to attach odds to this headline
         elif new_market:
             surprise = 0.08                         # first move of a market listed at 50% is not a move
+        elif young and not young.get("rebased"):
+            surprise = abs(change) * 0.3            # event created today, no price path to re-base on: discount
         else:
             surprise = abs(change) + (0.3 if closed else 0)
         attention = max(1.0, math.log10(max(vol or 0, 1000)) - 2)      # $1k -> 1, $1M -> 4
@@ -581,7 +616,7 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
             "eventKind": ev["kind"] if ev else None,
             "yes": yes, "change1d": change,
             "from": round(yes - change, 3) if (yes is not None and kind not in ("resolved", "news")) else None,
-            "closed": closed, "newMarket": new_market, "volume24h": vol, "score": score,
+            "closed": closed, "newMarket": new_market, "young": young or None, "volume24h": vol, "score": score,
             "repeated": repeated, "lastMention": mention["date"] if mention else None,
             "siblings": [{"label": o["label"], "yes": o["yes"]} for o in ev["outcomes"][:4]] if ev and ev["kind"] != "binary" else [],
             "causes": causes, "url": ev["url"] if ev else None,
@@ -595,7 +630,8 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
         for m in ms:
             ev = by_slug.get(m["eventSlug"])
             add("official", m["question"], m["yes"], m["change1d"], ev["volume24h"] if ev else 10_000,
-                OFFICIAL_CATEGORIES[cat], ev, closed=m["closed"], points=m["points"])
+                OFFICIAL_CATEGORIES[cat], ev, closed=m["closed"], points=m["points"],
+                young={k: m[k] for k in ("rebased", "firstPrint", "officialChange1d")} if m.get("rebased") else False)
     for m in mv:
         ev = m["event"]
         add("mover", m["question"], m["yes"], m["change1d"], ev["volume24h"], ev["domain"], ev,
@@ -659,6 +695,13 @@ def text_summary(day: dict) -> str:
             notes.append("已结算")
         if p["newMarket"]:
             notes.append("今天新上线的档位，起点 50% 是默认值，不算变动")
+        elif p.get("young"):
+            y = p["young"]
+            if y.get("rebased"):
+                notes.append(f"24 小时前的 {pct(y['firstPrint'])} 只存在了不到一小时（新上线的开盘首笔或一个尖峰），官方榜写的 "
+                             f"{delta(y['officialChange1d'])} 不要用；按稳定价格算起点是 {pct(p['from'])}")
+            else:
+                notes.append(f"上线才 {y['listedAgoH']} 小时，起点可能是开盘首笔，变动不可靠，只写现在多少")
         if p["repeated"]:
             notes.append(f"7 天内报过（{p['lastMention']}），数值没怎么变，慎用")
         elif p["lastMention"]:
@@ -687,7 +730,9 @@ def text_summary(day: dict) -> str:
             seen.add(m["question"])
             if len(seen) > 8:
                 break
-            L.append(f"- {delta(m['change1d'])} → {pct(m['yes'])}  {m['question']}{'（已结算）' if m['closed'] else ''}")
+            young = (f"（官方榜 {delta(m['officialChange1d'])} 从只存在了不到一小时的 {pct(m['firstPrint'])} 算起，"
+                     f"已改为稳定价格起点）") if m.get("rebased") else ""
+            L.append(f"- {delta(m['change1d'])} → {pct(m['yes'])}  {m['question']}{'（已结算）' if m['closed'] else ''}{young}")
     L.append("")
 
     fresh = [c for c in day["column"] if c["fresh"]]

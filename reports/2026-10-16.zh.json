@@ -1,12 +1,12 @@
 {
-  "title": "市场一夜转向看好美伊停火",
-  "headline": "美伊停火撑到 10 月 18 日的概率一天从 11% 升到 92%；撑到 10 月底仍有 78%。",
+  "title": "特斯拉 Roadster 真的飞起来了",
+  "headline": "Roadster 发布会上当场起飞，\"0 到 60 英里加速不到 1 秒\"的概率一天从 22% 升到 94%，\"能飞 1 秒以上\"已结算为是。",
   "hero": {
-    "value": "11% → 92%",
-    "label": "美伊停火撑到 10 月 18 日"
+    "value": "22% → 94%",
+    "label": "Roadster 0 到 60 英里加速不到 1 秒"
   },
-  "headlineQuestion": "US x Iran ceasefire continues through October 18?",
-  "headlineTitle": "美伊停火撑到 10 月 18 日",
+  "headlineQuestion": "Will the Tesla Roadster's 0-60 time be less than 1 second?",
+  "headlineTitle": "Roadster 加速不到 1 秒",
   "skip": [
     "Will Ukraine target Moscow on October 16, 2026?",
     "Military action against King Khalid International Airport (RUH) by October 15?",
@@ -19,7 +19,7 @@
     "Will the 5-year Treasury yield dip below 4.50% before 2027?": "5 年期美债收益率年内跌破 4.50%",
     "Will the median home value in the US be between $407,000 and $411,000 on December 31?": "美国房价中位数年底在 40.7 万到 41.1 万美元",
     "Will NVIDIA be the second-largest company in the world by market cap on December 31?": "英伟达年底市值排第二",
-    "Will the Tesla Roadster's 0-60 time be less than 1 second?": "Tesla Roadster 百公里加速不到 1 秒",
+    "Will the Tesla Roadster's 0-60 time be less than 1 second?": "Roadster 0-60 英里加速不到 1 秒",
     "Will Anthropic be the #2 AI lab at the end of October 2026?": "Anthropic 10 月底排 AI 实验室第二",
     "Another GTA VI trailer released by October 31?": "GTA VI 10 月底前再发预告片",
     "Will Daniel Craig be nominated for Best Supporting Actor at the 99th Academy Awards?": "Daniel Craig 获奥斯卡最佳男配提名",
@@ -74,17 +74,30 @@
     "US x Iran ceasefire continues through October 18?": "美伊停火撑到 10 月 18 日",
     "Will StandX launch a token by December 31, 2026?": "StandX 年底前发币",
     "US imports Russian diesel by November 30?": "美国 11 月底前进口俄罗斯柴油",
-    "Next Fable Model (5.2+) released by October 17, 2026?": "下一代 Fable 模型 10 月 17 日前发布"
+    "Next Fable Model (5.2+) released by October 17, 2026?": "下一代 Fable 模型 10 月 17 日前发布",
+    "Will SB Energy not IPO before January 2027?": "SB Energy 2027 年前不上市",
+    "Will Anthropic's IPO valuation be between $1.50T and $1.75T?": "Anthropic IPO 估值 1.5 到 1.75 万亿",
+    "Will StandX launch a token by June 30, 2027?": "StandX 2027 年中前发币",
+    "Papertrade FDV above $100M one day after launch?": "Papertrade 上线次日估值超 1 亿美元",
+    "US x Yemen ceasefire continues through October 15?": "美也停火持续到 10 月 15 日"
   },
   "outcomes": {},
   "picked": [
     {
-      "question": "US x Iran ceasefire continues through October 18?",
-      "yes": 0.92
+      "question": "Will the Tesla Roadster's 0-60 time be less than 1 second?",
+      "yes": 0.94
     },
     {
-      "question": "President Lula makes a late surge in Brazil's presidential election odds with just 10 days until the runoff.",
-      "yes": 0.25
+      "question": "Will the Tesla Roadster fly for 1s+?",
+      "yes": 1.0
+    },
+    {
+      "question": "Tesla & SpaceX projected to announce a merger by end of next year, as Tesla unveils its new flying Roadster.",
+      "yes": 0.63
+    },
+    {
+      "question": "Next Fable Model (5.2+) released by October 17, 2026?",
+      "yes": 0.03
     },
     {
       "question": "Will the Bank of Israel make no change to the Bank of Israel Interest Rate after the October decision?",
@@ -92,23 +105,32 @@
     },
     {
       "question": "What will WTI Crude Oil (WTI) hit in October 2026?",
-      "yes": 0.66
+      "yes": 0.46
     },
     {
-      "question": "Michael Saylor's MicroStrategy projected to be removed from MSCI index by end of year.",
-      "yes": 0.92
+      "question": "Will Anthropic's IPO valuation be between $1.50T and $1.75T?",
+      "yes": 0.38
     },
     {
-      "question": "Next Fable Model (5.2+) released by October 17, 2026?",
-      "yes": 0.04
-    },
-    {
-      "question": "Will the Tesla Roadster fly for 1s+?",
-      "yes": 0.55
-    },
-    {
-      "question": "Another GTA VI trailer released by October 31?",
+      "question": "US x Iran ceasefire continues through October 15?",
       "yes": 1.0
+    },
+    {
+      "question": "US x Yemen ceasefire continues through October 15?",
+      "yes": 1.0
+    },
+    {
+      "question": "Israel x Iran ceasefire continues through October 15?",
+      "yes": 1.0
+    },
+    {
+      "question": "President Lula makes a late surge in Brazil's presidential election odds with just 10 days until the runoff.",
+      "yes": 0.25
+    },
+    {
+      "question": "Will Rihanna have the second-greatest number of monthly Spotify listeners this month?",
+      "yes": 0.7
     }
-  ]
+  ],
+  "headlineCause": "发布会上 Roadster 当场起飞，Musk 称它是 Tesla 最后一款人开的车"
 }
