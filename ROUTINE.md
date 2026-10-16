@@ -58,7 +58,7 @@ Polymarket 今日 · 10/16
 …
 8. 文体 GTA VI 10 月底前再发预告片，从 61% 直接结算到 100%。
 
-图 2 头条走势 · 图 3 突发榜 · 图 4 长期盘
+图 2 头条走势 · 图 3 突发榜 · 图 4 长期盘 · 图 5 昨日结算
 #Polymarket #预测市场
 ```
 
@@ -99,7 +99,7 @@ python3 -m pip install -q playwright && python3 -m playwright install chromium  
 python3 scripts/render_cards.py
 ```
 
-输出 `cards/<日期>/`。固定四张（封面、头条走势、突发榜、长期盘）加满足条件的浮动卡（结算、新盘），每天 4 到 6 张。快讯卡只在 Dashboard 预览，不渲染。失败就跳过并汇报，不阻塞提交。
+输出 `cards/<日期>/`，每天固定五张，顺序不变：封面、头条走势、突发榜、长期盘、结算。新盘和快讯只在 Dashboard 预览，不渲染。失败就跳过并汇报，不阻塞提交。
 
 ## 5. 提交推送
 

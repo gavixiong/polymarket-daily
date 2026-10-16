@@ -22,8 +22,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 W, H = 1242, 1660
-FIXED = ["cover", "headline", "breaking", "hot"]
-FLOATING = ["resolved", "new"]   # the feed card stays dashboard-only: English headlines, already digested in the post
+FIXED = ["cover", "headline", "breaking", "hot", "resolved"]   # the five images a post ships, same order every day
+FLOATING: list[str] = []   # "new" and "feed" stay dashboard-only previews
 CHROME = ["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "/Applications/Chromium.app/Contents/MacOS/Chromium",
           "google-chrome", "google-chrome-stable", "chromium", "chromium-browser"]
 

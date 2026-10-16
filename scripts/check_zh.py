@@ -102,7 +102,7 @@ def main() -> int:
             if o["label"] and not outcome_ok(o["label"], zh):
                 missing_outcomes.append(o["label"])
     need += [("结算", r["question"]) for r in resolved_rows(day)]
-    need += [("新盘", t) for t in new_rows(day)]
+    # "新盘" and "快讯" cards are dashboard-only previews, not checked.
     if zh.get("headlineQuestion"):
         need.append(("头条", zh["headlineQuestion"]))
     for card, q in need:

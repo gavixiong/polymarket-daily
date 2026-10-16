@@ -151,9 +151,9 @@ const CARDS = {
       ${foot('来源 x.com/polymarket')}</section>`;
   },
 };
-const ORDER = [['cover', '封面', true], ['headline', '头条走势', true], ['breaking', '突发榜', true], ['hot', '长期盘', true], ['resolved', '结算', false], ['new', '新盘', false], ['feed', '快讯（仅 Dashboard，不进小红书）', false]];
-// The feed card never ships: English headlines the post has already digested. It stays here for the dashboard preview.
-const eligible = (k, day) => k === 'resolved' ? resolvedRows(day).length >= 3 : k === 'new' ? newRows(day).length >= 3 : k === 'feed' ? false : true;
+// A post ships the first five, same order every day. "new" and "feed" are dashboard-only previews.
+const ORDER = [['cover', '封面', true], ['headline', '头条走势', true], ['breaking', '突发榜', true], ['hot', '长期盘', true], ['resolved', '结算', true], ['new', '新盘（仅 Dashboard）', false], ['feed', '快讯（仅 Dashboard）', false]];
+const eligible = (k, day) => !['new', 'feed'].includes(k);
 // Fixed-size cards: when a list does not fit, drop rows from the bottom rather than shrink type.
 const fit = () => document.querySelectorAll('.card').forEach(c => { const rows = c.querySelector('.rows'); let g = 40; while (rows && c.scrollHeight > c.offsetHeight && rows.children.length > 3 && g--) rows.removeChild(rows.lastElementChild); });
 
