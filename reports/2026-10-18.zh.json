@@ -1,0 +1,77 @@
+{
+  "title": "俄夺Dovha Balka概率升到72%",
+  "headline": "市场一天内大幅转向，认为俄军年底前攻占 Dovha Balka 的可能性明显变大，概率从 26% 升到 72%。",
+  "hero": {
+    "value": "26% → 72%",
+    "label": "俄军年底前攻占 Dovha Balka，一天升了 46 个百分点"
+  },
+  "headlineQuestion": "Will Russia capture Dovha Balka by December 31, 2026?",
+  "headlineTitle": "俄军年底前攻占 Dovha Balka",
+  "skip": [],
+  "labels": {
+    "Will Russia capture Dovha Balka by December 31, 2026?": "俄军年底前攻占 Dovha Balka",
+    "Will Russia capture Dovha Balka by...?": "俄军攻占 Dovha Balka",
+    "Will Russia target Kyiv on October 17, 2026?": "俄罗斯 10 月 17 日打击基辅",
+    "Will there be 20 to 34 West Nile neuroinvasive disease cases among NYC residents in 2026?": "纽约市西尼罗河神经侵袭病例 20 到 34 例",
+    "Will GitHub's longest critical incident in October 2026 be between 3 and 6 hours?": "GitHub 10 月最长严重故障 3 到 6 小时",
+    "Will OpenRouter process between 675T and 725T tokens from Sep 28 to Oct 25?": "OpenRouter 9/28 到 10/25 处理 675T 到 725T 词元",
+    "Will the highest score achieved by a SpaceXAI Grok model on Humanity’s Last Exam in 2026 be 45% or higher?": "Grok 年内人类最后考试得分达 45%",
+    "Will the Central Bank of Colombia make no change to the monetary policy interest rate at the October meeting?": "哥伦比亚央行 10 月利率不变",
+    "Will Luca Niculescu be the next Prime Minister of Romania?": "Luca Niculescu 出任罗马尼亚总理",
+    "US-Iran ceasefire continues through...?": "美伊停火持续到何时",
+    "Brazil Presidential Election": "巴西总统选举",
+    "Israel x Iran ceasefire continues through...?": "以伊停火持续到何时",
+    "Fed Decision in October?": "10 月美联储利率决议",
+    "Will the Tesla Roadster's 0-60 time be less than 1 second?": "Roadster 0-60 英里加速不到 1 秒",
+    "What price will Bitcoin hit in October?": "比特币 10 月触及价位",
+    "Fed Decision in December?": "12 月美联储利率决议",
+    "Which company has the best AI model end of October?": "10 月底最强 AI 模型属于哪家",
+    "US x Iran ceasefire continues through October 16?": "美伊停火持续到 10 月 16 日",
+    "Aziz Akhannouch out as Morocco Prime Minister by December 31, 2026?": "摩洛哥首相 Akhannouch 年底前下台",
+    "Next Astra Model (6.1+) released by October 16, 2026?": "Astra 6.1 以上 10 月 16 日前发布",
+    "Will Christoffer Öqvist be the next Regional Board Chair of Region Sörmland?": "Christoffer Öqvist 出任 Sörmland 地区董事长",
+    "Will Urban Granström be the next Regional Board Chair of Region Sörmland?": "Urban Granström 出任 Sörmland 地区董事长",
+    "Next Fable Model (5.2+) released by October 16, 2026?": "Fable 5.2 以上 10 月 16 日前发布",
+    "Next DeepSeek Flash released by November 30, 2026?": "DeepSeek Flash 11 月底前发布",
+    "Israel x Lebanon Effective Ceasefire by September 30?": "以黎 9 月底前实际停火"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will Russia capture Dovha Balka by December 31, 2026?",
+      "yes": 0.72
+    },
+    {
+      "question": "Supreme Court Justice Samuel Alito projected to announce his retirement before July of next year.",
+      "yes": 0.59
+    },
+    {
+      "question": "CNN's Scott Jennings emerges as the favorite to be Trump's next press secretary.",
+      "yes": 0.18
+    },
+    {
+      "question": "Will Luca Niculescu be the next Prime Minister of Romania?",
+      "yes": 0.95
+    },
+    {
+      "question": "Aziz Akhannouch out as Morocco Prime Minister by December 31, 2026?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will the Central Bank of Colombia make no change to the monetary policy interest rate at the October meeting?",
+      "yes": 0.48
+    },
+    {
+      "question": "Will the next Fable model (5.2+) debut at a score of at least 1510 by June 30, 2027?",
+      "yes": 0.68
+    },
+    {
+      "question": "Will there be 20 to 34 West Nile neuroinvasive disease cases among NYC residents in 2026?",
+      "yes": 0.69
+    },
+    {
+      "question": "Will \"Sense and Sensibility\" Opening Weekend Box Office be between 7m and 8m?",
+      "yes": 0.82
+    }
+  ]
+}
