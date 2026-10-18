@@ -1,0 +1,75 @@
+{
+  "title": "特朗普力挺Likud，市场原只给30%",
+  "headline": "特朗普公开表态支持以色列执政党 Likud 参加大选，市场前一天只给 30%，结果真发生了，已成定局。",
+  "hero": {
+    "value": "30% → 100%",
+    "label": "特朗普支持 Likud 参加大选，市场前一天只给 30%"
+  },
+  "headlineQuestion": "Will Trump endorse Likud in the 2026 Israeli Election?",
+  "headlineTitle": "特朗普支持 Likud 参加以色列大选",
+  "skip": [],
+  "labels": {
+    "Will Trump endorse Likud in the 2026 Israeli Election?": "特朗普支持 Likud 参加大选",
+    "Will Miloš Vučević win the next Serbia presidential election?": "Vučević 赢得塞尔维亚总统选举",
+    "Will Lula win the most votes in the second round of the Brazil presidential election from Amapá?": "Lula 在阿马帕州第二轮得票最多",
+    "Will Russia target Kyiv on October 18, 2026?": "俄罗斯 10 月 18 日打击基辅",
+    "Next Astra Model (6.1+) released by October 23, 2026?": "Astra 6.1 以上 10 月 23 日前发布",
+    "Will GitHub's longest critical incident in October 2026 be between 3 and 6 hours?": "GitHub 10 月最长严重故障 3 到 6 小时",
+    "Will the next Fable model (5.2+) be released on October 22, 2026?": "Fable 5.2 以上 10 月 22 日发布",
+    "Will Xiaomi have the best Chinese AI model at the end of October 2026?": "小米 10 月底成中国最强 AI 模型",
+    "Brazil Presidential Election": "巴西总统选举",
+    "US-Iran ceasefire continues through...?": "美伊停火持续到何时",
+    "Israel x Iran ceasefire continues through...?": "以伊停火持续到何时",
+    "Fed Decision in October?": "10 月美联储利率决议",
+    "Will the Tesla Roadster's 0-60 time be less than 1 second?": "Roadster 0-60 英里加速不到 1 秒",
+    "What price will Bitcoin hit in October?": "比特币 10 月触及价位",
+    "What price will Bitcoin hit in 2026?": "比特币年内触及价位",
+    "Which company has the best AI model end of October?": "10 月底最强 AI 模型属于哪家",
+    "US x Iran ceasefire continues through October 17?": "美伊停火持续到 10 月 17 日",
+    "Israel x Iran ceasefire continues through October 18?": "以伊停火持续到 10 月 18 日",
+    "US x Iran ceasefire continues through October 18?": "美伊停火持续到 10 月 18 日",
+    "Will the 2026 United Left primary for the 2027 French presidential election be canceled?": "法国统一左翼初选被取消",
+    "Will Kareem Allam win the 2026 Vancouver mayoral election?": "Kareem Allam 当选温哥华市长",
+    "Will Ken Sim win the 2026 Vancouver mayoral election?": "Ken Sim 当选温哥华市长",
+    "Next Fable Model (5.2+) released by October 17, 2026?": "Fable 5.2 以上 10 月 17 日前发布",
+    "Will Pete Fry win the 2026 Vancouver mayoral election?": "Pete Fry 当选温哥华市长",
+    "What will WTI Crude Oil (WTI) hit in October 2026?": "WTI 原油 10 月触及价位",
+    "Will Anthropic have the best AI model at the end of October 2026?": "Anthropic 10 月底最强 AI 模型",
+    "Will The Odyssey win Best Production Design at the 99th Academy Awards?": "《奥德赛》夺奥斯卡最佳美术设计"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will Trump endorse Likud in the 2026 Israeli Election?",
+      "yes": 1.0
+    },
+    {
+      "question": "US x Iran ceasefire continues through October 18?",
+      "yes": 1.0
+    },
+    {
+      "question": "Israel x Iran ceasefire continues through October 18?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will the 2026 United Left primary for the 2027 French presidential election be canceled?",
+      "yes": 0.99
+    },
+    {
+      "question": "What will WTI Crude Oil (WTI) hit in October 2026?",
+      "yes": 0.8
+    },
+    {
+      "question": "Will Anthropic have the best AI model at the end of October 2026?",
+      "yes": 0.28
+    },
+    {
+      "question": "Will Xiaomi have the best Chinese AI model at the end of October 2026?",
+      "yes": 0.5
+    },
+    {
+      "question": "Will The Odyssey win Best Production Design at the 99th Academy Awards?",
+      "yes": 0.64
+    }
+  ]
+}
