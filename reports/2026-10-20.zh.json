@@ -1,0 +1,82 @@
+{
+  "title": "巴黎宵禁真的来了，市场此前几乎不给机会",
+  "headline": "巴黎在 10 月 19 日前实施宵禁，答案出来了：真的发生了，市场此前几乎没人看好，概率从 0% 直接结算到 100%。",
+  "hero": {
+    "value": "0% → 100%",
+    "label": "巴黎 10 月 19 日前宵禁，市场此前几乎没人看好"
+  },
+  "headlineQuestion": "Paris curfew by October 19?",
+  "headlineTitle": "巴黎 10 月 19 日前实施宵禁",
+  "skip": [],
+  "labels": {
+    "Paris curfew by October 19?": "巴黎 10 月 19 日前宵禁",
+    "Paris curfew by October 21?": "巴黎 10 月 21 日前宵禁",
+    "Curfew in a major French city by October 24, 2026?": "法国大城市 10 月 24 日前宵禁",
+    "Will the Bank of Canada increase the target for the overnight rate by 25 bps at the October interest rate announcement?": "加拿大央行 10 月加息 25 个基点",
+    "Bank of Canada Decision in October?": "加拿大央行 10 月利率决议",
+    "Will Japan's core CPI increase by less than or equal to 1.9% in 2026?": "日本 2026 核心通胀不超过 1.9%",
+    "Japan Core CPI YoY in 2026": "日本 2026 核心通胀",
+    "Will Meta be the third-best Code Arena | WebDev AI lab at the end of October 2026?": "Meta 10 月底排 Code Arena 第三",
+    "Third-best Code Arena WebDev AI Lab end of October?": "10 月底 Code Arena 第三名",
+    "Next OpenAI GPT Terra (5.7+) released by November 30, 2026?": "GPT Terra 11 月 30 日前发布",
+    "Next OpenAI GPT Terra (5.7+) released by...?": "GPT Terra 何时发布",
+    "Will \"I Love Boosters\" be nominated for Best Costume Design at the 99th Academy Awards?": "《I Love Boosters》获奥斯卡服装设计提名",
+    "Next Fable Model (5.2+) released by October 21, 2026?": "Fable 5.2 以上 10 月 21 日前发布",
+    "Next Fable Model (5.2+) released by...?": "Fable 5.2 以上何时发布",
+    "Will the OpenAI spy be accused of working for Saudi Arabia by December 31?": "OpenAI 间谍被指为沙特效力",
+    "Who will the OpenAI spy be accused of working for in 2026?": "OpenAI 间谍被指为谁效力",
+    "Will Blue and White win less than 0.75% of the vote in the 2026 Knesset elections?": "Blue and White 得票不足 0.75%",
+    "US-Iran ceasefire continues through...?": "美伊停火持续到何时",
+    "Brazil Presidential Election": "巴西总统选举",
+    "Brazil Presidential Election Second Round: Margin of Victory": "巴西总统选举第二轮得票差",
+    "Fed Decision in October?": "10 月美联储利率决议",
+    "What price will Bitcoin hit in October?": "比特币 10 月触及价位",
+    "Anthropic announces bankruptcy by...?": "Anthropic 何时宣布破产",
+    "Will the Tesla Roadster's 0-60 time be less than 1 second?": "Roadster 0-60 英里加速不到 1 秒",
+    "Which company has the best AI model end of October?": "10 月底最强 AI 模型属于哪家",
+    "Israel x Iran ceasefire continues through October 18?": "以伊停火持续到 10 月 18 日",
+    "US x Iran ceasefire continues through October 18?": "美伊停火持续到 10 月 18 日",
+    "Will the 2026 United Left primary for the 2027 French presidential election be canceled?": "法国统一左翼初选被取消",
+    "Lula x Flávio Bolsonaro debate before second round?": "Lula 与 Flávio Bolsonaro 第二轮前辩论",
+    "Will Marine Tondelier be the joint left nominee for the 2027 French presidential election?": "Marine Tondelier 成法国左翼联合候选人"
+  },
+  "outcomes": {
+    "Flávio Bolsonaro <4%": "Flávio Bolsonaro 领先不足 4 个百分点",
+    "Flávio Bolsonaro 4-8%": "Flávio Bolsonaro 领先 4 到 8 个百分点",
+    "Lula da Silva <4%": "Lula da Silva 领先不足 4 个百分点"
+  },
+  "picked": [
+    {
+      "question": "Paris curfew by October 19?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will the OpenAI spy be accused of working for Saudi Arabia by December 31?",
+      "yes": 0.49
+    },
+    {
+      "question": "Will the Bank of Canada increase the target for the overnight rate by 25 bps at the October interest rate announcement?",
+      "yes": 0.84
+    },
+    {
+      "question": "Will Japan's core CPI increase by less than or equal to 1.9% in 2026?",
+      "yes": 0.26
+    },
+    {
+      "question": "Will Meta be the third-best Code Arena | WebDev AI lab at the end of October 2026?",
+      "yes": 0.73
+    },
+    {
+      "question": "Next OpenAI GPT Terra (5.7+) released by November 30, 2026?",
+      "yes": 0.97
+    },
+    {
+      "question": "Next Fable Model (5.2+) released by October 21, 2026?",
+      "yes": 0.2
+    },
+    {
+      "question": "Will \"I Love Boosters\" be nominated for Best Costume Design at the 99th Academy Awards?",
+      "yes": 0.18
+    }
+  ]
+}
