@@ -81,6 +81,10 @@ DAILY = re.compile(r"\bon (January|February|March|April|May|June|July|August|Sep
                    r" \d{1,2}(, \d{4})?\?$")
 # Numeric brackets ("between $407,000 and $411,000", "100-119", "25m and 30m"): never a headline on their own
 BRACKET = re.compile(r"\bbetween\b|\b\d[\d,.]*[kmb]?\s*(-|–|to)\s*\$?\d[\d,.]*[kmb]?\b", re.I)
+# Earnings-season markets: "(NFLX) Q3 operating margin 32% to 34%?". Thin by nature, but each settled bracket is a
+# real-world result (the company reported). They bypass the volume floors and the bracket rule.
+EARNINGS = re.compile(r"\((?!HIGH\)|LOW\))[A-Z]{1,5}\)|\bQ[1-4]\b.*\b(revenue|margin|EPS|earnings|sales|growth|subscribers|deliveries|load factor|procedure)", re.I)
+EARNINGS_MIN_VOL = 2_000
 DATE_RUNG = re.compile(r"^(January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}(, \d{4})?$")
 
 # Thresholds
@@ -410,7 +414,8 @@ def fetch_resolved(now: datetime, events: dict[str, dict], prev_questions: set[s
                                                "ascending": "false", "limit": 100}) or []:
                 q = m.get("question") or ""
                 closed = parse_iso(m.get("closedTime"))
-                if (m["id"] in seen or not closed or closed < cutoff or fnum(m.get("volume")) < RESOLVED_MIN_VOL
+                if (m["id"] in seen or not closed or closed < cutoff
+                        or fnum(m.get("volume")) < (EARNINGS_MIN_VOL if EARNINGS.search(q) else RESOLVED_MIN_VOL)
                         or is_noise(q) or DAILY.search(q) or q in prev_questions):
                     continue
                 seen.add(m["id"])
@@ -465,7 +470,7 @@ def fetch_resolved(now: datetime, events: dict[str, dict], prev_questions: set[s
     keep.sort(key=lambda r: r["info"], reverse=True)
     out_rows, expected_used = [], False
     for r in keep:
-        if r["info"] < RESOLVED_MIN_INFO and not r["expected"]:
+        if r["info"] < RESOLVED_MIN_INFO and not r["expected"] and not EARNINGS.search(r["question"]):
             continue
         if r["expected"]:
             if r["volume"] < RESOLVED_EXPECTED_MIN_VOL or expected_used:
@@ -733,7 +738,10 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
             young=None, prior=None):
         if not question or is_noise(question) or DAILY.search(question):
             return
-        if (vol or 0) < CAND_MIN_VOL24H:
+        earnings = bool(EARNINGS.search(question))
+        if earnings and ev:
+            vol = max(vol or 0, ev["volume24h"])    # an earnings ladder is read as one event
+        if (vol or 0) < (EARNINGS_MIN_VOL if earnings else CAND_MIN_VOL24H):
             return                                  # one trader is not a market
         if young is None:  # Gamma rows carry no price path; go by the event's listing time
             created = parse_iso(ev.get("createdAt")) if ev else None
@@ -784,7 +792,7 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
         headline_ok = (kind in ("official", "mover", "hot", "resolved") and yes is not None
                        and (vol >= HEADLINE_MIN_VOL or event_vol >= HEADLINE_EVENT_MIN_VOL)
                        and (abs(change) >= HEADLINE_MIN_MOVE or crossed or (upset is not None and upset >= 0.5))
-                       and not (BRACKET.search(label or "") or re.search(r"\bbetween\b", question, re.I))
+                       and (earnings or not (BRACKET.search(label or "") or re.search(r"\bbetween\b", question, re.I)))
                        and not new_market and not repeated)
         words = nouns(question) | nouns(event_title)
         strong = words - WEAK_NOUNS
@@ -797,7 +805,7 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
             "yes": yes, "change1d": change,
             "from": round(yes - change, 3) if (yes is not None and kind != "news" and (kind != "resolved" or prior is not None)) else None,
             "prior": prior, "closed": closed, "newMarket": new_market, "young": young or None, "volume24h": vol,
-            "score": score, "headlineOk": headline_ok, "story": story, "daysLeft": days_left,
+            "score": score, "headlineOk": headline_ok, "story": story, "daysLeft": days_left, "earnings": earnings,
             "repeated": repeated, "lastMention": mention["date"] if mention else None,
             "siblings": [{"label": o["label"], "yes": o["yes"]} for o in ev["outcomes"][:4]] if ev and ev["kind"] != "binary" else [],
             "causes": causes, "url": ev["url"] if ev else None,
@@ -881,6 +889,8 @@ def text_summary(day: dict) -> str:
         notes = []
         if p["closed"]:
             notes.append(f"已结算，结算前一天 {pct(p['prior'])}" if p.get("prior") is not None else "已结算，结算前价格未知")
+        if p.get("earnings"):
+            notes.append("财报类：按事件写，区间就是答案，\"X 三季度某指标落在多少，市场前一天给多少\"")
         if p.get("story"):
             notes.append("长期关注事件" + (f"，还有 {p['daysLeft']} 天揭晓" if p.get("daysLeft") is not None else ""))
         if p["newMarket"]:
@@ -935,7 +945,8 @@ def text_summary(day: dict) -> str:
         seen = set()
         L.append(f"### {label}")
         for m in sorted(rows, key=lambda m: abs(m["change1d"] or 0), reverse=True):
-            if m["question"] in seen or (m.get("eventVolume24h") is not None and m["eventVolume24h"] < CAND_MIN_VOL24H):
+            if m["question"] in seen or (m.get("eventVolume24h") is not None and m["eventVolume24h"] < CAND_MIN_VOL24H
+                                         and not EARNINGS.search(m["question"])):
                 continue
             seen.add(m["question"])
             if len(seen) > 8:

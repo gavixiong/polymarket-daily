@@ -56,7 +56,8 @@ def official_rows(day, group, skip, n=8):
     for m in by_abs_change([m for c in GROUPS[group] for m in day["official"].get(c, [])]):
         if m["question"] in seen or m["question"] in skip:
             continue
-        if m.get("eventVolume24h") is not None and m["eventVolume24h"] < BREAKING_MIN_EVENT_VOL:
+        if (m.get("eventVolume24h") is not None and m["eventVolume24h"] < BREAKING_MIN_EVENT_VOL
+                and not re.search(r"\((?!HIGH\)|LOW\))[A-Z]{1,5}\)|\bQ[1-4]\b", m["question"])):
             continue
         seen.add(m["question"])
         out.append(m)
