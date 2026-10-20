@@ -868,7 +868,7 @@ def outcomes_line(e: dict, n: int = 3) -> str:
 
 def text_summary(day: dict) -> str:
     L = [f"# Polymarket 数据摘要 {day['date']}（生成于 {day['generatedAt']}）",
-         f"正文第二行照抄：{day['stamp']}", ""]
+         f"正文日期行（图注之后、标签之前）照抄：Polymarket 日报 · {day['date'][5:].replace('-0', '/').replace('-', '/')} · {day['stamp']}", ""]
 
     heads = [p for p in day["picks"] if p.get("headlineOk")]
     L += ["## 可当头条的候选（二元、成交够大、变动够大；头条只能从这里选，再按主语是否人人认识排除）"]
@@ -960,7 +960,7 @@ def text_summary(day: dict) -> str:
             L.append("### 24h 新上线")
             L += [f"- {e['title']}  → {outcomes_line(e)}" for e in day["new"][domain]]
         if day["resolved"][domain]:
-            L.append("### 刚结算（按信息量 = 成交 × 市场有多意外；写法固定\"前一天 X%，结果是/否\"）")
+            L.append("### 刚结算（按信息量 = 成交 × 市场有多意外；写法：前一天市场给 X%，结果成真 / 落空）")
             L += [f"- 结果 {r['result']} · 前一天 {pct(r['prior']) if r.get('prior') is not None else '未知'}"
                   f"{' · 如期' if r.get('expected') else ''} · {usd(r['volume'])}  {r['question']}" for r in day["resolved"][domain]]
         L.append("")

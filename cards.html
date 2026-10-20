@@ -100,7 +100,7 @@ const CARDS = {
     const size = units * 84 <= 1082 ? 84 : 1082 / units >= 62 ? Math.floor(1082 / units) : 72;  // one line if it can be read at 62px+, else two lines at 72px
     return `<section class="card cover"><div class="big">${esc(shortDate(day.date).replace('/', '.'))}</div>${brand(day, '每日 07:00')}
       <div class="date">${esc(cnDate(day.date))}<span style="display:block;font-size:28px;color:var(--muted);margin-top:8px">${esc(stamp(day))}</span></div><h1 style="font-size:${size}px">${esc(title || headline)}</h1>${title ? `<p class="lede">${esc(headline)}</p>` : ''}
-      <div class="hero"><div class="v">${esc(hero.value)}</div><div class="l">${esc(hero.label)}</div></div>
+      <div class="hero"><div class="v" style="font-size:${String(hero.value).length > 9 ? Math.max(104, Math.floor(176 * 9 / String(hero.value).length)) : 176}px">${esc(hero.value)}</div><div class="l">${esc(hero.label)}</div></div>
       ${boardKpis(day)}
       ${foot('预测市场里的今日世界', '数据 Polymarket · 每天北京时间 07:00 更新')}</section>`;
   },

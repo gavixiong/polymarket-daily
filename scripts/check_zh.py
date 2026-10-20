@@ -33,6 +33,7 @@ JARGON = re.compile(r"(这个|那个|的|个|该|此|新|长期|梯子|热门|�
 TITLE_MAX = 20  # Xiaohongshu title limit
 LINES_MIN, LINES_MAX = 5, 10      # numbered items in the post
 LINE_MAX, HEADLINE_MAX = 60, 80   # characters per item (item 1 may run longer: it carries the background)
+BOARD_MAX = 90                    # the 盘面 line: four events with countdowns
 POST_MAX = 700                    # whole post
 BREAKING_MIN_EVENT_VOL = 20_000   # mirrors shared.js officialRows
 ITEM = re.compile(r"^(\d+)\.\s+(\S\S)\s+(.*)$")
@@ -132,14 +133,16 @@ def main() -> int:
         if not LINES_MIN <= len(items) <= LINES_MAX:
             wording.append(f"编号条目 {len(items)} 条，应在 {LINES_MIN} 到 {LINES_MAX} 之间（门槛说了算，不凑数）")
         for n, tag, text in items:
-            cap = HEADLINE_MAX if n == 1 else LINE_MAX
+            cap = HEADLINE_MAX if n == 1 else BOARD_MAX if tag == "盘面" else LINE_MAX
             if len(text) > cap:
                 wording.append(f"第 {n} 条 {len(text)} 字，上限 {cap}：{text[:40]}…")
         if sum(1 for _, tag, _ in items if tag == "盘面") != 1:
             wording.append("需要恰好一行\"盘面\"条目（长期关注事件的数字行）")
-        tail = [l.strip() for l in lines if l.strip() and not ITEM.match(l)]
-        if not any(l.endswith(("？", "?")) for l in tail[2:]):
+        tail = [l.strip() for l in lines[1:] if l.strip() and not ITEM.match(l)]
+        if not any(l.endswith(("？", "?")) for l in tail):
             wording.append("结尾缺一句问读者的话（以问号结尾的独立一行，放在图注之前）")
+        if not any(l.startswith("Polymarket 日报 · ") and "数据截至" in l for l in tail):
+            wording.append("缺日期行\"Polymarket 日报 · M/D · 数据截至 …\"（放在图注之后、标签之前）")
         if len(body) > POST_MAX:
             wording.append(f"正文共 {len(body)} 字，上限 {POST_MAX}")
         for l in lines:

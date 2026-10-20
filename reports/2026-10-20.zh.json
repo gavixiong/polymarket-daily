@@ -1,12 +1,12 @@
 {
   "title": "巴黎宵禁真的来了，市场此前几乎不给机会",
-  "headline": "巴黎在 10 月 19 日前实施宵禁，答案出来了：真的发生了，市场此前几乎没人看好，概率从 0% 直接结算到 100%。",
+  "headline": "\"巴黎 10/19 前实施宵禁\"前一天市场只给 0.3%，一天内直接结算到 100%；法国大城市 10/24 前宵禁也同时成真。",
   "hero": {
-    "value": "0% → 100%",
-    "label": "巴黎 10 月 19 日前宵禁，市场此前几乎没人看好"
+    "value": "0.3% → 100%",
+    "label": "巴黎 10 月 19 日前宵禁，前一天市场几乎不给机会"
   },
   "headlineQuestion": "Paris curfew by October 19?",
-  "headlineTitle": "巴黎 10 月 19 日前实施宵禁",
+  "headlineTitle": "巴黎 10 月 19 日前宵禁",
   "skip": [],
   "labels": {
     "Paris curfew by October 19?": "巴黎 10 月 19 日前宵禁",
@@ -38,7 +38,25 @@
     "US x Iran ceasefire continues through October 18?": "美伊停火持续到 10 月 18 日",
     "Will the 2026 United Left primary for the 2027 French presidential election be canceled?": "法国统一左翼初选被取消",
     "Lula x Flávio Bolsonaro debate before second round?": "Lula 与 Flávio Bolsonaro 第二轮前辩论",
-    "Will Marine Tondelier be the joint left nominee for the 2027 French presidential election?": "Marine Tondelier 成法国左翼联合候选人"
+    "Will Marine Tondelier be the joint left nominee for the 2027 French presidential election?": "Marine Tondelier 成法国左翼联合候选人",
+    "Will the Bank of Canada make no change to the target for the overnight rate at the October interest rate announcement?": "加拿大央行 10 月按兵不动",
+    "Will Papertrade launch a token by June 30, 2027?": "Papertrade 2027 年中前发币",
+    "Papertrade FDV above $25M one day after launch?": "Papertrade 上线次日估值超 2500 万美元",
+    "Next Fable Model (5.2+) released by October 24, 2026?": "Fable 下一代 10 月 24 日前发布",
+    "Will \"Remain\" win the Alberta independence referendum by 60–80%?": "艾伯塔独立公投\"留下\"赢 60 到 80 个点",
+    "Will China GDP growth in Q3 2026 be between 4.3% and 4.6%?": "中国三季度 GDP 同比 4.3% 到 4.6%",
+    "Will Trump meet with Kim Jong Un in 2026?": "Trump 2026 年内会见金正恩",
+    "Will Iliana Iotova win the 2026 Bulgarian presidential first round by 10%-20%?": "保加利亚总统首轮 Iotova 领先 10 到 20 个点",
+    "Next White House Press Secretary announced by November 30, 2026?": "11 月底前宣布新任白宫新闻秘书",
+    "Will Flávio Bolsonaro win the second round of the 2026 Brazilian presidential election by less than 4%?": "Bolsonaro 决选领先不足 4 个点",
+    "Will Rafael Grossi attend a US x Iran diplomatic meeting by December 31, 2026?": "Grossi 年底前出席美伊会谈",
+    "Will Kim Jong Un be the next leader out before 2027?": "金正恩是下一个下台的领导人",
+    "Will Solana dip to $100 in October?": "Solana 10 月跌到 100 美元",
+    "Tesla and SpaceX merger officially announced by December 31?": "Tesla 与 SpaceX 年底前宣布合并",
+    "Will Google have the best AI model at the end of November 2026?": "Google 11 月底拥有最强 AI 模型",
+    "Balance of Power: 2026 Midterms": "2026 中期选举：国会归属",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年触及价位",
+    "Will the Doge-1 Lunar Mission launch by...?": "Doge-1 登月任务何时发射"
   },
   "outcomes": {
     "Flávio Bolsonaro <4%": "Flávio Bolsonaro 领先不足 4 个百分点",
@@ -51,32 +69,48 @@
       "yes": 1.0
     },
     {
-      "question": "Will the OpenAI spy be accused of working for Saudi Arabia by December 31?",
-      "yes": 0.49
+      "question": "Curfew in a major French city by October 24, 2026?",
+      "yes": 1.0
     },
     {
       "question": "Will the Bank of Canada increase the target for the overnight rate by 25 bps at the October interest rate announcement?",
-      "yes": 0.84
-    },
-    {
-      "question": "Will Japan's core CPI increase by less than or equal to 1.9% in 2026?",
-      "yes": 0.26
-    },
-    {
-      "question": "Will Meta be the third-best Code Arena | WebDev AI lab at the end of October 2026?",
       "yes": 0.73
     },
     {
-      "question": "Next OpenAI GPT Terra (5.7+) released by November 30, 2026?",
-      "yes": 0.97
+      "question": "Will WTI Crude Oil (WTI) hit (HIGH) $100 in October?",
+      "yes": 0.86
     },
     {
-      "question": "Next Fable Model (5.2+) released by October 21, 2026?",
-      "yes": 0.2
+      "question": "Will China GDP growth in Q3 2026 be between 4.3% and 4.6%?",
+      "yes": 1.0
     },
     {
-      "question": "Will \"I Love Boosters\" be nominated for Best Costume Design at the 99th Academy Awards?",
-      "yes": 0.18
+      "question": "Next Fable Model (5.2+) released by October 24, 2026?",
+      "yes": 0.4
+    },
+    {
+      "question": "Will Google have the best AI model at the end of November 2026?",
+      "yes": 0.52
+    },
+    {
+      "question": "Will there be no change in Fed interest rates after the October 2026 meeting?",
+      "yes": 0.86
+    },
+    {
+      "question": "US x Iran ceasefire continues through October 31?",
+      "yes": 0.78
+    },
+    {
+      "question": "Will Flávio Bolsonaro win the 2026 Brazilian presidential election?",
+      "yes": 0.77
+    },
+    {
+      "question": "2026 Balance of Power: Democrats Sweep",
+      "yes": 0.62
+    },
+    {
+      "question": "Will \"Big Walk\" win Ultimate Game of the Year at the 2026 Golden Joystick Awards?",
+      "yes": 0.28
     }
   ]
 }
