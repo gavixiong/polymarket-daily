@@ -1,9 +1,9 @@
 {
-  "title": "比特币跌 8 万概率一天降 18 个点",
-  "headline": "比特币 10 月内跌到 8 万美元的概率，一天内从 66% 降到 48%，成交 18 万美元。",
+  "title": "比特币跌 8 万概率一天降 16 个点",
+  "headline": "比特币 10 月内跌到 8 万美元的概率，一天内从 66% 降到 50%，成交 18 万美元。",
   "hero": {
-    "value": "66% → 48%",
-    "label": "比特币 10 月跌到 8 万美元的概率一天降了 18 个百分点"
+    "value": "66% → 50%",
+    "label": "比特币 10 月跌到 8 万美元的概率一天降了 16 个百分点"
   },
   "headlineQuestion": "Will Bitcoin dip to $80,000 in October?",
   "headlineTitle": "比特币 10 月跌到 8 万美元",
@@ -26,7 +26,16 @@
     "What price will Bitcoin hit in 2026?": "比特币 2026 年触及价位",
     "What will WTI Crude Oil (WTI) hit in October 2026?": "WTI 原油 10 月触及价位",
     "Which company has the best AI model end of October?": "10 月底最强 AI 模型属于哪家",
-    "Will Luca Niculescu be the next Prime Minister of Romania?": "Luca Niculescu 出任罗马尼亚总理"
+    "Will Luca Niculescu be the next Prime Minister of Romania?": "Luca Niculescu 出任罗马尼亚总理",
+    "Netflix (NFLX) Q3 operating margin 34% to 36%?": "Netflix 三季度营业利润率 34% 到 36%",
+    "United Airlines (UAL) Q3 consolidated passenger load factor 84% to 85%?": "United 三季度客座率 84% 到 85%",
+    "Will Papertrade launch a token by June 30, 2027?": "Papertrade 2027 年中前发币",
+    "Intuitive Surgical (ISRG) Q3 da Vinci procedure growth 15% to 17.5%?": "Intuitive 三季度达芬奇手术量增 15% 到 17.5%",
+    "Next Fable Model (5.2+) released by October 22, 2026?": "Fable 5.2 以上 10/22 前发布",
+    "Will Ethereum dip to $2,300 in October?": "以太坊 10 月跌到 2300 美元",
+    "Intuitive Surgical (ISRG) Q3 da Vinci procedure growth 12.5% to 15%?": "Intuitive 三季度达芬奇手术量增 12.5% 到 15%",
+    "United Airlines (UAL) Q3 consolidated passenger load factor 83% to 84%?": "United 三季度客座率 83% 到 84%",
+    "United Airlines (UAL) Q3 total revenue per available seat mile 20¢ to 20.5¢?": "United 三季度单位座英里收入 20 到 20.5 美分"
   },
   "outcomes": {
     "Flávio Bolsonaro <4%": "Flávio Bolsonaro 领先不足 4 个百分点",
@@ -36,7 +45,7 @@
   "picked": [
     {
       "question": "Will Bitcoin dip to $80,000 in October?",
-      "yes": 0.48
+      "yes": 0.5
     },
     {
       "question": "Will the Bank of Canada increase the target for the overnight rate by 25 bps at the October interest rate announcement?",
@@ -44,7 +53,7 @@
     },
     {
       "question": "Will \"Remain\" win the Alberta independence referendum by 40–60%?",
-      "yes": 0.95
+      "yes": 0.98
     },
     {
       "question": "Russia-Ukraine peace talks by December 31, 2026?",
@@ -56,7 +65,7 @@
     },
     {
       "question": "Next Fable Model (5.2+) released by October 22, 2026?",
-      "yes": 0.29
+      "yes": 0.22
     },
     {
       "question": "Will there be no change in Fed interest rates after the October 2026 meeting?",
@@ -76,7 +85,7 @@
     },
     {
       "question": "Will \"Grand Theft Auto VI Launch Trailer\" get between 40 and 60 million views on week 1?",
-      "yes": 0.16
+      "yes": 0.15
     }
   ]
 }
