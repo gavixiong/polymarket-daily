@@ -14,7 +14,9 @@ Schema of data/<date>.json
   column    [article]              news.polymarket.com RSS
   hot       {domain: [event]}      top events by 24h volume; `pinned` marks the rule-selected long-running panel
   new       {domain: [event]}      events created in the last 24h
-  resolved  {domain: [market]}     markets closed in the last 36h
+  resolved  {domain: [market]}     markets closed in the last 36h, with the day-before price (prior)
+  board     [storyline]            long-running events, one number each, change since last written
+  upcoming  [event]                events resolving within 48h
   flows     [market]               net money by market from >= $10k trades
   picks     [candidate]            scored, de-duplicated candidates for the short post
 
@@ -77,6 +79,9 @@ THRESHOLD_LABEL = re.compile(
 # Recurring daily markets ("... on October 14, 2026?") resolve every day; never news on their own
 DAILY = re.compile(r"\bon (January|February|March|April|May|June|July|August|September|October|November|December)"
                    r" \d{1,2}(, \d{4})?\?$")
+# Numeric brackets ("between $407,000 and $411,000", "100-119", "25m and 30m"): never a headline on their own
+BRACKET = re.compile(r"\bbetween\b|\b\d[\d,.]*[kmb]?\s*(-|–|to)\s*\$?\d[\d,.]*[kmb]?\b", re.I)
+DATE_RUNG = re.compile(r"^(January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}(, \d{4})?$")
 
 # Thresholds
 LOOKBACK_H = 24
@@ -88,7 +93,11 @@ PERSIST_MAX = 5            # rule-selected long-running events (plus any `always
 NEW_PER_DOMAIN = 8
 RESOLVED_PER_DOMAIN = 8
 HOT_MIN_VOL24H = 20_000
-RESOLVED_MIN_VOL = 2_000
+RESOLVED_MIN_VOL = 20_000          # a settled market nobody traded is not a result worth a line
+RESOLVED_PRIOR_LOOKUPS = 15        # settled markets (by volume) whose day-before price we fetch
+RESOLVED_EXPECTED = 0.90           # prior this far toward the outcome = "as expected": zero information
+RESOLVED_EXPECTED_MIN_VOL = 500_000  # ...unless the market is this big, then one line may say "如期"
+RESOLVED_MIN_INFO = 5_000           # volume × surprise below this is neither big nor surprising
 MOVER_MIN_CHANGE = 0.05
 YOUNG_H = 23                # an event created less than this many hours ago has no trustworthy 24h change
 OPEN_SETTLE_S = 3600        # a 24h-ago price that did not hold for an hour is not a baseline (see settle_spike)
@@ -99,6 +108,16 @@ FLOW_PRICE_RANGE = (0.10, 0.90)
 PAGES_PER_TAG = 2
 
 # Scoring for the short post
+CAND_MIN_VOL24H = 20_000           # below this a move is one trader, not a market
+VOL_TIERS = (100_000, 500_000)     # attention 1 / 2 / 3 by 24h volume
+HEADLINE_MIN_VOL = 100_000         # a headline needs real money on the market itself...
+HEADLINE_EVENT_MIN_VOL = 500_000   # ...or on its event
+HEADLINE_MIN_MOVE = 0.30           # or it crossed 50%, or it settled against a confident prior
+STORY_MIN_MOVE = 0.05              # a long-running event earns its own line when it moved this much since last written
+STORY_DEADLINE_DAYS = 3            # ...or resolves within this many days
+NEW_MIN_VOL24H = 20_000            # a new market worth a "新题" line already has money on it
+UPCOMING_H = 48                    # "明天揭晓": events ending within this window
+UPCOMING_MIN_VOL = 100_000
 PICKS_MAX = 14
 PER_EVENT_MAX = 2
 PER_DOMAIN_MAX = 5
@@ -367,31 +386,159 @@ def new_panel(events: dict[str, dict], now: datetime) -> dict[str, list[dict]]:
     return out
 
 
-def fetch_resolved(now: datetime) -> dict[str, list[dict]]:
+def prior_price(token_id: str, closed: datetime) -> float | None:
+    """Yes price about 24h before the market closed (last point at or before that moment)."""
+    hist = (get(f"{CLOB}/prices-history", {"market": token_id, "interval": "1w", "fidelity": 60}) or {}).get("history") or []
+    if not hist:
+        return None
+    cut = closed.timestamp() - 24 * 3600
+    before = [h for h in hist if h["t"] <= cut]
+    return round((before[-1] if before else hist[0])["p"], 4)
+
+
+def fetch_resolved(now: datetime, events: dict[str, dict], prev_questions: set[str]) -> dict[str, list[dict]]:
+    """Markets closed in the last 36h, ranked by information: volume × how wrong the day-before price was.
+
+    Dropped: anything shown yesterday; the losing rows of an exclusive event (only the winner is news);
+    date rungs that expired to No while the same ladder is still open (that is a calendar, not a result);
+    outcomes the market already priced at 90%+ (one such line may survive if the market is very large)."""
     cutoff = now - timedelta(hours=RESOLVED_LOOKBACK_H)
-    out = {}
+    rows, seen = [], set()
     for domain, cfg in DOMAINS.items():
-        rows, seen = [], set()
         for tag in cfg["tag_ids"]:
             for m in get(f"{GAMMA}/markets", {"closed": "true", "tag_id": tag, "order": "closedTime",
                                                "ascending": "false", "limit": 100}) or []:
                 q = m.get("question") or ""
                 closed = parse_iso(m.get("closedTime"))
                 if (m["id"] in seen or not closed or closed < cutoff or fnum(m.get("volume")) < RESOLVED_MIN_VOL
-                        or is_noise(q) or DAILY.search(q)):
+                        or is_noise(q) or DAILY.search(q) or q in prev_questions):
                     continue
                 seen.add(m["id"])
                 p = prices(m)
                 outcomes = json.loads(m.get("outcomes") or '["Yes","No"]')
                 idx = max(range(len(p)), key=lambda i: p[i]) if p else 0
                 ev = (m.get("events") or [{}])[0]
+                ids = m.get("clobTokenIds") or []
+                ids = json.loads(ids) if isinstance(ids, str) else list(ids)
                 rows.append({"question": q, "result": outcomes[idx] if idx < len(outcomes) else None,
-                             "closedTime": m.get("closedTime"), "volume": fnum(m.get("volume")),
-                             "eventTitle": ev.get("title"),
+                             "resultYes": idx == 0, "closedTime": m.get("closedTime"), "_closed": closed,
+                             "volume": fnum(m.get("volume")), "domain": domain,
+                             "eventTitle": ev.get("title"), "eventSlug": ev.get("slug"),
+                             "label": m.get("groupItemTitle") or None, "_token": str(ids[0]) if ids else None,
                              "url": f"https://polymarket.com/event/{ev.get('slug')}" if ev.get("slug") else None})
-        rows.sort(key=lambda r: r["volume"], reverse=True)
-        out[domain] = rows[:RESOLVED_PER_DOMAIN]
+    # exclusive events: keep the winner only; with no winner in the set keep the biggest loser
+    by_event: dict[str, list[dict]] = {}
+    for r in rows:
+        by_event.setdefault(r["eventSlug"] or r["question"], []).append(r)
+    keep = []
+    for group in by_event.values():
+        winners = [r for r in group if r["resultYes"]]
+        if winners:
+            keep += winners
+        else:
+            keep.append(max(group, key=lambda r: r["volume"]))
+    # a date rung expiring to No while later rungs are open is not news
+    keep = [r for r in keep if not (not r["resultYes"] and r["label"] and DATE_RUNG.match(r["label"])
+                                    and events.get(r["eventSlug"], {}).get("kind") == "ladder")]
+    keep.sort(key=lambda r: r["volume"], reverse=True)
+    for r in keep[:RESOLVED_PRIOR_LOOKUPS]:
+        r["prior"] = prior_price(r["_token"], r["_closed"]) if r["_token"] else None
+    for r in keep:
+        prior = r.get("prior")
+        outcome = 1.0 if r["resultYes"] else 0.0
+        r["expected"] = prior is not None and abs(outcome - prior) <= 1 - RESOLVED_EXPECTED
+        r["info"] = round(r["volume"] * (abs(outcome - prior) if prior is not None else 0.25))
+    # one line per event: when a thing happens every later date rung settles Yes at once; keep the earliest
+    # date (the one that "came true"), otherwise the most informative row
+    def rung_date(r):
+        try:
+            return datetime.strptime(r["label"] + ("" if "," in r["label"] else f", {now.year}"), "%B %d, %Y")
+        except (TypeError, ValueError):
+            return None
+    grouped: dict[str, list[dict]] = {}
+    for r in keep:
+        grouped.setdefault(r["eventSlug"] or r["question"], []).append(r)
+    keep = []
+    for group in grouped.values():
+        dated = [r for r in group if rung_date(r)]
+        keep.append(min(dated, key=rung_date) if len(dated) == len(group) and group[0]["resultYes"] else max(group, key=lambda r: r["info"]))
+    keep.sort(key=lambda r: r["info"], reverse=True)
+    out_rows, expected_used = [], False
+    for r in keep:
+        if r["info"] < RESOLVED_MIN_INFO and not r["expected"]:
+            continue
+        if r["expected"]:
+            if r["volume"] < RESOLVED_EXPECTED_MIN_VOL or expected_used:
+                continue
+            expected_used = True
+        out_rows.append(r)
+    out_rows.sort(key=lambda r: r["info"], reverse=True)
+    out = {d: [] for d in DOMAINS}
+    for r in out_rows:
+        if len(out[r["domain"]]) < RESOLVED_PER_DOMAIN:
+            out[r["domain"]].append({k: v for k, v in r.items() if not k.startswith("_") and k != "domain"})
     return out
+
+
+def previous_resolved(today: str) -> set[str]:
+    """Questions on yesterday's settled list, so the card never shows the same result twice."""
+    for f in sorted(DATA_DIR.glob("????-??-??.json"), reverse=True):
+        if f.name[:10] < today:
+            try:
+                return {r["question"] for rows in json.loads(f.read_text()).get("resolved", {}).values() for r in rows}
+            except (ValueError, OSError, KeyError):
+                return set()
+    return set()
+
+
+def board_panel(day: dict, now: datetime) -> list[dict]:
+    """The storylines: long-running events, one number each, with the change since we last wrote about it.
+    binary -> Yes; exclusive -> the leader; date ladder -> the nearest deadline still in doubt; price ladder ->
+    the rung nearest 50%. `write` says whether it earns its own line today or only a slot on the 盘面 row."""
+    prev = recent_mentions(day["date"])
+    out = []
+    for domain in DOMAINS:
+        for e in day["hot"][domain]:
+            if not e.get("pinned") or not e["outcomes"]:
+                continue
+            outs = e["outcomes"]
+            if e["kind"] == "binary":
+                o = outs[0]
+            elif e["kind"] == "exclusive":
+                o = max(outs, key=lambda o: o["yes"] or 0)
+            else:
+                dated = [o for o in outs if DATE_RUNG.match(o["label"] or "")]
+                if dated:
+                    live = [o for o in dated if (o["yes"] or 0) < 0.95]
+                    o = max(live, key=lambda o: o["yes"] or 0) if live else min(dated, key=lambda o: o["yes"] or 0)
+                else:
+                    o = min(outs, key=lambda o: abs((o["yes"] or 0) - 0.5))
+            end = parse_iso(e.get("endDate"))
+            days_left = math.ceil((end - now).total_seconds() / 86400) if end else None
+            mention = prev.get(o["question"])
+            since = round(o["yes"] - mention["yes"], 3) if mention and mention.get("yes") is not None and o["yes"] is not None else None
+            out.append({"title": e["title"], "slug": e["slug"], "kind": e["kind"], "url": e["url"], "domain": domain,
+                        "label": o["label"], "question": o["question"], "yes": o["yes"], "change1d": o["change1d"],
+                        "volume24h": e["volume24h"], "daysLeft": days_left,
+                        "sinceDate": mention["date"] if mention else None, "sinceYes": since,
+                        "write": bool(mention is None or (since is not None and abs(since) >= STORY_MIN_MOVE)
+                                      or (days_left is not None and 0 <= days_left <= STORY_DEADLINE_DAYS))})
+    out.sort(key=lambda b: b["volume24h"], reverse=True)
+    return out
+
+
+def upcoming_panel(events: dict[str, dict], now: datetime) -> list[dict]:
+    """Big events that resolve within 48h: tomorrow's answers, worth one line today."""
+    out = []
+    for e in events.values():
+        end = parse_iso(e.get("endDate"))
+        if not end or e["volume24h"] < UPCOMING_MIN_VOL:
+            continue
+        hours = (end - now).total_seconds() / 3600
+        if 0 <= hours <= UPCOMING_H:
+            out.append({**public(e), "hoursLeft": round(hours, 1)})
+    out.sort(key=lambda e: e["volume24h"], reverse=True)
+    return out[:6]
 
 
 def movers(events: dict[str, dict]) -> list[dict]:
@@ -578,21 +725,32 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
 
     young_cut = datetime.now(TZ) - timedelta(hours=YOUNG_H)
 
+    def logit(p):
+        p = min(0.99, max(0.01, p))
+        return math.log(p / (1 - p))
+
     def add(kind, question, yes, change, vol, domain, ev, *, closed=False, label=None, event_title=None, points=None,
-            young=None):
+            young=None, prior=None):
         if not question or is_noise(question) or DAILY.search(question):
             return
+        if (vol or 0) < CAND_MIN_VOL24H:
+            return                                  # one trader is not a market
         if young is None:  # Gamma rows carry no price path; go by the event's listing time
             created = parse_iso(ev.get("createdAt")) if ev else None
             if created and created.tzinfo is None:
                 created = created.replace(tzinfo=timezone.utc)
             young = {"listedAgoH": round((datetime.now(TZ) - created).total_seconds() / 3600, 1)} if created and created > young_cut else None
-        if closed and (yes or 0) < 0.5:
+        if closed and (yes or 0) < 0.5 and kind != "resolved":
             return                                  # a rung resolving No on its own is never news
+        if kind == "resolved" and prior is not None:
+            change = round(yes - prior, 4)
         change = change or 0
+        frm = yes - change if yes is not None else None
+        crossed = frm is not None and yes is not None and (frm - 0.5) * (yes - 0.5) < 0
         new_market = points is not None and points < 12 and yes is not None and abs((yes - change) - 0.5) < 0.02
+        upset = (abs((1.0 if yes >= 0.5 else 0.0) - prior) if kind == "resolved" and prior is not None and yes is not None else None)
         if kind == "resolved":
-            surprise = 0.15                         # unknown prior; keep as filler
+            surprise = (upset + (0.3 if upset >= 0.5 else 0)) if upset is not None else 0.15
         elif kind == "news":
             surprise = 0.2                          # Polymarket chose to attach odds to this headline
         elif new_market:
@@ -600,12 +758,34 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
         elif young and not young.get("rebased"):
             surprise = abs(change) * 0.3            # event created today, no price path to re-base on: discount
         else:
-            surprise = abs(change) + (0.3 if closed else 0)
-        attention = max(1.0, math.log10(max(vol or 0, 1000)) - 2)      # $1k -> 1, $1M -> 4
+            if abs(change) < MOVER_MIN_CHANGE:
+                return                              # under five points is noise on any market
+            # half log-odds (30% -> 70% matters more than 1% -> 3%), half plain points (1% -> 7% is still small);
+            # crossing 50% is a verdict change
+            surprise = 0.5 * min(2.0, abs(logit(yes) - logit(frm)) / 3) + abs(change) + (0.3 if crossed else 0)
+            if not closed and (max(yes, frm) < 0.12 or min(yes, frm) > 0.88):
+                surprise *= 0.4                     # 1% -> 7% is still "almost certainly not"
+        attention = 1 if vol < VOL_TIERS[0] else 2 if vol < VOL_TIERS[1] else 3
         mention = prev.get(question)
-        repeated = bool(mention and yes is not None and mention.get("yes") is not None
-                        and abs(yes - mention["yes"]) < MENTION_MIN_MOVE)
+        story = bool(ev and ev.get("pinned"))
+        days_left = None
+        if story and ev.get("endDate"):
+            end = parse_iso(ev["endDate"])
+            days_left = math.ceil((end - datetime.now(timezone.utc)).total_seconds() / 86400) if end else None
+        if story:  # long-running events: written again when they moved or are about to resolve, not on a 7-day clock
+            repeated = bool(mention and yes is not None and mention.get("yes") is not None
+                            and abs(yes - mention["yes"]) < STORY_MIN_MOVE
+                            and not (days_left is not None and days_left <= STORY_DEADLINE_DAYS))
+        else:
+            repeated = bool(mention and yes is not None and mention.get("yes") is not None
+                            and abs(yes - mention["yes"]) < MENTION_MIN_MOVE)
         score = round(surprise * attention * (0.2 if repeated else 1.0), 3)
+        event_vol = ev["volume24h"] if ev else 0
+        headline_ok = (kind in ("official", "mover", "hot", "resolved") and yes is not None
+                       and (vol >= HEADLINE_MIN_VOL or event_vol >= HEADLINE_EVENT_MIN_VOL)
+                       and (abs(change) >= HEADLINE_MIN_MOVE or crossed or (upset is not None and upset >= 0.5))
+                       and not (BRACKET.search(label or "") or re.search(r"\bbetween\b", question, re.I))
+                       and not new_market and not repeated)
         words = nouns(question) | nouns(event_title)
         strong = words - WEAK_NOUNS
         causes = [{"time": p["time"], "text": p["text"], "url": p["url"]} for p in posts
@@ -615,8 +795,9 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
             "eventTitle": event_title or (ev["title"] if ev else None), "eventSlug": ev["slug"] if ev else None,
             "eventKind": ev["kind"] if ev else None,
             "yes": yes, "change1d": change,
-            "from": round(yes - change, 3) if (yes is not None and kind not in ("resolved", "news")) else None,
-            "closed": closed, "newMarket": new_market, "young": young or None, "volume24h": vol, "score": score,
+            "from": round(yes - change, 3) if (yes is not None and kind != "news" and (kind != "resolved" or prior is not None)) else None,
+            "prior": prior, "closed": closed, "newMarket": new_market, "young": young or None, "volume24h": vol,
+            "score": score, "headlineOk": headline_ok, "story": story, "daysLeft": days_left,
             "repeated": repeated, "lastMention": mention["date"] if mention else None,
             "siblings": [{"label": o["label"], "yes": o["yes"]} for o in ev["outcomes"][:4]] if ev and ev["kind"] != "binary" else [],
             "causes": causes, "url": ev["url"] if ev else None,
@@ -626,11 +807,12 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
 
     # Culture (sports, film, music) rides along as its own domain with a small cap: it only enters the post
     # when a market moved, never as a bare headline.
+    priors = {r["question"]: r.get("prior") for rows in day["resolved"].values() for r in rows}  # settled board rows share the day-before price
     for cat, ms in day["official"].items():
         for m in ms:
             ev = by_slug.get(m["eventSlug"])
-            add("official", m["question"], m["yes"], m["change1d"], ev["volume24h"] if ev else 10_000,
-                OFFICIAL_CATEGORIES[cat], ev, closed=m["closed"], points=m["points"],
+            add("official", m["question"], m["yes"], m["change1d"], ev["volume24h"] if ev else (m.get("eventVolume24h") or CAND_MIN_VOL24H),
+                OFFICIAL_CATEGORIES[cat], ev, closed=m["closed"], points=m["points"], prior=priors.get(m["question"]) if m["closed"] else None,
                 young={k: m[k] for k in ("rebased", "firstPrint", "officialChange1d")} if m.get("rebased") else False)
     for m in mv:
         ev = m["event"]
@@ -644,8 +826,10 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
                         by_slug.get(e["slug"]), label=o["label"], event_title=e["title"])
     for domain, rows in day["resolved"].items():
         for r in rows:
-            add("resolved", r["question"], 1.0 if str(r["result"]).lower() == "yes" else 0.0, None, r["volume"],
-                domain, None, closed=True, event_title=r["eventTitle"])
+            if r.get("expected"):
+                continue                            # the market already knew; it is a storyline line, not news
+            add("resolved", r["question"], 1.0 if r.get("resultYes") else 0.0, None, r["volume"],
+                domain, by_slug.get(r.get("eventSlug")), closed=True, event_title=r["eventTitle"], prior=r.get("prior"))
     # News posts where Polymarket itself attached a market ("… 69% chance.") are the only feed items with an
     # objective importance signal; they enter as candidates with the odds as the current price.
     for p in posts:
@@ -663,7 +847,7 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
     per_event, per_domain, out = {}, {}, []
     for c in sorted(cands.values(), key=lambda c: c["score"], reverse=True):
         ek = c["eventSlug"] or c["question"]
-        cap = 1 if c["eventKind"] == "ladder" else PER_EVENT_MAX
+        cap = PER_EVENT_MAX if c["eventKind"] == "binary" else 1   # Yes/No of one decision, or two rungs, are one story
         domain_cap = CULTURE_MAX if c["domain"] == "culture" else PER_DOMAIN_MAX
         if per_event.get(ek, 0) >= cap or per_domain.get(c["domain"], 0) >= domain_cap:
             continue
@@ -686,13 +870,19 @@ def text_summary(day: dict) -> str:
     L = [f"# Polymarket 数据摘要 {day['date']}（生成于 {day['generatedAt']}）",
          f"正文第二行照抄：{day['stamp']}", ""]
 
-    L += ["## 候选条目（已打分、去重、限额；小红书正文从这里选 4–10 条）",
-          "格式：排名 [分数] 类型/领域  从→到  标题 | 事件 | 24h 成交 | 备注"]
+    heads = [p for p in day["picks"] if p.get("headlineOk")]
+    L += ["## 可当头条的候选（二元、成交够大、变动够大；头条只能从这里选，再按主语是否人人认识排除）"]
+    L += [f"- 第 {p['rank']} 名  {p['question']}" for p in heads] or ["- 今天没有满足硬条件的头条，选候选第一名并在汇报里说明"]
+    L.append("")
+    L += ["## 候选条目（已打分、去重、限额；正文从这里选 5–10 条）",
+          "格式：排名 [分数] 类型/领域  从→到  标题 | 事件 | 24h 成交 | 备注；[头条✓] = 满足头条硬条件"]
     for p in day["picks"]:
         title = p["label"] if p["label"] and p["label"] not in ("Yes", p["question"]) else p["question"]
         notes = []
         if p["closed"]:
-            notes.append("已结算")
+            notes.append(f"已结算，结算前一天 {pct(p['prior'])}" if p.get("prior") is not None else "已结算，结算前价格未知")
+        if p.get("story"):
+            notes.append("长期关注事件" + (f"，还有 {p['daysLeft']} 天揭晓" if p.get("daysLeft") is not None else ""))
         if p["newMarket"]:
             notes.append("今天新上线的档位，起点 50% 是默认值，不算变动")
         elif p.get("young"):
@@ -710,12 +900,32 @@ def text_summary(day: dict) -> str:
             head = "梯子市场，整体看" if p["eventKind"] == "ladder" else "同事件其他选项"
             notes.append(head + "：" + "; ".join(f"{s['label']} {pct(s['yes'])}" for s in p["siblings"]))
         frm = pct(p["from"]) if p["from"] is not None else "—"
-        L.append(f"{p['rank']:>2}. [{p['score']:.2f}] {p['kind']}/{p['domain']}  {frm}→{pct(p['yes'])}  {title}"
+        L.append(f"{p['rank']:>2}. [{p['score']:.2f}] {'[头条✓] ' if p.get('headlineOk') else ''}{p['kind']}/{p['domain']}  {frm}→{pct(p['yes'])}  {title}"
                  + (f" | {p['eventTitle']}" if p["eventTitle"] and p["eventTitle"] != title else "")
                  + (f" | {usd(p['volume24h'])}" if p["volume24h"] else "")
                  + (f" | {'；'.join(notes)}" if notes else ""))
         for c in p["causes"]:
             L.append(f"      ↳ 可能的原因（快讯 {c['time'][6:]}）：{c['text'][:160]}")
+    L.append("")
+
+    L.append("## 盘面（长期关注事件；正文固定一行只写数字，标 [单独写] 的才展开成一条）")
+    for b in day["board"]:
+        since = (f"比上次报道（{b['sinceDate']} {pct(b['yes'] - b['sinceYes'])}）{delta(b['sinceYes'])}" if b.get("sinceYes") is not None
+                 else "之前没写过")
+        left = f" · 还有 {b['daysLeft']} 天" if b.get("daysLeft") is not None and b["daysLeft"] <= 30 else ""
+        rung = f"{b['label']} " if b["label"] and b["label"] != "Yes" else ""
+        L.append(f"- {'[单独写] ' if b['write'] else ''}{b['title']} → {rung}{pct(b['yes'])} · 24h {delta(b['change1d'])} · {since}{left} · {usd(b['volume24h'])}")
+    if not day["board"]:
+        L.append("- 今天没有长期关注事件（历史不足）")
+    L.append("")
+
+    new_rows = [e for d in DOMAINS for e in day["new"][d] if e["volume24h"] >= NEW_MIN_VOL24H][:4]
+    L.append("## 新题（24 小时内新开且已有成交；正文最多 1 条，\"Polymarket 开了一个新问题\"）")
+    L += [f"- {usd(e['volume24h'])}  {e['title']}  → {outcomes_line(e)}" for e in new_rows] or ["- 今天没有像样的新题"]
+    L.append("")
+
+    L.append("## 明天揭晓（48 小时内到期的大市场；正文末尾一行）")
+    L += [f"- {e['hoursLeft']} 小时后  {e['title']}  → {outcomes_line(e)}  {usd(e['volume24h'])}" for e in day["upcoming"]] or ["- 48 小时内没有大市场到期"]
     L.append("")
 
     L.append("## 官方突发榜（polymarket.com/breaking，24h 变动最大）")
@@ -725,7 +935,7 @@ def text_summary(day: dict) -> str:
         seen = set()
         L.append(f"### {label}")
         for m in sorted(rows, key=lambda m: abs(m["change1d"] or 0), reverse=True):
-            if m["question"] in seen:
+            if m["question"] in seen or (m.get("eventVolume24h") is not None and m["eventVolume24h"] < CAND_MIN_VOL24H):
                 continue
             seen.add(m["question"])
             if len(seen) > 8:
@@ -750,8 +960,9 @@ def text_summary(day: dict) -> str:
             L.append("### 24h 新上线")
             L += [f"- {e['title']}  → {outcomes_line(e)}" for e in day["new"][domain]]
         if day["resolved"][domain]:
-            L.append("### 刚结算")
-            L += [f"- 结果 {r['result']}: {r['question']}  (vol {usd(r['volume'])})" for r in day["resolved"][domain]]
+            L.append("### 刚结算（按信息量 = 成交 × 市场有多意外；写法固定\"前一天 X%，结果是/否\"）")
+            L += [f"- 结果 {r['result']} · 前一天 {pct(r['prior']) if r.get('prior') is not None else '未知'}"
+                  f"{' · 如期' if r.get('expected') else ''} · {usd(r['volume'])}  {r['question']}" for r in day["resolved"][domain]]
         L.append("")
 
     if day["flows"]:
@@ -785,15 +996,37 @@ def main() -> int:
         "column": fetch_column(now),
         "hot": hot_panel(events, date),
         "new": new_panel(events, now),
-        "resolved": fetch_resolved(now),
+        "resolved": fetch_resolved(now, events, previous_resolved(date)),
+        "upcoming": upcoming_panel(events, now),
         "flows": fetch_flows(events, now),
     }
+    by_slug = {e["slug"]: e for e in events.values()}
+    # The breaking board carries no volume. Borrow the event's; for boards rows whose event is outside our
+    # tag pool, fetch the event (biggest moves first, a dozen at most) so the volume floor can judge them.
+    fetched: set[str] = set()
+    for cat, ms in day["official"].items():
+        for m in sorted(ms, key=lambda m: abs(m["change1d"] or 0), reverse=True):
+            slug = m.get("eventSlug")
+            if slug and slug not in by_slug and slug not in fetched and len(fetched) < 12:
+                fetched.add(slug)
+                rows = get(f"{GAMMA}/events", {"slug": slug}) or []
+                if rows:
+                    dom = OFFICIAL_CATEGORIES[cat]
+                    e = event_brief(rows[0], dom if dom in DOMAINS else "politics")
+                    e["domain"] = dom
+                    events[slug] = by_slug[slug] = e
+    for ms in day["official"].values():
+        for m in ms:
+            ev = by_slug.get(m.get("eventSlug"))
+            m["eventVolume24h"] = ev["volume24h"] if ev else None
+    day["board"] = board_panel(day, now)
     day["picks"] = build_picks(day, events, movers(events))
     day["stats"] = {"events": len(events), "feedPosts": len(day["feed"]),
                     "officialMovers": sum(len(v) for k, v in day["official"].items() if k != "culture"),
                     "resolved": sum(len(v) for v in day["resolved"].values()),
                     "new": sum(len(v) for v in day["new"].values()),
-                    "picks": len(day["picks"]), "requests": _requests}
+                    "picks": len(day["picks"]), "headlines": sum(1 for p in day["picks"] if p.get("headlineOk")),
+                    "requests": _requests}
     log("official: " + ", ".join(f"{k}={len(v)}" for k, v in day["official"].items()))
     log(f"feed: {len(day['feed'])} posts; picks: {len(day['picks'])} "
         f"({sum(p['repeated'] for p in day['picks'])} repeated); flows: {len(day['flows'])}")

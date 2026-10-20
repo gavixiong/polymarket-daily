@@ -82,6 +82,14 @@ function headlineMarket(day) {
   return (want && all.find(m => m.question === want)) || all.filter(m => (m.history7d || []).length >= 20).sort((a, b) => Math.abs(b.change1d) - Math.abs(a.change1d))[0] || officialRows(day, 'politics', 1)[0];
 }
 
+// Cover footer: the three biggest storylines with today's number, so the cover carries forward-looking content too.
+// Older data files have no board; they fall back to the day's counts.
+function boardKpis(day) {
+  const board = (day.board || []).slice(0, 3);
+  if (!board.length) return `<div class="kpis"><div class="kpi"><div class="l">昨日结算</div><div class="v">${resolvedRows(day, 99).length} 个</div></div><div class="kpi"><div class="l">新上线</div><div class="v">${newRows(day, 99).length} 个</div></div></div>`;
+  return `<div class="kpis">${board.map(b => `<div class="kpi"><div class="l">${esc(label(b.title))}${b.label && b.label !== 'Yes' ? ` · ${esc(outcomeLabel(b.label))}` : ''}</div><div class="v">${pct(b.yes)}<small style="font-size:26px;color:var(--ink-2);font-weight:500;margin-left:8px">${b.change1d ? pt(b.change1d) : ''}</small></div></div>`).join('')}</div>`;
+}
+
 const CARDS = {
   cover(day) {
     const o = overlay(), top = officialRows(day, 'politics', 1)[0];
@@ -93,8 +101,7 @@ const CARDS = {
     return `<section class="card cover"><div class="big">${esc(shortDate(day.date).replace('/', '.'))}</div>${brand(day, '每日 07:00')}
       <div class="date">${esc(cnDate(day.date))}<span style="display:block;font-size:28px;color:var(--muted);margin-top:8px">${esc(stamp(day))}</span></div><h1 style="font-size:${size}px">${esc(title || headline)}</h1>${title ? `<p class="lede">${esc(headline)}</p>` : ''}
       <div class="hero"><div class="v">${esc(hero.value)}</div><div class="l">${esc(hero.label)}</div></div>
-      <div class="kpis"><div class="kpi"><div class="l">变动 ≥10pt</div><div class="v">${['politics', 'finance', 'tech'].flatMap(g => officialRows(day, g, 99)).filter(m => Math.abs(m.change1d) >= 0.1).length} 个</div></div>
-        <div class="kpi"><div class="l">昨日结算</div><div class="v">${resolvedRows(day, 99).length} 个</div></div><div class="kpi"><div class="l">新上线</div><div class="v">${newRows(day, 99).length} 个</div></div></div>
+      ${boardKpis(day)}
       ${foot('预测市场里的今日世界', '数据 Polymarket · 每天北京时间 07:00 更新')}</section>`;
   },
   headline(day) {
@@ -135,9 +142,10 @@ const CARDS = {
   },
   resolved(day) {
     const rows = resolvedRows(day, 8);
-    return `<section class="card">${brand(day, '结算')}<h1>昨天出了结果的问题</h1><p class="sub">过去 36 小时结算 · 按成交量</p>
-      <div class="rows">${rows.map(r => `<div class="row" style="grid-template-columns:110px 1fr 140px"><div><span class="chip ${/^yes$/i.test(r.result) ? 'yes' : ''}">${esc(r.result)}</span></div><div class="t">${zh(r.question)}</div><div class="d" style="text-align:right">${usd(r.volume)}</div></div>`).join('')}</div>
-      ${foot('Yes / No = 最终归一的选项')}</section>`;
+    const hasPrior = rows.some(r => r.prior != null);
+    return `<section class="card">${brand(day, '结算')}<h1>${hasPrior ? '昨天揭晓：市场猜对了吗' : '昨天出了结果的问题'}</h1><p class="sub">${hasPrior ? '过去 36 小时结算 · 按信息量排：成交 × 市场有多意外' : '过去 36 小时结算 · 按成交量'}</p>
+      <div class="rows">${rows.map(r => `<div class="row" style="grid-template-columns:110px 1fr ${hasPrior ? '190px ' : ''}130px"><div><span class="chip ${/^yes$/i.test(r.result) ? 'yes' : ''}">${esc(r.result)}</span></div><div class="t">${zh(r.question)}${r.expected ? '<span class="tag">如期</span>' : ''}</div>${hasPrior ? `<div class="d" style="text-align:right">${r.prior != null ? '前一天 ' + pct(r.prior) : ''}</div>` : ''}<div class="d" style="text-align:right">${usd(r.volume)}</div></div>`).join('')}</div>
+      ${foot(hasPrior ? '前一天 = 结算前 24 小时的 Yes 价格' : 'Yes / No = 最终归一的选项')}</section>`;
   },
   new(day) {
     const rows = newRows(day, 6);

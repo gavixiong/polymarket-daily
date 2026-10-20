@@ -4,9 +4,9 @@
 
 ## 布局
 
-- `scripts/fetch.py` — 唯一的数据脚本，纯标准库。分 config / http / shaping / sources / scoring / summary / main 七段。写 `data/<日期>.json`，打印摘要。
+- `scripts/fetch.py` — 唯一的数据脚本，纯标准库。分 config / http / shaping / sources / scoring / summary / main 七段。写 `data/<日期>.json`，打印摘要。候选按 成交分档 × 意外（半对数几率半百分点）打分，标出"可当头条"；结算市场带结算前一天价格（prior），按 成交 × 意外 排；`board` 是长期关注事件的数字行，`upcoming` 是 48 小时内揭晓的大市场。
 - `scripts/render_cards.py` — 把 `cards.html` 截成 PNG 到 `cards/<日期>/`。
-- `scripts/check_zh.py` — 校验五张图上每一行都有中文标签，缺的按 JSON 片段补进 `*.zh.json`。
+- `scripts/check_zh.py` — 校验五张图上每一行都有中文标签，缺的按 JSON 片段补进 `*.zh.json`；也校验正文结构（5 到 10 条、字数、一行盘面、结尾问句、中英文空格）、标题、头条资格、博彩词。
 - `assets/shared.js` — 两个页面共用的格式化、中文覆盖、图表（份额条、档位条、走势图）。
 - `index.html` Dashboard、`cards.html` 卡片页，都是静态页，无构建。
 - `reports/<日期>.xhs.md` 正文、`reports/<日期>.zh.json` 中文覆盖与已选条目，由定时代理按 `ROUTINE.md` 写。

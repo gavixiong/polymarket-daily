@@ -95,13 +95,15 @@ const PM = (() => {
     const skip = new Set(L.skip || []), seen = new Set(), out = [];
     g[2].flatMap(c => day.official[c] || []).sort((a, b) => Math.abs(b.change1d) - Math.abs(a.change1d)).forEach(m => {
       if (seen.has(m.question) || skip.has(m.question)) return;
+      if (m.eventVolume24h != null && m.eventVolume24h < 20000) return;  // same floor as the post: one trader is not a market
       seen.add(m.question); out.push(m);
     });
     return out.slice(0, n);
   }
   const resolvedRows = (day, n = 8) => {
     const seen = new Set();
-    return DOMAINS.flatMap(([d]) => day.resolved[d]).filter(r => !seen.has(r.question) && seen.add(r.question)).sort((a, b) => b.volume - a.volume).slice(0, n);
+    // fetch.py ranks settled markets by information (volume × how wrong the day-before price was); older files only have volume
+    return DOMAINS.flatMap(([d]) => day.resolved[d]).filter(r => !seen.has(r.question) && seen.add(r.question)).sort((a, b) => (b.info ?? b.volume) - (a.info ?? a.volume)).slice(0, n);
   };
   const newRows = (day, n = 6) => {
     const posts = day.feed.filter(p => p.kind === 'new').map(p => ({ title: p.text, outcomes: [], official: true, kind: 'binary' }));

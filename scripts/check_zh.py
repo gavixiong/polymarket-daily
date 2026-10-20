@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
-"""Verify that every row the five Xiaohongshu cards will show has a Chinese label,
-that the day has a news-style title, and that no betting jargon reaches readers.
+"""Verify that every row the five Xiaohongshu cards will show has a Chinese label, that the day has a
+news-style title and the fixed post structure (5-10 items, a 盘面 line, a closing question, length caps,
+CJK/Latin spacing), that the headline comes from a headline-eligible candidate, and that no betting
+jargon reaches readers.
 
     python3 scripts/check_zh.py [YYYY-MM-DD]
 
@@ -29,6 +31,12 @@ PARTICLES = {"de", "da", "do", "von", "van", "of", "the", "bin", "al", "el", "&"
 # gambling senses only: a market called a "盘", plus 押注 / 下注 / 赌 / 赔率.
 JARGON = re.compile(r"(这个|那个|的|个|该|此|新|长期|梯子|热门|冷门)盘|盘口|押注|下注|赌|赔率")
 TITLE_MAX = 20  # Xiaohongshu title limit
+LINES_MIN, LINES_MAX = 5, 10      # numbered items in the post
+LINE_MAX, HEADLINE_MAX = 60, 80   # characters per item (item 1 may run longer: it carries the background)
+POST_MAX = 700                    # whole post
+BREAKING_MIN_EVENT_VOL = 20_000   # mirrors shared.js officialRows
+ITEM = re.compile(r"^(\d+)\.\s+(\S\S)\s+(.*)$")
+SPACING = re.compile(r"[一-鿿][A-Za-z0-9]|[A-Za-z0-9][一-鿿]")
 
 
 
@@ -46,6 +54,8 @@ def official_rows(day, group, skip, n=8):
     seen, out = set(), []
     for m in by_abs_change([m for c in GROUPS[group] for m in day["official"].get(c, [])]):
         if m["question"] in seen or m["question"] in skip:
+            continue
+        if m.get("eventVolume24h") is not None and m["eventVolume24h"] < BREAKING_MIN_EVENT_VOL:
             continue
         seen.add(m["question"])
         out.append(m)
@@ -70,7 +80,7 @@ def hot_rows(day, n=8):
 
 def resolved_rows(day, n=8):
     seen, out = set(), []
-    for r in sorted((r for d in DOMAINS for r in day["resolved"][d]), key=lambda r: r["volume"], reverse=True):
+    for r in sorted((r for d in DOMAINS for r in day["resolved"][d]), key=lambda r: r.get("info", r["volume"]), reverse=True):
         if r["question"] not in seen:
             seen.add(r["question"])
             out.append(r)
@@ -112,12 +122,36 @@ def main() -> int:
     xhs_path = ROOT / "reports" / f"{date}.xhs.md"
     texts = []
     if xhs_path.exists():
-        lines = xhs_path.read_text().splitlines()
+        body = xhs_path.read_text()
+        lines = body.splitlines()
         if lines and (not lines[0].strip() or lines[0].startswith("Polymarket") or len(lines[0].strip()) > TITLE_MAX):
             wording.append(f"正文第一行应是 12 到 20 字的新闻标题，现在是：{lines[0].strip()!r}")
         texts += [(xhs_path.name, l) for l in lines]
+        # structure: 5-10 numbered items, item 1 <= 80 chars, others <= 60, one 盘面 line, a question to readers
+        items = [(int(m.group(1)), m.group(2), m.group(3)) for m in (ITEM.match(l) for l in lines) if m]
+        if not LINES_MIN <= len(items) <= LINES_MAX:
+            wording.append(f"编号条目 {len(items)} 条，应在 {LINES_MIN} 到 {LINES_MAX} 之间（门槛说了算，不凑数）")
+        for n, tag, text in items:
+            cap = HEADLINE_MAX if n == 1 else LINE_MAX
+            if len(text) > cap:
+                wording.append(f"第 {n} 条 {len(text)} 字，上限 {cap}：{text[:40]}…")
+        if sum(1 for _, tag, _ in items if tag == "盘面") != 1:
+            wording.append("需要恰好一行\"盘面\"条目（长期关注事件的数字行）")
+        tail = [l.strip() for l in lines if l.strip() and not ITEM.match(l)]
+        if not any(l.endswith(("？", "?")) for l in tail[2:]):
+            wording.append("结尾缺一句问读者的话（以问号结尾的独立一行，放在图注之前）")
+        if len(body) > POST_MAX:
+            wording.append(f"正文共 {len(body)} 字，上限 {POST_MAX}")
+        for l in lines:
+            m = SPACING.search(l)
+            if m:
+                wording.append(f"中英文/数字之间要有空格「{m.group(0)}」：{l.strip()[:50]}")
+                break
     else:
         missing_fields.append(f"{xhs_path.name}（文件不存在）")
+    heads = {p["question"] for p in day.get("picks", []) if p.get("headlineOk")}
+    if heads and zh.get("headlineQuestion") and zh["headlineQuestion"] not in heads:
+        wording.append(f"headlineQuestion 不在\"可当头条\"候选里：{zh['headlineQuestion'][:60]}")
     texts += [("zh.json " + k, str(zh.get(k) or "")) for k in ("title", "headline", "headlineTitle", "headlineCause")]
     texts.append(("zh.json hero.label", str((zh.get("hero") or {}).get("label") or "")))
     texts += [("zh.json labels", v) for v in labels.values()] + [("zh.json outcomes", v) for v in zh.get("outcomes", {}).values()]
