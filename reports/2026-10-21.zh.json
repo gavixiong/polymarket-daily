@@ -1,0 +1,82 @@
+{
+  "title": "比特币跌 8 万概率一天降 18 个点",
+  "headline": "比特币 10 月内跌到 8 万美元的概率，一天内从 66% 降到 48%，成交 18 万美元。",
+  "hero": {
+    "value": "66% → 48%",
+    "label": "比特币 10 月跌到 8 万美元的概率一天降了 18 个百分点"
+  },
+  "headlineQuestion": "Will Bitcoin dip to $80,000 in October?",
+  "headlineTitle": "比特币 10 月跌到 8 万美元",
+  "skip": [],
+  "labels": {
+    "Will Bitcoin dip to $80,000 in October?": "比特币 10 月跌到 8 万美元",
+    "What price will Bitcoin hit in October?": "比特币 10 月触及价位",
+    "Will \"Remain\" win the Alberta independence referendum by 40–60%?": "艾伯塔公投\"留下\"领先 40 到 60 个点",
+    "Will Russia capture Orikhiv by March 31, 2027?": "俄军 2027 年 3 月底前攻占 Orikhiv",
+    "Will Ethereum reach $2,500 in October?": "以太坊 10 月涨到 2500 美元",
+    "Will the next Fable model (5.2+) be released on October 20, 2026?": "Fable 5.2 以上 10/20 发布",
+    "Next White House Press Secretary announced by December 31, 2026?": "年底前宣布新任白宫新闻秘书",
+    "Will the Bank of Canada increase the target for the overnight rate by 25 bps at the October interest rate announcement?": "加拿大央行 10 月加息 25 个基点",
+    "Will Olivia Chow win the 2026 Toronto mayoral election?": "Olivia Chow 赢多伦多市长选举",
+    "Brazil Presidential Election": "巴西总统选举",
+    "US-Iran ceasefire continues through...?": "美伊停火持续到何时",
+    "Balance of Power: 2026 Midterms": "2026 中期选举：国会归属",
+    "Brazil Presidential Election Second Round: Margin of Victory": "巴西决选得票差",
+    "Fed Decision in October?": "10 月美联储利率决议",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年触及价位",
+    "What will WTI Crude Oil (WTI) hit in October 2026?": "WTI 原油 10 月触及价位",
+    "Which company has the best AI model end of October?": "10 月底最强 AI 模型属于哪家",
+    "Will Luca Niculescu be the next Prime Minister of Romania?": "Luca Niculescu 出任罗马尼亚总理"
+  },
+  "outcomes": {
+    "Flávio Bolsonaro <4%": "Flávio Bolsonaro 领先不足 4 个百分点",
+    "Flávio Bolsonaro 4-8%": "Flávio Bolsonaro 领先 4 到 8 个百分点",
+    "Lula da Silva <4%": "Lula da Silva 领先不足 4 个百分点"
+  },
+  "picked": [
+    {
+      "question": "Will Bitcoin dip to $80,000 in October?",
+      "yes": 0.48
+    },
+    {
+      "question": "Will the Bank of Canada increase the target for the overnight rate by 25 bps at the October interest rate announcement?",
+      "yes": 0.69
+    },
+    {
+      "question": "Will \"Remain\" win the Alberta independence referendum by 40–60%?",
+      "yes": 0.95
+    },
+    {
+      "question": "Russia-Ukraine peace talks by December 31, 2026?",
+      "yes": 0.5
+    },
+    {
+      "question": "Will Flávio Bolsonaro win the second round of the 2026 Brazilian presidential election by 4–8%?",
+      "yes": 0.36
+    },
+    {
+      "question": "Next Fable Model (5.2+) released by October 22, 2026?",
+      "yes": 0.29
+    },
+    {
+      "question": "Will there be no change in Fed interest rates after the October 2026 meeting?",
+      "yes": 0.86
+    },
+    {
+      "question": "US x Iran ceasefire continues through October 31?",
+      "yes": 0.82
+    },
+    {
+      "question": "Will Flávio Bolsonaro win the 2026 Brazilian presidential election?",
+      "yes": 0.8
+    },
+    {
+      "question": "2026 Balance of Power: Democrats Sweep",
+      "yes": 0.64
+    },
+    {
+      "question": "Will \"Grand Theft Auto VI Launch Trailer\" get between 40 and 60 million views on week 1?",
+      "yes": 0.16
+    }
+  ]
+}
