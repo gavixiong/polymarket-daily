@@ -83,7 +83,7 @@ DAILY = re.compile(r"\bon (January|February|March|April|May|June|July|August|Sep
 BRACKET = re.compile(r"\bbetween\b|\b\d[\d,.]*[kmb]?\s*(-|–|to)\s*\$?\d[\d,.]*[kmb]?\b", re.I)
 # Earnings-season markets: "(NFLX) Q3 operating margin 32% to 34%?". Thin by nature, but each settled bracket is a
 # real-world result (the company reported). They bypass the volume floors and the bracket rule.
-EARNINGS = re.compile(r"\((?!HIGH\)|LOW\))[A-Z]{1,5}\)|\bQ[1-4]\b.*\b(revenue|margin|EPS|earnings|sales|growth|subscribers|deliveries|load factor|procedure)", re.I)
+EARNINGS = re.compile(r"\((?!HIGH\)|LOW\))[A-Z]{1,5}\)\s+Q[1-4]\b|\bQ[1-4]\b.*\b(revenue|margin|EPS|earnings|sales|growth|subscribers|deliveries|load factor|procedure)", re.I)
 EARNINGS_MIN_VOL = 2_000
 DATE_RUNG = re.compile(r"^(January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}(, \d{4})?$")
 

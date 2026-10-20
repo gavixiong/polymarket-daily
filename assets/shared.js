@@ -95,7 +95,7 @@ const PM = (() => {
     const skip = new Set(L.skip || []), seen = new Set(), out = [];
     g[2].flatMap(c => day.official[c] || []).sort((a, b) => Math.abs(b.change1d) - Math.abs(a.change1d)).forEach(m => {
       if (seen.has(m.question) || skip.has(m.question)) return;
-      if (m.eventVolume24h != null && m.eventVolume24h < 20000 && !/\((?!HIGH\)|LOW\))[A-Z]{1,5}\)|\bQ[1-4]\b/.test(m.question)) return;  // same floor as the post; earnings brackets are exempt
+      if (m.eventVolume24h != null && m.eventVolume24h < 20000 && !/\((?!HIGH\)|LOW\))[A-Z]{1,5}\)\s+Q[1-4]\b|\bQ[1-4]\b/.test(m.question)) return;  // same floor as the post; earnings brackets are exempt
       seen.add(m.question); out.push(m);
     });
     return out.slice(0, n);

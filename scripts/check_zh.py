@@ -57,7 +57,7 @@ def official_rows(day, group, skip, n=8):
         if m["question"] in seen or m["question"] in skip:
             continue
         if (m.get("eventVolume24h") is not None and m["eventVolume24h"] < BREAKING_MIN_EVENT_VOL
-                and not re.search(r"\((?!HIGH\)|LOW\))[A-Z]{1,5}\)|\bQ[1-4]\b", m["question"])):
+                and not re.search(r"\((?!HIGH\)|LOW\))[A-Z]{1,5}\)\s+Q[1-4]\b|\bQ[1-4]\b", m["question"])):
             continue
         seen.add(m["question"])
         out.append(m)
