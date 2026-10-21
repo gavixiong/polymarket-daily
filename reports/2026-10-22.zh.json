@@ -1,0 +1,63 @@
+{
+  "title": "以伊停火概率一天从 60% 跌到 44%",
+  "headline": "以色列和伊朗的停火能否撑到 11 月 30 日，概率一天从 60% 降到 44%，成交 65 万美元。",
+  "hero": {
+    "value": "60% → 44%",
+    "label": "以色列和伊朗停火撑到 11 月 30 日的概率一天降了 16 个百分点"
+  },
+  "headlineQuestion": "Israel x Iran ceasefire continues through November 30?",
+  "headlineTitle": "以伊停火撑到 11 月 30 日",
+  "skip": [],
+  "labels": {
+    "Israel x Iran ceasefire continues through November 30?": "以伊停火撑到 11 月 30 日",
+    "US imports Russian diesel by November 30?": "美国 11 月底前进口俄罗斯柴油",
+    "No change in Reserve Bank of Australia's interest rates at the November 2026 meeting?": "澳洲联储 11 月按兵不动",
+    "Russia-Ukraine peace talks by November 30, 2026?": "俄乌 11 月底前举行和谈",
+    "Will Ethereum dip to $2,400 in October?": "以太坊 10 月跌到 2400 美元",
+    "Will Bitcoin reach $85,000 in October?": "比特币 10 月涨到 8.5 万美元",
+    "Will Russia and Ukraine hold any diplomatic meeting by November 30, 2026?": "俄乌 11 月底前举行外交会面",
+    "Will Germany GDP growth in Q3 2026 be at least 1.3%?": "德国三季度 GDP 增长至少 1.3%",
+    "Will Brad Bradford win the 2026 Toronto mayoral election?": "Brad Bradford 赢多伦多市长选举",
+    "Balance of Power: 2026 Midterms": "2026 中期选举：国会归属",
+    "US-Iran ceasefire continues through...?": "美伊停火持续到何时",
+    "Brazil Presidential Election": "巴西总统选举",
+    "Brazil Presidential Election Second Round: Margin of Victory": "巴西决选得票差",
+    "Fed Decision in October?": "10 月美联储利率决议",
+    "What price will Bitcoin hit in October?": "比特币 10 月触及价位",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年触及价位",
+    "Which company has the best AI model end of October?": "10 月底最强 AI 模型属于哪家",
+    "Meta (META) Q3 ad impression growth across Family of Apps <10%?": "Meta 三季度广告展示量增长低于 10%",
+    "Will Lam Research (LRCX) Q1 total revenue be above $8.1B?": "Lam Research 季度营收高于 81 亿美元"
+  },
+  "outcomes": {
+    "Flávio Bolsonaro <4%": "Flávio Bolsonaro 领先不足 4 个百分点",
+    "Flávio Bolsonaro 4-8%": "Flávio Bolsonaro 领先 4 到 8 个百分点",
+    "Lula da Silva <4%": "Lula da Silva 领先不足 4 个百分点"
+  },
+  "picked": [
+    {
+      "question": "Israel x Iran ceasefire continues through November 30?",
+      "yes": 0.44
+    },
+    {
+      "question": "Russia-Ukraine peace talks by November 30, 2026?",
+      "yes": 0.66
+    },
+    {
+      "question": "US imports Russian diesel by November 30?",
+      "yes": 0.7
+    },
+    {
+      "question": "Will Bitcoin reach $85,000 in October?",
+      "yes": 0.89
+    },
+    {
+      "question": "Will Ethereum dip to $2,400 in October?",
+      "yes": 0.56
+    },
+    {
+      "question": "October 31",
+      "yes": 0.68
+    }
+  ]
+}
