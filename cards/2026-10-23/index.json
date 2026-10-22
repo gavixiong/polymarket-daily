@@ -1,6 +1,6 @@
 {
  "date": "2026-10-23",
- "engine": "playwright",
+ "engine": "chrome",
  "cards": [
   {
    "key": "cover",

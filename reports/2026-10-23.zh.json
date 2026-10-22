@@ -1,22 +1,23 @@
 {
-  "title": "比特币 8.5 万概率腰斩到 40%",
-  "headline": "比特币 10 月能否碰到 8.5 万美元，市场一天内概率从 86% 降到 40%，成交 40.9 万美元。",
+  "title": "俄乌月底前会面概率从 14% 到 60%",
+  "headline": "俄罗斯和乌克兰 10 月底前举行外交会面的概率一天内从 14% 升到 60%，成交 12.3 万美元。",
   "hero": {
-    "value": "86% → 40%",
-    "label": "比特币 10 月碰到 8.5 万美元的概率一天降了 46 个百分点"
+    "value": "14% → 60%",
+    "label": "俄乌 10 月底前举行任何形式外交会面的概率"
   },
-  "headlineQuestion": "Will Bitcoin reach $85,000 in October?",
-  "headlineTitle": "比特币 10 月涨到 8.5 万美元",
-  "skip": [],
+  "headlineQuestion": "Will Russia and Ukraine hold any diplomatic meeting by October 31, 2026?",
+  "headlineTitle": "俄乌 10 月底前举行外交会面",
+  "skip": [
+    "Will Ukraine target Moscow on October 21, 2026?"
+  ],
   "labels": {
-    "Will Bitcoin reach $85,000 in October?": "比特币 10 月涨到 8.5 万美元",
-    "Vertiv (VRT) Q3 adjusted operating margin 24% to 26%?": "Vertiv 三季度营业利润率 24% 到 26%",
     "Will Russia and Ukraine hold any diplomatic meeting by October 31, 2026?": "俄乌 10 月底前举行外交会面",
+    "Will Bitcoin reach $85,000 in October?": "比特币 10 月涨到 8.5 万美元",
     "Will Ethereum dip to $2,300 in October?": "以太坊 10 月跌到 2300 美元",
-    "Will Iliana Iotova win the 2026 Bulgarian presidential first round by 20%-30%?": "Iotova 首轮领先 20% 到 30%",
-    "Will Apple be the largest company in the world by market cap on October 31, 2026?": "苹果 10 月底成为市值最大公司",
-    "Next Fable Model (5.2+) released by October 29, 2026?": "Fable 5.2 10/29 前发布",
+    "Vertiv (VRT) Q3 adjusted operating margin 24% to 26%?": "Vertiv 三季度营业利润率 24% 到 26%",
+    "Will Iliana Iotova win the 2026 Bulgarian presidential first round by 10%-20%?": "Iotova 首轮领先 10% 到 20%",
     "Will Vivek Ramaswamy pull the Amy Acton mother ad?": "Ramaswamy 撤下 Acton 母亲广告",
+    "Will Apple be the largest company in the world by market cap on October 31, 2026?": "苹果 10 月底成为市值最大公司",
     "Balance of Power: 2026 Midterms": "2026 中期选举：国会归属",
     "US-Iran ceasefire continues through...?": "美伊停火持续到何时",
     "Brazil Presidential Election": "巴西总统选举",
@@ -25,37 +26,35 @@
     "What price will Bitcoin hit in 2026?": "比特币 2026 年触及价位",
     "What price will Bitcoin hit in October?": "比特币 10 月触及价位",
     "Which company has best AI model end of 2026?": "2026 年底最强 AI 模型属于哪家",
-    "Israel x Iran ceasefire continues through October 21?": "以伊停火撑到 10/21"
+    "Next Fable Model (5.2+) released by October 29, 2026?": "Fable 5.2 10/29 前发布",
+    "Israel x Iran ceasefire continues through October 21?": "以伊停火撑到 10/21",
+    "Predict.fun FDV above $600M one day after launch?": "Predict.fun 上线次日估值超 6 亿美元"
   },
   "outcomes": {},
   "picked": [
     {
-      "question": "Will Bitcoin reach $85,000 in October?",
-      "yes": 0.4
-    },
-    {
       "question": "Will Russia and Ukraine hold any diplomatic meeting by October 31, 2026?",
-      "yes": 0.6
+      "yes": 0.595
     },
     {
-      "question": "US x Iran ceasefire continues through October 22?",
-      "yes": 0.98
+      "question": "Will Bitcoin reach $85,000 in October?",
+      "yes": 0.395
     },
     {
       "question": "Will Ethereum dip to $2,300 in October?",
       "yes": 0.62
     },
     {
-      "question": "Will Iliana Iotova win the 2026 Bulgarian presidential first round by 20%-30%?",
-      "yes": 0.13
+      "question": "Will there be no change in Fed interest rates after the October 2026 meeting?",
+      "yes": 0.935
     },
     {
-      "question": "Vertiv (VRT) Q3 adjusted operating margin 24% to 26%?",
-      "yes": 0.96
+      "question": "US x Iran ceasefire continues through October 31?",
+      "yes": 0.765
     },
     {
-      "question": "Next Fable Model (5.2+) released by October 29, 2026?",
-      "yes": 0.48
+      "question": "Will Karen Bass win the 2026 Los Angeles mayoral election?",
+      "yes": 0.475
     }
   ]
 }
