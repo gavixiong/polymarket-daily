@@ -109,6 +109,7 @@ GET /holders?market=<conditionId>&limit=10
 4. `/tags` 只返回 100 条，拿不全，直接用上表的 ID 即可。
 5. 评论接口 `/comments?parent_entity_type=Event&parent_entity_id=` 返回空，暂不可用。
 6. 无认证时没有发现速率限制问题，但建议每次请求间隔 ≥ 200ms，日报一次跑下来大约 20~40 个请求。
+7. **财报市场**（2026-10-22 实测）：标签 Earnings `tag_id=1013`，每家公司每季一个"Will Meta (META) beat quarterly earnings?"，description 里写了预计发布日（"release earnings on October 21, 2026"）和一致预期（"consensus estimate for Meta's GAAP EPS … is $6.31"）。成交只有几百到一万多美元，过不了任何成交门槛，所以单独抓：已结算的按 `/events?tag_id=1013&closed=true&order=endDate` 取，`closedTime` 在财报发布后几小时到半天。
 
 ## 5. 日报可以直接产出的板块（数据已验证可取）
 

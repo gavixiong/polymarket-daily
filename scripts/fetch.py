@@ -85,7 +85,15 @@ BRACKET = re.compile(r"\bbetween\b|\b\d[\d,.]*[kmb]?\s*(-|–|to)\s*\$?\d[\d,.]*
 # real-world result (the company reported). They bypass the volume floors and the bracket rule.
 EARNINGS = re.compile(r"\((?!HIGH\)|LOW\))[A-Z]{1,5}\)\s+Q[1-4]\b|\bQ[1-4]\b.*\b(revenue|margin|EPS|earnings|sales|growth|subscribers|deliveries|load factor|procedure)", re.I)
 EARNINGS_MIN_VOL = 2_000
-DATE_RUNG = re.compile(r"^(January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}(, \d{4})?$")
+# The per-company "Will Meta (META) beat quarterly earnings?" markets (tag Earnings). A few thousand dollars each, so
+# they never clear a volume floor, but a settled one is the quarter's headline result. They get their own 财报 line.
+EARNINGS_TAG = 1013
+BEAT = re.compile(r"^Will (.+?) \(([A-Z.]{1,6})\) beat quarterly earnings\?$")
+EARNINGS_LINE_MAX = 6
+# Crypto price ladders ("What price will Bitcoin hit in October?", "Will Ethereum dip to $2,300?") move every day;
+# Bitcoin and Ethereum are one story for the post.
+CRYPTO_PRICE = re.compile(r"(?=.*\b(Bitcoin|BTC|Ethereum|ETH|Solana|SOL|XRP|Dogecoin)\b)(?=.*\b(hit|reach|dip|above|below|price)\b)", re.I)
+DATE_RUNG =re.compile(r"^(January|February|March|April|May|June|July|August|September|October|November|December) \d{1,2}(, \d{4})?$")
 
 # Thresholds
 LOOKBACK_H = 24
@@ -128,6 +136,9 @@ PER_DOMAIN_MAX = 5
 CULTURE_MAX = 2          # sports / film / music: at most two, always at the end of the post
 MENTION_DAYS = 7
 MENTION_MIN_MOVE = 0.10
+EVENT_REPEAT_DAYS = 2      # an event written on either of the last two days comes back only with a big move...
+EVENT_REPEAT_MOVE = 0.20   # ...on whichever rung it is today (Fable "by Oct 24", "by Oct 29" is one story)
+HEADLINE_REPEAT_DAYS = 3   # an event that was the title in the last three days is not the title again unless it settled
 WEAK_NOUNS = {"Trump", "Iran", "Israel", "Russia", "Ukraine", "China", "United", "States", "America", "American",
               "Democratic", "Republican", "Anthropic", "Google", "OpenAI", "Bitcoin", "Federal", "Reserve",
               "Congress", "Court", "Supreme", "Biden", "Harris", "Election", "Party", "Government", "Military",
@@ -486,14 +497,63 @@ def fetch_resolved(now: datetime, events: dict[str, dict], prev_questions: set[s
 
 
 def previous_resolved(today: str) -> set[str]:
-    """Questions on yesterday's settled list, so the card never shows the same result twice."""
+    """Questions on yesterday's settled lists (the card and the 财报 line), so a result never shows twice."""
     for f in sorted(DATA_DIR.glob("????-??-??.json"), reverse=True):
         if f.name[:10] < today:
             try:
-                return {r["question"] for rows in json.loads(f.read_text()).get("resolved", {}).values() for r in rows}
+                d = json.loads(f.read_text())
+                return ({r["question"] for rows in d.get("resolved", {}).values() for r in rows}
+                        | {r["question"] for r in (d.get("earnings") or {}).get("settled", [])})
             except (ValueError, OSError, KeyError):
                 return set()
     return set()
+
+
+def fetch_earnings(now: datetime, prev_questions: set[str]) -> dict[str, list[dict]]:
+    """Earnings-season "beat quarterly earnings?" markets: the ones settled in the last 36h with their day-before
+    price, and the ones reporting on the next US day (the date stated in the market text). Ranked by lifetime volume, which tracks how well-known the company is."""
+    def row(e: dict) -> dict | None:
+        m = (e.get("markets") or [{}])[0]
+        hit = BEAT.match(m.get("question") or "")
+        if not hit:
+            return None
+        cons = re.search(r"consensus estimate for .*?((?:non-)?GAAP) EPS.*? is (-?\$-?[\d.]+)", m.get("description") or "", re.I)
+        when = re.search(r"release earnings on (\w+ \d{1,2}, \d{4})", m.get("description") or "")
+        try:
+            report = datetime.strptime(when.group(1), "%B %d, %Y").date().isoformat() if when else None
+        except ValueError:
+            report = None
+        ids = m.get("clobTokenIds") or []
+        ids = json.loads(ids) if isinstance(ids, str) else list(ids)
+        return {"company": hit.group(1), "ticker": hit.group(2), "question": m["question"], "reportDate": report,
+                "eps": cons.group(1) if cons else None, "consensus": cons.group(2) if cons else None,
+                "yes": (prices(m) or [None])[0], "volume": fnum(e.get("volume")), "endDate": e.get("endDate"),
+                "url": f"https://polymarket.com/event/{e.get('slug')}", "_m": m, "_token": str(ids[0]) if ids else None}
+
+    settled = []
+    cutoff = now - timedelta(hours=RESOLVED_LOOKBACK_H)
+    for e in get(f"{GAMMA}/events", {"tag_id": EARNINGS_TAG, "closed": "true", "order": "endDate",
+                                     "ascending": "false", "limit": 100}) or []:
+        r = row(e)
+        closed = parse_iso((r or {}).get("_m", {}).get("closedTime"))
+        if r and closed and closed >= cutoff and r["volume"] >= EARNINGS_MIN_VOL and r["question"] not in prev_questions:
+            r["beat"], r["_closed"] = (r["yes"] or 0) >= 0.5, closed
+            settled.append(r)
+    settled.sort(key=lambda r: r["volume"], reverse=True)
+    settled = settled[:EARNINGS_LINE_MAX]
+    for r in settled:
+        r["prior"] = prior_price(r["_token"], r["_closed"]) if r["_token"] else None
+
+    upcoming = []
+    for e in get(f"{GAMMA}/events", {"tag_id": EARNINGS_TAG, "active": "true", "closed": "false", "order": "volume",
+                                     "ascending": "false", "limit": 100}) or []:
+        r = row(e)
+        # The run is the US afternoon before: today's US reports are already out (they settle as results);
+        # tomorrow's US reports are what Beijing readers learn about next.
+        if r and r["reportDate"] == ((now + la_offset(now)).date() + timedelta(days=1)).isoformat():
+            upcoming.append(r)
+    clean = lambda rows: [{k: v for k, v in r.items() if not k.startswith("_")} for r in rows]  # noqa: E731
+    return {"settled": clean(settled), "upcoming": clean(upcoming[:EARNINGS_LINE_MAX])}
 
 
 def board_panel(day: dict, now: datetime) -> list[dict]:
@@ -718,6 +778,90 @@ def recent_mentions(today: str) -> dict[str, dict]:
     return out
 
 
+def family(question: str | None, event_title: str | None, slug: str | None) -> str:
+    """The story a candidate belongs to: its event, except that all crypto price ladders are one story."""
+    if CRYPTO_PRICE.search(question or "") or CRYPTO_PRICE.search(event_title or ""):
+        return "crypto-price"
+    return slug or question or ""
+
+
+def recent_families(today: str) -> dict[str, dict]:
+    """Stories written in the post on recent days: {family: {"written": last date, "headline": last date as title}}.
+
+    The reports only keep the English questions, so each day's data file maps a question back to its event."""
+    oldest = (datetime.strptime(today, "%Y-%m-%d") - timedelta(days=max(EVENT_REPEAT_DAYS, HEADLINE_REPEAT_DAYS))).strftime("%Y-%m-%d")
+    written_cut = (datetime.strptime(today, "%Y-%m-%d") - timedelta(days=EVENT_REPEAT_DAYS)).strftime("%Y-%m-%d")
+    out: dict[str, dict] = {}
+    for f in sorted(REPORTS_DIR.glob("????-??-??.zh.json")):
+        d = f.name[:10]
+        if not oldest <= d < today:
+            continue
+        try:
+            zh = json.loads(f.read_text())
+            data = json.loads((DATA_DIR / f"{d}.json").read_text())
+        except (ValueError, OSError):
+            continue
+        events = {}
+        for p in data.get("picks", []):
+            events[p["question"]] = (p.get("eventTitle"), p.get("eventSlug"))
+        for b in data.get("board", []):
+            events.setdefault(b["question"], (b["title"], b["slug"]))
+        for ms in data.get("official", {}).values():
+            for m in ms:
+                events.setdefault(m["question"], (None, m.get("eventSlug")))
+        for rows in data.get("resolved", {}).values():
+            for r in rows:
+                events.setdefault(r["question"], (r.get("eventTitle"), r.get("eventSlug")))
+        fam = lambda q: family(q, *events.get(q, (None, None)))  # noqa: E731
+        if d >= written_cut:
+            for p in zh.get("picked", []):
+                if p.get("question"):
+                    out.setdefault(fam(p["question"]), {})["written"] = d
+        if zh.get("headlineQuestion"):
+            out.setdefault(fam(zh["headlineQuestion"]), {})["headline"] = d
+    return out
+
+
+def apply_recent(cands: list[dict], today: str) -> None:
+    """Event-level memory on top of the per-question one: a story written in the last two days is demoted unless it
+    moved 20+ points today or settled; a story that was the title in the last three days cannot be the title."""
+    recent = recent_families(today)
+    for c in cands:
+        c["family"] = family(c["question"], c.get("eventTitle"), c.get("eventSlug"))
+        seen = recent.get(c["family"], {})
+        if (seen.get("written") and not c["repeated"] and not c.get("story") and not c["closed"]
+                and abs(c["change1d"] or 0) < EVENT_REPEAT_MOVE):
+            c["repeated"], c["repeatedEvent"], c["lastMention"] = True, True, seen["written"]
+            c["score"], c["headlineOk"] = round(c["score"] * 0.2, 3), False
+        if seen.get("headline") and c["kind"] != "resolved" and c["headlineOk"]:
+            c["headlineOk"], c["recentHeadline"] = False, seen["headline"]
+
+
+def cap_picks(cands: list[dict]) -> list[dict]:
+    """Best first, at most two rows of a binary event, one of any other event, one crypto price line, five per
+    domain, two culture. Crypto rows that lost to the kept one ride along as `related` so they can share its line."""
+    per_event, per_domain, out, kept = {}, {}, [], {}
+    for c in sorted(cands, key=lambda c: c["score"], reverse=True):
+        ek = c.get("family") or c["eventSlug"] or c["question"]
+        cap = PER_EVENT_MAX if c["eventKind"] == "binary" and ek != "crypto-price" else 1   # Yes/No of one decision, or two rungs, are one story
+        domain_cap = CULTURE_MAX if c["domain"] == "culture" else PER_DOMAIN_MAX
+        if per_event.get(ek, 0) >= cap:
+            if ek == "crypto-price" and ek in kept and c["eventSlug"] != kept[ek]["eventSlug"] and len(kept[ek]["related"]) < 2:
+                kept[ek]["related"].append({"question": c["question"], "yes": c["yes"], "from": c["from"]})
+            continue
+        if per_domain.get(c["domain"], 0) >= domain_cap:
+            continue
+        per_event[ek] = per_event.get(ek, 0) + 1
+        per_domain[c["domain"]] = per_domain.get(c["domain"], 0) + 1
+        c["rank"] = len(out) + 1
+        c["related"] = []
+        kept.setdefault(ek, c)
+        out.append(c)
+        if len(out) >= PICKS_MAX:
+            break
+    return out
+
+
 def nouns(text: str | None) -> set[str]:
     return {w.strip("'’?,.:;()\"") for w in re.findall(r"\b[A-Z][A-Za-z\-]{3,}\b", text or "")} - STOP_NOUNS
 
@@ -852,20 +996,8 @@ def build_picks(day: dict, events: dict[str, dict], mv: list[dict]) -> list[dict
         if text in cands:
             cands[text]["url"], cands[text]["time"] = p["url"], p["time"]
 
-    per_event, per_domain, out = {}, {}, []
-    for c in sorted(cands.values(), key=lambda c: c["score"], reverse=True):
-        ek = c["eventSlug"] or c["question"]
-        cap = PER_EVENT_MAX if c["eventKind"] == "binary" else 1   # Yes/No of one decision, or two rungs, are one story
-        domain_cap = CULTURE_MAX if c["domain"] == "culture" else PER_DOMAIN_MAX
-        if per_event.get(ek, 0) >= cap or per_domain.get(c["domain"], 0) >= domain_cap:
-            continue
-        per_event[ek] = per_event.get(ek, 0) + 1
-        per_domain[c["domain"]] = per_domain.get(c["domain"], 0) + 1
-        c["rank"] = len(out) + 1
-        out.append(c)
-        if len(out) >= PICKS_MAX:
-            break
-    return out
+    apply_recent(list(cands.values()), day["date"])
+    return cap_picks(list(cands.values()))
 
 
 # ============================================================================ summary
@@ -902,10 +1034,17 @@ def text_summary(day: dict) -> str:
                              f"{delta(y['officialChange1d'])} 不要用；按稳定价格算起点是 {pct(p['from'])}")
             else:
                 notes.append(f"上线才 {y['listedAgoH']} 小时，起点可能是开盘首笔，变动不可靠，只写现在多少")
-        if p["repeated"]:
+        if p.get("repeatedEvent"):
+            notes.append(f"同一件事 {p['lastMention']} 刚写过，今天变动不到 {EVENT_REPEAT_MOVE * 100:.0f} 个点，慎用")
+        elif p["repeated"]:
             notes.append(f"7 天内报过（{p['lastMention']}），数值没怎么变，慎用")
         elif p["lastMention"]:
             notes.append(f"上次报 {p['lastMention']}，这次变了")
+        if p.get("recentHeadline"):
+            notes.append(f"{p['recentHeadline']} 当过标题，今天不能再当标题，可以写在正文里")
+        if p.get("related"):
+            notes.append("同类加密价格，并进这一句写：" + "; ".join(
+                f"{r['question']} {pct(r['from']) if r['from'] is not None else '—'}→{pct(r['yes'])}" for r in p["related"]))
         if p["siblings"]:
             head = "梯子市场，整体看" if p["eventKind"] == "ladder" else "同事件其他选项"
             notes.append(head + "：" + "; ".join(f"{s['label']} {pct(s['yes'])}" for s in p["siblings"]))
@@ -918,7 +1057,7 @@ def text_summary(day: dict) -> str:
             L.append(f"      ↳ 可能的原因（快讯 {c['time'][6:]}）：{c['text'][:160]}")
     L.append("")
 
-    L.append("## 盘面（长期关注事件；正文固定一行只写数字，标 [单独写] 的才展开成一条）")
+    L.append("## 盘面（长期关注事件；正文固定一行只写数字，标 [单独写] 的才展开成一条；已单独成条的不再进盘面行）")
     for b in day["board"]:
         since = (f"比上次报道（{b['sinceDate']} {pct(b['yes'] - b['sinceYes'])}）{delta(b['sinceYes'])}" if b.get("sinceYes") is not None
                  else "之前没写过")
@@ -932,6 +1071,17 @@ def text_summary(day: dict) -> str:
     new_rows = [e for d in DOMAINS for e in day["new"][d] if e["volume24h"] >= NEW_MIN_VOL24H][:4]
     L.append("## 新题（24 小时内新开且已有成交；正文最多 1 条，\"Polymarket 开了一个新问题\"）")
     L += [f"- {usd(e['volume24h'])}  {e['title']}  → {outcomes_line(e)}" for e in new_rows] or ["- 今天没有像样的新题"]
+    L.append("")
+
+    ern = day.get("earnings") or {}
+    L.append("## 财报（\"会不会超预期\"市场，每家只有几千美元成交，只写前一天概率；有结果就在盘面行之后写一行\"财报\"，候选里的财报类条目也并进这一行）")
+    for r in ern.get("settled", []):
+        cons = f"，市场预期 {r['eps']} EPS {r['consensus']}" if r.get("consensus") else ""
+        L.append(f"- {'超预期' if r['beat'] else '没达预期'} · 前一天 {pct(r.get('prior'))} · {r['company']} ({r['ticker']}){cons} · 累计 {usd(r['volume'])}")
+    if not ern.get("settled"):
+        L.append("- 过去 36 小时没有财报结果")
+    for r in ern.get("upcoming", []):
+        L.append(f"- 明天发布 · 现在 {pct(r['yes'])} 认为超预期 · {r['company']} ({r['ticker']}) · 累计 {usd(r['volume'])}")
     L.append("")
 
     L.append("## 明天揭晓（48 小时内到期的大市场；正文末尾一行）")
@@ -1008,6 +1158,7 @@ def main() -> int:
         "hot": hot_panel(events, date),
         "new": new_panel(events, now),
         "resolved": fetch_resolved(now, events, previous_resolved(date)),
+        "earnings": fetch_earnings(now, previous_resolved(date)),
         "upcoming": upcoming_panel(events, now),
         "flows": fetch_flows(events, now),
     }
