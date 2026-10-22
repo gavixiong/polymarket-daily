@@ -1,0 +1,61 @@
+{
+  "title": "比特币 8.5 万概率腰斩到 40%",
+  "headline": "比特币 10 月能否碰到 8.5 万美元，市场一天内概率从 86% 降到 40%，成交 40.9 万美元。",
+  "hero": {
+    "value": "86% → 40%",
+    "label": "比特币 10 月碰到 8.5 万美元的概率一天降了 46 个百分点"
+  },
+  "headlineQuestion": "Will Bitcoin reach $85,000 in October?",
+  "headlineTitle": "比特币 10 月涨到 8.5 万美元",
+  "skip": [],
+  "labels": {
+    "Will Bitcoin reach $85,000 in October?": "比特币 10 月涨到 8.5 万美元",
+    "Vertiv (VRT) Q3 adjusted operating margin 24% to 26%?": "Vertiv 三季度营业利润率 24% 到 26%",
+    "Will Russia and Ukraine hold any diplomatic meeting by October 31, 2026?": "俄乌 10 月底前举行外交会面",
+    "Will Ethereum dip to $2,300 in October?": "以太坊 10 月跌到 2300 美元",
+    "Will Iliana Iotova win the 2026 Bulgarian presidential first round by 20%-30%?": "Iotova 首轮领先 20% 到 30%",
+    "Will Apple be the largest company in the world by market cap on October 31, 2026?": "苹果 10 月底成为市值最大公司",
+    "Next Fable Model (5.2+) released by October 29, 2026?": "Fable 5.2 10/29 前发布",
+    "Will Vivek Ramaswamy pull the Amy Acton mother ad?": "Ramaswamy 撤下 Acton 母亲广告",
+    "Balance of Power: 2026 Midterms": "2026 中期选举：国会归属",
+    "US-Iran ceasefire continues through...?": "美伊停火持续到何时",
+    "Brazil Presidential Election": "巴西总统选举",
+    "Prime Minister of Israel after the next election?": "下届以色列总理",
+    "Fed Decision in October?": "10 月美联储利率决议",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年触及价位",
+    "What price will Bitcoin hit in October?": "比特币 10 月触及价位",
+    "Which company has best AI model end of 2026?": "2026 年底最强 AI 模型属于哪家",
+    "Israel x Iran ceasefire continues through October 21?": "以伊停火撑到 10/21"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will Bitcoin reach $85,000 in October?",
+      "yes": 0.4
+    },
+    {
+      "question": "Will Russia and Ukraine hold any diplomatic meeting by October 31, 2026?",
+      "yes": 0.6
+    },
+    {
+      "question": "US x Iran ceasefire continues through October 22?",
+      "yes": 0.98
+    },
+    {
+      "question": "Will Ethereum dip to $2,300 in October?",
+      "yes": 0.62
+    },
+    {
+      "question": "Will Iliana Iotova win the 2026 Bulgarian presidential first round by 20%-30%?",
+      "yes": 0.13
+    },
+    {
+      "question": "Vertiv (VRT) Q3 adjusted operating margin 24% to 26%?",
+      "yes": 0.96
+    },
+    {
+      "question": "Next Fable Model (5.2+) released by October 29, 2026?",
+      "yes": 0.48
+    }
+  ]
+}

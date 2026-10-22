@@ -1,0 +1,26 @@
+{
+ "date": "2026-10-23",
+ "engine": "playwright",
+ "cards": [
+  {
+   "key": "cover",
+   "file": "01-cover.png"
+  },
+  {
+   "key": "headline",
+   "file": "02-headline.png"
+  },
+  {
+   "key": "breaking",
+   "file": "03-breaking.png"
+  },
+  {
+   "key": "hot",
+   "file": "04-hot.png"
+  },
+  {
+   "key": "resolved",
+   "file": "05-resolved.png"
+  }
+ ]
+}
