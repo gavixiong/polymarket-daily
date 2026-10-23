@@ -1,0 +1,58 @@
+{
+  "title": "原油摸到 105 美元概率一天翻倍",
+  "headline": "WTI 原油 10 月内碰到 105 美元的概率一天从 40% 升到 83%，成交 22 万美元。",
+  "hero": {
+    "value": "40% → 83%",
+    "label": "WTI 原油 10 月碰到 105 美元的概率"
+  },
+  "headlineQuestion": "Will WTI Crude Oil (WTI) hit (HIGH) $105 in October?",
+  "headlineTitle": "WTI 原油 10 月碰到 105 美元",
+  "skip": [],
+  "labels": {
+    "Will WTI Crude Oil (WTI) hit (HIGH) $105 in October?": "WTI 原油 10 月碰到 105 美元",
+    "Will the next Claude Haiku model (4.6+) debut at a score of at least 1420 by June 30, 2027?": "下一代 Claude Haiku 评分达 1420",
+    "Will Russia and Ukraine hold any diplomatic meeting by October 31, 2026?": "俄乌 10 月底前举行外交会面",
+    "Vertiv (VRT) Q3 adjusted operating margin 24% to 26%?": "Vertiv 三季度营业利润率 24% 到 26%",
+    "Next Fable Model (5.2+) released by October 31, 2026?": "Fable 5.2 10/31 前发布",
+    "Will Russia target Kyiv on October 23, 2026?": "俄罗斯 10/23 袭击基辅",
+    "Total Internet Blackout in Iran by December 31, 2026?": "伊朗年底前全国断网",
+    "Will the Bank of Russia make no change to the key rate after the October Meeting?": "俄罗斯央行 10 月利率不变",
+    "Tyler Robinson convicted of homicide?": "Tyler Robinson 被判谋杀罪",
+    "Balance of Power: 2026 Midterms": "2026 中期选举：国会归属",
+    "Brazil Presidential Election": "巴西总统选举",
+    "US-Iran ceasefire continues through...?": "美伊停火持续到何时",
+    "Prime Minister of Israel after the next election?": "下届以色列总理",
+    "Fed Decision in October?": "10 月美联储利率决议",
+    "What will WTI Crude Oil (WTI) hit in October 2026?": "WTI 原油 10 月触及价位",
+    "What price will Bitcoin hit in October?": "比特币 10 月触及价位",
+    "Which company has the best AI model end of October?": "10 月底最强 AI 模型属于哪家",
+    "Next Fable Model (5.2+) released by October 22, 2026?": "Fable 5.2 10/22 前发布"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will WTI Crude Oil (WTI) hit (HIGH) $105 in October?",
+      "yes": 0.83
+    },
+    {
+      "question": "Will Russia and Ukraine hold any diplomatic meeting by October 31, 2026?",
+      "yes": 1.0
+    },
+    {
+      "question": "NATO x Russia military clash by November 15, 2026?",
+      "yes": 0.06
+    },
+    {
+      "question": "Next Fable Model (5.2+) released on...? No release by October 31",
+      "yes": 0.77
+    },
+    {
+      "question": "Will the Bank of Russia make no change to the key rate after the October Meeting?",
+      "yes": 1.0
+    },
+    {
+      "question": "Brazil Presidential Election",
+      "yes": 0.77
+    }
+  ]
+}
