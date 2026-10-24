@@ -1,0 +1,63 @@
+{
+  "title": "巴西决选前 Lula 夺冠只剩 16%",
+  "headline": "巴西总统决选还有 2 天，Lula 夺冠概率一天从 24% 降到 16%，Flávio Bolsonaro 升到 84%",
+  "hero": {
+    "value": "24% → 16%",
+    "label": "Lula 赢下巴西总统大选，一天内下跌"
+  },
+  "headlineQuestion": "Will Luiz Inácio Lula da Silva win the 2026 Brazilian presidential election?",
+  "headlineTitle": "Lula 赢下巴西大选的概率",
+  "skip": [],
+  "labels": {
+    "Will Vivek Ramaswamy pull the Amy Acton mother ad?": "Ramaswamy 会撤下攻击广告吗",
+    "Will Iliana Iotova win the 2026 Bulgarian presidential first round by 10%-20%?": "Iotova 首轮领先 10 到 20 个点",
+    "Will commitments to the 1W public sale exceed $30M?": "1win 公募认购超 3000 万美元",
+    "Will Flávio Bolsonaro win the second round of the 2026 Brazilian presidential election by 4–6%?": "Bolsonaro 决选领先 4 到 6 个点",
+    "Will Ethereum dip to $2,250 by December 31, 2026?": "以太坊年底前跌到 2250 美元",
+    "Will Moonshot have the best Chinese AI model at the end of October 2026?": "月底 Moonshot 最强中国 AI",
+    "US x Iran ceasefire continues through October 28?": "美伊停火撑到 10/28",
+    "Will Solana dip to $90 in October?": "Solana 10 月跌到 90 美元",
+    "Balance of Power: 2026 Midterms": "2026 中期选举两院格局",
+    "Brazil Presidential Election": "巴西总统大选",
+    "US-Iran ceasefire continues through...?": "美伊停火能撑多久",
+    "Fed Decision in October?": "美联储 10 月决议",
+    "What price will Bitcoin hit in October?": "比特币 10 月价格",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年价格",
+    "Which company has the best AI model end of October?": "月底最强 AI 模型公司",
+    "Best Chinese AI Company end of October?": "月底最强中国 AI 公司",
+    "Will the Bank of Russia decrease the key rate after the October Meeting?": "俄罗斯央行 10 月降息",
+    "Will there be no Hormuz agreement?": "霍尔木兹没有协议",
+    "Will Luiz Inácio Lula da Silva win the 2026 Brazilian presidential election?": "Lula 赢下巴西大选"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will Luiz Inácio Lula da Silva win the 2026 Brazilian presidential election?",
+      "yes": 0.16
+    },
+    {
+      "question": "US x Iran ceasefire continues through October 28?",
+      "yes": 0.9
+    },
+    {
+      "question": "Iotova 10-20%",
+      "yes": 0.42
+    },
+    {
+      "question": "Will the Bank of Russia decrease the key rate after the October Meeting?",
+      "yes": 0.0
+    },
+    {
+      "question": "↓ 77,500",
+      "yes": 0.42
+    },
+    {
+      "question": "Next Fable Model (5.2+) released by October 31, 2026?",
+      "yes": 0.3
+    },
+    {
+      "question": "Will Malta win Junior Eurovision 2026?",
+      "yes": 0.0
+    }
+  ]
+}
