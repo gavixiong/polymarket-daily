@@ -1,0 +1,54 @@
+{
+  "title": "Lula 概率一天从 12% 到 79%",
+  "headline": "巴西总统大选即将揭晓，市场给 Lula 当选的概率一天从 12% 升到 79%",
+  "hero": {
+    "value": "12% → 79%",
+    "label": "Lula 赢得巴西总统大选，成交 1760 万美元"
+  },
+  "headlineQuestion": "Will Luiz Inácio Lula da Silva win the 2026 Brazilian presidential election?",
+  "headlineTitle": "Lula 赢得巴西总统大选",
+  "skip": [],
+  "labels": {
+    "Will María Corina Machado enter Venezuela by October 31?": "Machado 10/31 前回委内瑞拉",
+    "Will the Student List win 50% or more of the vote in the 2026 Serbian parliamentary election?": "Student List 得票过半",
+    "Will Student List – Students Win win the most seats in the 2026 Serbian parliamentary election?": "Student List 拿最多席位",
+    "Will Iliana Iotova win the 2026 Bulgarian presidential first round by less than 10%?": "Iotova 首轮领先不到 10 个点",
+    "Will Luiz Inácio Lula da Silva win the 2026 Brazilian presidential election?": "Lula 赢得巴西总统大选",
+    "Will Flavio Bolsonaro win the most votes in the second round of the Brazil presidential election from Amapá?": "Bolsonaro 在 Amapá 决选得票最多",
+    "Will Luiz Inácio Lula da Silva win the second round of the 2026 Brazilian presidential election by less than 4%?": "Lula 决选领先不到 4 个点",
+    "Will Flávio Bolsonaro win Brazil, Gadi Eizenkot become Israeli PM, and Democrats win the US Senate?": "Bolsonaro 胜、Eizenkot 当总理、民主党夺参议院",
+    "Brazil Presidential Election": "巴西总统大选",
+    "US-Iran ceasefire continues through...?": "美伊停火能撑到何时",
+    "Prime Minister of Israel after the next election?": "以色列大选后的总理",
+    "Fed Decision in October?": "美联储 10 月决议",
+    "What price will Bitcoin hit in October?": "比特币 10 月价格",
+    "What will WTI Crude Oil (WTI) hit in October 2026?": "WTI 原油 10 月价格",
+    "Next Fable Model (5.2+) released by...?": "Fable 下一代何时发布",
+    "Which company has the best AI model end of October?": "10 月底最强 AI 模型是谁家",
+    "Will Anton Danko win the 2026 Poprad mayoral election?": "Anton Danko 当选 Poprad 市长",
+    "Will Igor Kršiak win the 2026 Nitra mayoral election?": "Igor Kršiak 当选 Nitra 市长"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will Luiz Inácio Lula da Silva win the 2026 Brazilian presidential election?",
+      "yes": 0.79
+    },
+    {
+      "question": "Will Student List – Students Win win the most seats in the 2026 Serbian parliamentary election?",
+      "yes": 0.99
+    },
+    {
+      "question": "Will Iliana Iotova win the 2026 Bulgarian presidential first round by less than 10%?",
+      "yes": 0.87
+    },
+    {
+      "question": "Will María Corina Machado enter Venezuela by October 31?",
+      "yes": 1.0
+    },
+    {
+      "question": "Next Fable Model (5.2+) released by October 30, 2026?",
+      "yes": 0.44
+    }
+  ]
+}
