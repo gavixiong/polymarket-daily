@@ -1,12 +1,12 @@
 {
-  "title": "美伊停火撑到 10/31，市场给 82%",
-  "headline": "美伊停火能撑到 10/31 的概率比 10/23 的 76% 升到 82%",
+  "title": "美联储决议还有 4 天，96% 认为不动",
+  "headline": "10 月 29 日议息会议，市场 96% 认为按兵不动；真正的分歧在 12 月，加息概率 78%。",
   "hero": {
-    "value": "76% → 82%",
-    "label": "美伊停火撑到 10/31"
+    "value": "96%",
+    "label": "美联储 10 月按兵不动，还有 4 天揭晓"
   },
-  "headlineQuestion": "Will Armenia win Junior Eurovision 2026?",
-  "headlineTitle": "Armenia 赢得儿童欧洲歌唱大赛",
+  "headlineQuestion": "Will there be no change in Fed interest rates after the October 2026 meeting?",
+  "headlineTitle": "美联储 10 月按兵不动",
   "skip": [],
   "labels": {
     "Next Fable Model (5.2+) released by October 31, 2026?": "Fable 5.2 10/31 前发布",
@@ -26,33 +26,26 @@
     "Which company has the best AI model end of October?": "月底最强 AI 模型公司",
     "OpenAI announces another Millennium Prize solution by...?": "OpenAI 再解千禧难题时间",
     "Will there be no Hormuz agreement?": "霍尔木兹没有协议",
-    "Will Armenia win Junior Eurovision 2026?": "Armenia 赢得儿童欧洲歌唱大赛"
+    "Will Armenia win Junior Eurovision 2026?": "亚美尼亚赢得儿童欧洲歌唱大赛",
+    "Will there be no change in Fed interest rates after the October 2026 meeting?": "美联储 10 月按兵不动",
+    "Will WTI Crude Oil (WTI) hit (HIGH) $105 in October?": "WTI 原油 10 月碰到 105 美元",
+    "Next Fable Model (5.2+) released by...?": "Fable 下一代何时发布",
+    "Next Fable Model (5.2+) released by October 27, 2026?": "Fable 下一代 10 月 27 日前发布",
+    "Will Vivek Ramaswamy pull the Amy Acton mother ad?": "Ramaswamy 撤下攻击 Acton 母亲的广告",
+    "Will the 5-year Treasury yield dip below 4.20% before 2027?": "5 年期美债收益率年内跌破 4.20%",
+    "Will María Corina Machado enter Venezuela by December 31?": "Machado 年底前回到委内瑞拉",
+    "Will Bitcoin reach $82,500 in October?": "比特币 10 月碰到 8.25 万美元",
+    "Will OpenAI's valuation hit (HIGH) $1.25T by December 31?": "OpenAI 年底前估值到 1.25 万亿美元"
   },
   "outcomes": {},
   "picked": [
     {
-      "question": "October 31",
-      "yes": 0.82
+      "question": "Will there be no change in Fed interest rates after the October 2026 meeting?",
+      "yes": 0.96
     },
     {
-      "question": "Aleksandar Vučić – United Serbia",
-      "yes": 0.72
-    },
-    {
-      "question": "Flávio Bolsonaro",
-      "yes": 0.8
-    },
-    {
-      "question": "Will Vivek Ramaswamy pull the Amy Acton mother ad?",
-      "yes": 0.05
-    },
-    {
-      "question": "November 20, 2026",
-      "yes": 0.26
-    },
-    {
-      "question": "Next Fable Model (5.2+) released by October 31, 2026?",
-      "yes": 0.36
+      "question": "Will WTI Crude Oil (WTI) hit (HIGH) $105 in October?",
+      "yes": 0.7
     },
     {
       "question": "Will Armenia win Junior Eurovision 2026?",

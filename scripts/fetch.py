@@ -211,8 +211,11 @@ def outcome(m: dict) -> dict:
     """One market inside an event, as an outcome row."""
     p = prices(m)
     label = m.get("groupItemTitle") or m.get("question")
+    ids = m.get("clobTokenIds") or []
+    ids = json.loads(ids) if isinstance(ids, str) else list(ids)
     return {
         "question": m.get("question"),
+        "tokenId": str(ids[0]) if ids else None,
         "label": "Yes" if label == m.get("question") else label,
         "yes": p[0] if p else None,
         "change1d": m.get("oneDayPriceChange"),
@@ -625,6 +628,8 @@ def board_panel(day: dict, now: datetime) -> list[dict]:
                         "label": o["label"], "question": o["question"], "yes": o["yes"], "change1d": o["change1d"],
                         "volume24h": e["volume24h"], "daysLeft": days_left,
                         "sinceDate": mention["date"] if mention else None, "sinceYes": since, "pinnedBy": e.get("pinnedBy"),
+                        "closed": False,
+                        "history7d": [[h["t"], round(h["p"], 3)] for h in ((get(f"{CLOB}/prices-history", {"market": o["tokenId"], "interval": "1w", "fidelity": 120}) or {}).get("history") or [])] if o.get("tokenId") else [],
                         "write": bool(abs(move) >= STORY_REWRITE_MOVE or crossed)})
     out.sort(key=lambda b: b["volume24h"], reverse=True)
     return out
@@ -1064,8 +1069,8 @@ def text_summary(day: dict) -> str:
          f"正文日期行（图注之后、标签之前）照抄：Polymarket 日报 · {day['date'][5:].replace('-0', '/').replace('-', '/')} · {day['stamp']}", ""]
 
     if day.get("quiet"):
-        L += ["## 今天是安静日：没有像样的非文体新闻。正文 4 到 6 条就够，明写\"今天市场很安静\"；头条用盘面角度；"
-              "文体若成交 10 万以上且变 30 个点以上可排第 2 条。不要往下捞小市场凑数。", ""]
+        L += ["## 今天是安静日：没有像样的非文体新闻。正文 4 到 6 条就够，不往下捞小市场凑数；头条用盘面角度；"
+              "文体若成交 10 万以上且变 30 个点以上可排第 2 条。正文和图上不提\"安静\"，只在汇报里写。", ""]
     heads = [p for p in day["picks"] if p.get("headlineOk")]
     L += ["## 可当头条的候选（二元、成交够大、变动够大；头条只能从这里选，再按主语是否人人认识排除）"]
     L += [f"- 第 {p['rank']} 名  {p['question']}" for p in heads] or ["- 今天没有满足硬条件的头条，选候选第一名并在汇报里说明"]

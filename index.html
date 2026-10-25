@@ -185,7 +185,7 @@ async function show(date) {
   const gen = new Date(day.generatedAt.replace(' ', 'T').replace(/ ([+-]\d{2})(\d{2})$/, '$1:$2'));
   const ageH = (Date.now() - gen.getTime()) / 36e5;
   const stale = !isFinite(ageH) || ageH > 26, st = $('#status');
-  st.textContent = stale ? `⚠ 数据已 ${isFinite(ageH) ? Math.round(ageH) : '?'} 小时未更新` : `● ${ageH < 1 ? '刚更新' : Math.round(ageH) + ' 小时前更新'}${cards.length ? ' · 图片 ' + cards.length + ' 张' : ' · 无图片'}${xhs ? '' : ' · 无正文'}`;
+  st.textContent = stale ? `⚠ 数据已 ${isFinite(ageH) ? Math.round(ageH) : '?'} 小时未更新` : `● ${ageH < 1 ? '刚更新' : Math.round(ageH) + ' 小时前更新'}${cards.length ? ' · 图片 ' + cards.length + ' 张' : ' · 无图片'}${xhs ? '' : ' · 无正文'}${day.quiet ? ' · 安静日' : ''}`;
   st.style.color = stale || !cards.length || !xhs ? 'var(--c8)' : 'var(--good)';
 
   $('#xhsText').textContent = xhs || '今日还没有生成正文。';

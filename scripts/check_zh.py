@@ -36,6 +36,7 @@ QUIET_LINES_MIN = 4
 SECOND_ITEM_MIN_VOL = 50_000      # items 2 and 3 need real money behind them
 LINE_MAX, HEADLINE_MAX = 60, 80   # characters per item (item 1 may run longer: it carries the background)
 BOARD_MAX = 90                    # the 盘面 line: four events with countdowns; the 财报 line: a few companies
+FLOW_MAX = 80                     # the 大单 line: three flows with amounts
 POST_MAX = 700                    # whole post
 BREAKING_MIN_EVENT_VOL = 20_000   # mirrors shared.js officialRows
 ITEM = re.compile(r"^(\d+)\.\s+(\S\S)\s+(.*)$")
@@ -136,12 +137,12 @@ def main() -> int:
         lines_min = QUIET_LINES_MIN if day.get("quiet") else LINES_MIN
         if not lines_min <= len(items) <= LINES_MAX:
             wording.append(f"编号条目 {len(items)} 条，应在 {lines_min} 到 {LINES_MAX} 之间（门槛说了算，不凑数）")
-        if day.get("quiet") and "安静" not in body:
-            wording.append("今天是安静日，正文里要明写\"今天市场很安静\"，不要用小市场凑数")
+        if day.get("quiet") and "安静" in body:
+            wording.append("安静日不在正文里说\"安静\"，Dashboard 状态行会标；只需少写几条")
         if day.get("flows") and sum(1 for _, tag, _ in items if tag == "大单") != 1:
             wording.append("需要恰好一行\"大单\"条目（1 万美元以上大单的净流向，摘要\"大单行\"块）")
         for n, tag, text in items:
-            cap = HEADLINE_MAX if n == 1 else BOARD_MAX if tag in ("盘面", "财报") else LINE_MAX
+            cap = HEADLINE_MAX if n == 1 else BOARD_MAX if tag in ("盘面", "财报") else FLOW_MAX if tag == "大单" else LINE_MAX
             if len(text) > cap:
                 wording.append(f"第 {n} 条 {len(text)} 字，上限 {cap}：{text[:40]}…")
         if sum(1 for _, tag, _ in items if tag == "盘面") != 1:
@@ -163,8 +164,10 @@ def main() -> int:
     else:
         missing_fields.append(f"{xhs_path.name}（文件不存在）")
     heads = {p["question"] for p in day.get("picks", []) if p.get("headlineOk")}
+    if day.get("quiet"):   # a quiet day's title takes the board angle: any long-running market is a valid headline
+        heads |= {b["question"] for b in day.get("board", [])}
     if heads and zh.get("headlineQuestion") and zh["headlineQuestion"] not in heads:
-        wording.append(f"headlineQuestion 不在\"可当头条\"候选里：{zh['headlineQuestion'][:60]}")
+        wording.append(f"headlineQuestion 不在\"可当头条\"候选里（安静日可用盘面里的市场）：{zh['headlineQuestion'][:60]}")
     # picked = the day's memory. Every entry must be a question string from today's data (the 7-day memory maps it
     # back to its event); nothing marked "written before, barely moved" may be picked; items 2 and 3 need volume.
     known = set()

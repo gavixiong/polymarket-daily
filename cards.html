@@ -79,7 +79,9 @@ const zh = s => { const z = label(s); return `${esc(z)}${z !== s ? `<small>${esc
 
 function headlineMarket(day) {
   const all = Object.values(day.official).flat(), want = overlay().headlineQuestion;
-  return (want && all.find(m => m.question === want)) || all.filter(m => (m.history7d || []).length >= 20).sort((a, b) => Math.abs(b.change1d) - Math.abs(a.change1d))[0] || officialRows(day, 'politics', 1)[0];
+  // The title market: on the breaking board, or (quiet days) a long-running market from the board, which carries its own curve.
+  return (want && all.find(m => m.question === want)) || (want && (day.board || []).find(b => b.question === want && (b.history7d || []).length >= 2))
+    || all.filter(m => (m.history7d || []).length >= 20).sort((a, b) => Math.abs(b.change1d) - Math.abs(a.change1d))[0] || officialRows(day, 'politics', 1)[0];
 }
 
 // Cover footer: the three biggest storylines with today's number, so the cover carries forward-looking content too.
@@ -96,7 +98,8 @@ const CARDS = {
     const hero = o.hero || { value: top ? pt(top.change1d) : '—', label: top ? label(top.question) : '' };
     const headline = o.headline || (day.xhsFirst || ''), title = o.title || '';
     // Width estimate: CJK ~1em, Latin/digits ~0.55em, spaces ~0.3em. Fit one line at 84px, else shrink to two full lines.
-    const units = [...title].reduce((n, ch) => n + (/[一-鿿]/.test(ch) ? 1 : ch === ' ' ? 0.3 : 0.55), 0);
+    // Width estimate: any non-ASCII glyph (CJK and fullwidth punctuation) ~1em, ASCII ~0.6em, space ~0.3em, plus 4% slack.
+    const units = 1.04 * [...title].reduce((n, ch) => n + (ch > '\u007f' ? 1 : ch === ' ' ? 0.3 : 0.6), 0);
     const size = units * 84 <= 1082 ? 84 : 1082 / units >= 62 ? Math.floor(1082 / units) : 72;  // one line if it can be read at 62px+, else two lines at 72px
     return `<section class="card cover"><div class="big">${esc(shortDate(day.date).replace('/', '.'))}</div>${brand(day, '每日 07:00')}
       <div class="date">${esc(cnDate(day.date))}<span style="display:block;font-size:28px;color:var(--muted);margin-top:8px">${esc(stamp(day))}</span></div><h1 style="font-size:${size}px">${esc(title || headline)}</h1>${title ? `<p class="lede">${esc(headline)}</p>` : ''}
