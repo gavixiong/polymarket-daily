@@ -31,7 +31,9 @@ PARTICLES = {"de", "da", "do", "von", "van", "of", "the", "bin", "al", "el", "&"
 # gambling senses only: a market called a "盘", plus 押注 / 下注 / 赌 / 赔率.
 JARGON = re.compile(r"(这个|那个|的|个|该|此|新|长期|梯子|热门|冷门)盘|盘口|押注|下注|赌|赔率")
 TITLE_MAX = 20  # Xiaohongshu title limit
-LINES_MIN, LINES_MAX = 5, 10      # numbered items in the post
+LINES_MIN, LINES_MAX = 5, 10      # numbered items in the post (4 on a quiet day)
+QUIET_LINES_MIN = 4
+SECOND_ITEM_MIN_VOL = 50_000      # items 2 and 3 need real money behind them
 LINE_MAX, HEADLINE_MAX = 60, 80   # characters per item (item 1 may run longer: it carries the background)
 BOARD_MAX = 90                    # the 盘面 line: four events with countdowns; the 财报 line: a few companies
 POST_MAX = 700                    # whole post
@@ -131,8 +133,13 @@ def main() -> int:
         texts += [(xhs_path.name, l) for l in lines]
         # structure: 5-10 numbered items, item 1 <= 80 chars, others <= 60, one 盘面 line, a question to readers
         items = [(int(m.group(1)), m.group(2), m.group(3)) for m in (ITEM.match(l) for l in lines) if m]
-        if not LINES_MIN <= len(items) <= LINES_MAX:
-            wording.append(f"编号条目 {len(items)} 条，应在 {LINES_MIN} 到 {LINES_MAX} 之间（门槛说了算，不凑数）")
+        lines_min = QUIET_LINES_MIN if day.get("quiet") else LINES_MIN
+        if not lines_min <= len(items) <= LINES_MAX:
+            wording.append(f"编号条目 {len(items)} 条，应在 {lines_min} 到 {LINES_MAX} 之间（门槛说了算，不凑数）")
+        if day.get("quiet") and "安静" not in body:
+            wording.append("今天是安静日，正文里要明写\"今天市场很安静\"，不要用小市场凑数")
+        if day.get("flows") and sum(1 for _, tag, _ in items if tag == "大单") != 1:
+            wording.append("需要恰好一行\"大单\"条目（1 万美元以上大单的净流向，摘要\"大单行\"块）")
         for n, tag, text in items:
             cap = HEADLINE_MAX if n == 1 else BOARD_MAX if tag in ("盘面", "财报") else LINE_MAX
             if len(text) > cap:
@@ -158,6 +165,36 @@ def main() -> int:
     heads = {p["question"] for p in day.get("picks", []) if p.get("headlineOk")}
     if heads and zh.get("headlineQuestion") and zh["headlineQuestion"] not in heads:
         wording.append(f"headlineQuestion 不在\"可当头条\"候选里：{zh['headlineQuestion'][:60]}")
+    # picked = the day's memory. Every entry must be a question string from today's data (the 7-day memory maps it
+    # back to its event); nothing marked "written before, barely moved" may be picked; items 2 and 3 need volume.
+    known = set()
+    for p in day.get("picks", []):
+        known.add(p["question"])
+    for ms in day.get("official", {}).values():
+        known.update(m["question"] for m in ms)
+    for evs in list(day.get("hot", {}).values()) + list(day.get("new", {}).values()):
+        for e in evs:
+            known.add(e["title"])
+            known.update(o["question"] for o in e.get("outcomes", []) if o.get("question"))
+    for rows in day.get("resolved", {}).values():
+        known.update(r["question"] for r in rows)
+    known.update(b["question"] for b in day.get("board", []))
+    known.update(e["title"] for e in day.get("upcoming", []))
+    known.update(f_["question"] for f_ in day.get("flows", []))
+    for rows in (day.get("earnings") or {}).values():
+        for r in rows:
+            known.update(str(v) for k, v in r.items() if k in ("question", "company", "ticker") and v)
+    by_q = {p["question"]: p for p in day.get("picks", [])}
+    for i, p in enumerate(zh.get("picked", [])):
+        q = p.get("question") or ""
+        if q not in known:
+            wording.append(f"picked 第 {i + 1} 条不是摘要里的英文原题，7 天记忆对不上：{q[:60]}")
+            continue
+        c = by_q.get(q)
+        if c and c.get("repeated") and not c.get("closed"):
+            wording.append(f"picked 第 {i + 1} 条 {c.get('lastMention')} 写过且之后只变了 {round((c.get('sinceMove') or 0) * 100)} 个点，不该再写：{q[:50]}")
+        if i in (1, 2) and c and not c.get("earnings") and (c.get("volume24h") or 0) < SECOND_ITEM_MIN_VOL:
+            wording.append(f"第 {i + 1} 条成交只有 ${round((c.get('volume24h') or 0) / 1000)}k，第 2、3 条要 5 万以上：{q[:50]}")
     texts += [("zh.json " + k, str(zh.get(k) or "")) for k in ("title", "headline", "headlineTitle", "headlineCause")]
     texts.append(("zh.json hero.label", str((zh.get("hero") or {}).get("label") or "")))
     texts += [("zh.json labels", v) for v in labels.values()] + [("zh.json outcomes", v) for v in zh.get("outcomes", {}).values()]
