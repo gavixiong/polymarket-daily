@@ -1,0 +1,59 @@
+{
+  "title": "Lula 险胜，市场前一天只给 18%",
+  "headline": "巴西总统决选 Lula 赢了，票差不到 4 个百分点，市场前一天只给 18%",
+  "hero": {
+    "value": "18% → 100%",
+    "label": "Lula 赢得巴西决选且票差不到 4 个百分点，市场前一天只给 18%"
+  },
+  "headlineQuestion": "Will Luiz Inácio Lula da Silva win the second round of the 2026 Brazilian presidential election by less than 4%?",
+  "headlineTitle": "Lula 险胜不到 4 个百分点",
+  "skip": [],
+  "labels": {
+    "Brazil Presidential Election Second Round: Any Candidate Gets Most Votes Ever?": "巴西决选有人得票创纪录",
+    "Fed Decision in October?": "美联储 10 月决议",
+    "Next Fable Model (5.2+) released by October 29, 2026?": "Fable 5.2 以后 10/29 前发布",
+    "Next Fable Model (5.2+) released by...?": "Fable 5.2 以后何时发布",
+    "Next OpenAI GPT Terra (5.7+) released by October 26, 2026?": "GPT Terra 5.7 以后 10/26 前发布",
+    "Prime Minister of Israel after the next election?": "大选后的以色列总理",
+    "US x Iran ceasefire continues through October 22?": "美伊停火撑到 10/22",
+    "US-Iran ceasefire continues through...?": "美伊停火能撑多久",
+    "Welltower (WELL) Q3 same store NOI (SSNOI) growth 15% to 18%?": "Welltower 三季度同店净营业收入增 15% 到 18%",
+    "What price will Bitcoin hit in October?": "比特币 10 月碰到什么价",
+    "What will WTI Crude Oil (WTI) hit in October 2026?": "WTI 原油 10 月碰到什么价",
+    "Which company has the best AI model end of October?": "10 月底最强 AI 模型是谁家",
+    "Which party will win the House in 2026?": "2026 年哪个党赢众议院",
+    "Will Anthropic IPO by November 20, 2026?": "Anthropic 11/20 前上市",
+    "Will Anthropic's initial public offering occur in November 2026 (ET)?": "Anthropic 11 月上市",
+    "Will Anthropic's public ticker be $ANT?": "Anthropic 股票代码是 $ANT",
+    "Will Luiz Inácio Lula da Silva win the second round of the 2026 Brazilian presidential election by 2–4%?": "Lula 决选赢 2 到 4 个百分点",
+    "Will Luiz Inácio Lula da Silva win the second round of the 2026 Brazilian presidential election by less than 4%?": "Lula 险胜不到 4 个百分点",
+    "Will NVIDIA be the largest company in the world by market cap on October 31, 2026?": "10/31 英伟达市值全球第一",
+    "Will Russia and Ukraine hold any diplomatic meeting by October 31, 2026?": "俄乌 10/31 前举行外交会谈",
+    "Will commitments to the 1W public sale exceed $40M?": "1W 公开发售认购超 4000 万美元",
+    "Will voter turnout in the 2026 Serbian parliamentary election be 66-70%?": "塞尔维亚大选投票率 66% 到 70%",
+    "Will voter turnout in the second round of the 2026 Brazil presidential election be 80-82%?": "巴西决选投票率 80% 到 82%"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will Luiz Inácio Lula da Silva win the second round of the 2026 Brazilian presidential election by less than 4%?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Anthropic IPO by November 20, 2026?",
+      "yes": 0.68
+    },
+    {
+      "question": "Israel x Iran ceasefire continues through November 30?",
+      "yes": 0.52
+    },
+    {
+      "question": "Will WTI Crude Oil (WTI) hit (HIGH) $105 in October?",
+      "yes": 0.46
+    },
+    {
+      "question": "Next Fable Model (5.2+) released by October 29, 2026?",
+      "yes": 0.25
+    }
+  ]
+}
