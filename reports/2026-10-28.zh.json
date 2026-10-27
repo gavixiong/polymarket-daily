@@ -1,0 +1,58 @@
+{
+  "title": "Yashar 头名 70% 跌到 13%",
+  "headline": "以色列大选最大党，市场一天内改口：Yashar 拿最多议席从 70% 跌到 13%，Likud 升到 86%",
+  "hero": {
+    "value": "70% → 13%",
+    "label": "Yashar 拿最多议席，市场前一天给 70%，现在只剩 13%"
+  },
+  "headlineQuestion": "Will Yashar win the most seats in the 2026 Israeli legislative election?",
+  "headlineTitle": "Yashar 拿最多议席",
+  "skip": [],
+  "labels": {
+    "Will Likud win the second-most seats in the 2026 Israeli legislative election?": "Likud 拿第二多议席",
+    "Will Yashar win the most seats in the 2026 Israeli legislative election?": "Yashar 拿最多议席",
+    "Visa (V) Q4 payments volume growth (constant dollars) 9.5% to 10.5%?": "Visa 四季度支付额增 9.5% 到 10.5%",
+    "Will Likud win 25-29 seats in the 2026 Israeli legislative election?": "Likud 拿 25 到 29 席",
+    "Will Amcha Yisrael win a seat in the 2026 Knesset elections?": "Amcha Yisrael 进议会",
+    "Will Together win 11-13 seats in the 2026 Knesset elections?": "Together 拿 11 到 13 席",
+    "Will Radomir Saičić be the next Prime Minister of Serbia?": "Saičić 当塞尔维亚总理",
+    "Paris curfew effectively lifted by October 31?": "巴黎宵禁 10/31 前解除",
+    "Prime Minister of Israel after the next election?": "大选后的以色列总理",
+    "US-Iran ceasefire continues through...?": "美伊停火能撑多久",
+    "Fed Decision in October?": "美联储 10 月决议",
+    "What price will Bitcoin hit in October?": "比特币 10 月碰到什么价",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年碰到什么价",
+    "What will WTI Crude Oil (WTI) hit in October 2026?": "WTI 原油 10 月碰到什么价",
+    "Next Fable Model (5.2+) released by...?": "Fable 5.2 以后何时发布",
+    "Israeli Legislative Election Winner": "以色列大选哪个党议席最多",
+    "Will South Korea GDP growth in Q3 2026 be between 3.0% and 3.4%?": "韩国三季度 GDP 增 3.0% 到 3.4%",
+    "Next OpenAI GPT Terra (5.7+) released by October 31, 2026?": "GPT Terra 5.7 以后 10/31 前发布",
+    "Will the PLQ win 36-39 seats in the National Assembly of Quebec in this election?": "魁北克自由党拿 36 到 39 席",
+    "US x Iran ceasefire continues through October 24?": "美伊停火撑到 10/24",
+    "Visa (V) Q4 cross border volume total growth (constant dollars) 13.5% to 14.5%?": "Visa 四季度跨境额增 13.5% 到 14.5%",
+    "Will Seagate (STX) Q1 hard drive exabyte shipments be above 230?": "Seagate 硬盘出货超 230 EB"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will Yashar win the most seats in the 2026 Israeli legislative election?",
+      "yes": 0.13
+    },
+    {
+      "question": "Will Gadi Eizenkot be the next Prime Minister of Israel?",
+      "yes": 0.44
+    },
+    {
+      "question": "Will Radomir Saičić be the next Prime Minister of Serbia?",
+      "yes": 0.34
+    },
+    {
+      "question": "Will Bitcoin reach $82,500 in October?",
+      "yes": 0.56
+    },
+    {
+      "question": "Will WTI Crude Oil (WTI) hit (HIGH) $105 in October?",
+      "yes": 0.26
+    }
+  ]
+}
