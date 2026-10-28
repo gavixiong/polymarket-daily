@@ -1,0 +1,60 @@
+{
+  "title": "Flávio 回国了，此前概率仅 11%",
+  "headline": "Flávio Bolsonaro 回巴西了，市场前一天只给 11%，结果成真",
+  "hero": {
+    "value": "11% → 100%",
+    "label": "Flávio Bolsonaro 11/30 前回巴西，市场前一天只给 11%"
+  },
+  "headlineQuestion": "Will Flávio Bolsonaro return to Brazil by November 30, 2026?",
+  "headlineTitle": "Flávio Bolsonaro 11/30 前回巴西",
+  "skip": [],
+  "labels": {
+    "Will Predict.fun launch a token by October 31, 2026?": "Predict.fun 10/31 前发币",
+    "Will Microsoft be the third-largest company in the world by market cap on October 31?": "微软 10/31 市值全球第三",
+    "Will The Democrats be in the next Israeli government?": "Democrats 党进入下届以色列政府",
+    "Will STRC hit $100 by October 31?": "STRC 10/31 前涨到 100 美元",
+    "Gemini Carbon released by November 15, 2026?": "Gemini Carbon 11/15 前发布",
+    "Will Likud win 25-29 seats in the 2026 Israeli legislative election?": "Likud 拿 25 到 29 席",
+    "Will commitments to the 1W public sale exceed $40M?": "1W 公售认购超 4000 万美元",
+    "Netanyahu out by March 31, 2027?": "Netanyahu 2027 年 3 月底前下台",
+    "Prime Minister of Israel after the next election?": "大选后的以色列总理",
+    "US-Iran ceasefire continues through...?": "美伊停火能撑到哪天",
+    "Fed Decision in December?": "美联储 12 月决议",
+    "What price will Bitcoin hit in October?": "比特币 10 月价格",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年价格",
+    "What will WTI Crude Oil (WTI) hit in October 2026?": "WTI 原油 10 月价格",
+    "Next Fable Model (5.2+) released by...?": "Fable 5.2 发布时间",
+    "Israel Election: Likud # of seats?": "以色列大选 Likud 席位",
+    "Will there be no change in Fed interest rates after the October 2026 meeting?": "美联储 10 月利率不变",
+    "Will Flávio Bolsonaro return to Brazil by November 30, 2026?": "Flávio 11/30 前回巴西",
+    "Will any AI model reach 1560 Coding Arena Score by December 31, 2026?": "AI 编程榜破 1560 分",
+    "No change in Reserve Bank of New Zealand's interest rates at the October 2026 meeting?": "新西兰央行 10 月利率不变",
+    "Will the Bank of Canada increase the target for the overnight rate by 25 bps at the October interest rate announcement?": "加拿大央行 10 月加息",
+    "Next Fable Model (5.2+) released by October 27, 2026?": "Fable 5.2 10/27 前发布",
+    "Bank of Canada Rate Hike in 2026?": "加拿大央行 2026 年加息",
+    "Microsoft (MSFT) Q1 Azure revenue growth (constant currency) 48% to 50%?": "微软 Azure 增速 48% 到 50%"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will Flávio Bolsonaro return to Brazil by November 30, 2026?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Benjamin Netanyahu be the next Prime Minister of Israel?",
+      "yes": 0.5
+    },
+    {
+      "question": "Will Likud win 25-29 seats in the 2026 Israeli legislative election?",
+      "yes": 0.98
+    },
+    {
+      "question": "Will Predict.fun launch a token by October 31, 2026?",
+      "yes": 0.87
+    },
+    {
+      "question": "Will Ethereum dip to $2,300 in October?",
+      "yes": 0.49
+    }
+  ]
+}
