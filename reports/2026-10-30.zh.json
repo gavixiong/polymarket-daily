@@ -1,0 +1,64 @@
+{
+  "title": "比特币 7.75 万，3% 升到 57%",
+  "headline": "比特币 10 月跌到 7.75 万美元的概率，一天从 3% 升到 57%",
+  "hero": {
+    "value": "3% → 57%",
+    "label": "比特币 10 月跌到 7.75 万美元，市场一天内大幅改口"
+  },
+  "headlineQuestion": "Will Bitcoin dip to $77,500 in October?",
+  "headlineTitle": "比特币 10 月跌到 7.75 万美元",
+  "skip": [],
+  "labels": {
+    "Will Bitcoin dip to $77,500 in October?": "比特币 10 月跌到 7.75 万美元",
+    "Israel x Iran ceasefire continues through November 1?": "以伊停火撑过 11/1",
+    "US x Iran ceasefire continues through November 2?": "美伊停火撑过 11/2",
+    "Will Ra'am win 8 or more seats in the 2026 Knesset elections?": "Ra'am 拿 8 席以上",
+    "Will Hyperliquid reach $100 by December 31, 2026?": "Hyperliquid 年底前涨到 100 美元",
+    "Christine Lagarde out as ECB president in 2026?": "Lagarde 2026 年卸任欧央行行长",
+    "Another crypto hack over $100m by October 31?": "10/31 前再出 1 亿美元加密黑客事件",
+    "Will NVIDIA be the largest company in the world by market cap on October 31, 2026?": "NVIDIA 10/31 市值全球第一",
+    "Will Ethereum reach $2,400 in October?": "以太坊 10 月涨到 2400 美元",
+    "Will US GDP growth in Q3 2026 be greater than 3.0%?": "美国三季度 GDP 增速超 3%",
+    "Prime Minister of Israel after the next election?": "大选后的以色列总理",
+    "US-Iran ceasefire continues through...?": "美伊停火能撑到哪天",
+    "Fed Decision in December?": "美联储 12 月决议",
+    "What price will Bitcoin hit in October?": "比特币 10 月价格",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年价格",
+    "What will WTI Crude Oil (WTI) hit in October 2026?": "WTI 原油 10 月价格",
+    "Which party will win the House in 2026?": "2026 年哪个党赢众议院",
+    "Which company has the best AI model end of October?": "10 月底最强 AI 模型",
+    "Will the Fed increase interest rates by 25 bps after the October 2026 meeting?": "美联储 10 月加息 25 个基点",
+    "Will the Bank of Canada make no change to the target for the overnight rate at the October interest rate announcement?": "加拿大央行 10 月利率不变",
+    "Will Silver (XAGUSD) hit (LOW) $52 in October?": "白银 10 月跌到 52 美元",
+    "Will Brendan Blomeley win the next Clarence mayoral election?": "Brendan Blomeley 当选 Clarence 市长",
+    "Will there be 4 or more North Korea tests in October 2026?": "朝鲜 10 月试射 4 次以上",
+    "Starbucks (SBUX) Q4 global comparable store sales growth 7% to 9%?": "星巴克四季度同店增速 7% 到 9%"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will Bitcoin dip to $77,500 in October?",
+      "yes": 0.57
+    },
+    {
+      "question": "Israel x Iran ceasefire continues through November 1?",
+      "yes": 0.94
+    },
+    {
+      "question": "US x Iran ceasefire continues through November 2?",
+      "yes": 0.57
+    },
+    {
+      "question": "Will Ra'am win 8 or more seats in the 2026 Knesset elections?",
+      "yes": 0.98
+    },
+    {
+      "question": "Will Hyperliquid reach $100 by December 31, 2026?",
+      "yes": 0.8
+    },
+    {
+      "question": "Christine Lagarde out as ECB president in 2026?",
+      "yes": 1.0
+    }
+  ]
+}
