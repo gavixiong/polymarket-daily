@@ -1,0 +1,68 @@
+{
+  "title": "堪萨斯参院民主党 48% 升到 54%",
+  "headline": "堪萨斯州参议员选举，民主党候选人 Adam Hamilton 一天从 48% 升到 54%",
+  "hero": {
+    "value": "48% → 54%",
+    "label": "堪萨斯参议院选举，民主党 Adam Hamilton 胜出概率"
+  },
+  "headlineQuestion": "Will the Democrats win the Kansas Senate race in 2026?",
+  "headlineTitle": "堪萨斯参议院民主党胜出概率",
+  "skip": [],
+  "labels": {
+    "Will the Democrats win the Kansas Senate race in 2026?": "堪萨斯参院民主党胜出",
+    "Kansas Senate Election Winner": "堪萨斯参议院选举赢家",
+    "US x Iran ceasefire continues through November 2?": "美伊停火撑过 11/2",
+    "US-Iran ceasefire continues through...?": "美伊停火能撑到哪天",
+    "Will Bitcoin reach $82,500 in October?": "比特币 10 月涨到 8.25 万美元",
+    "Will Ethereum reach $2,400 in October?": "以太坊 10 月涨到 2400 美元",
+    "Will Predict.fun launch a token by October 31, 2026?": "Predict.fun 10/31 前发币",
+    "Republican Senate odds dip to 30% by October 31?": "共和党参院概率 10/31 前跌到 30%",
+    "Will Bitcoin dip to $76,000 October 26-November 1?": "比特币跌到 7.6 万美元",
+    "Republican House odds dip to 7% by October 31?": "共和党众院概率 10/31 前跌到 7%",
+    "Will Eurozone GDP growth in Q3 2026 be between 1.2% and 1.5%?": "欧元区三季度 GDP 增速 1.2% 到 1.5%",
+    "Will NVIDIA be the second-largest company in the world by market cap on October 31, 2026?": "NVIDIA 10/31 市值全球第二",
+    "Will Vivek Ramaswamy pull the Amy Acton mother ad?": "Vivek Ramaswamy 撤下攻击 Amy Acton 母亲的广告",
+    "Will General Mills Q2 organic net sales growth be between -1.5% and 0%?": "General Mills 二季度自然增长 -1.5% 到 0%",
+    "Will DICK'S Sporting Goods Q3 Dick's business comparable sales growth be between 3% and 4%?": "DICK'S 三季度同店增速 3% 到 4%",
+    "Will Ukraine re-enter Uspenivka by December 31?": "乌克兰年底前重返 Uspenivka",
+    "Next French Presidential Election": "法国下届总统选举",
+    "What price will Bitcoin hit in October?": "比特币 10 月价格",
+    "Fed Decision in December?": "美联储 12 月决议",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年价格",
+    "What will WTI Crude Oil (WTI) hit in October 2026?": "WTI 原油 10 月价格",
+    "Balance of Power: 2026 Midterms": "2026 中期选举两院格局",
+    "Next Fable Model (5.2+) released by...?": "Fable 5.2 发布时间",
+    "Will Eurozone GDP growth in Q3 2026 be between 0.8% and 1.1%?": "欧元区三季度 GDP 增速 0.8% 到 1.1%",
+    "Will the Central Bank of Colombia make no change to the monetary policy interest rate at the October meeting?": "哥伦比亚央行 10 月利率不变",
+    "Will Germany GDP growth in Q3 2026 be between 1.0% and 1.2%?": "德国三季度 GDP 增速 1.0% 到 1.2%",
+    "Will Space Exploration Technologies’ market capitalization be between $1.75T and $2.00T at the end of October 2026?": "SpaceX 10 月底市值 1.75 到 2 万亿美元",
+    "Israel x Iran ceasefire continues through October 27?": "以伊停火撑过 10/27"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will the Democrats win the Kansas Senate race in 2026?",
+      "yes": 0.54
+    },
+    {
+      "question": "US x Iran ceasefire continues through November 2?",
+      "yes": 0.91
+    },
+    {
+      "question": "Will WTI Crude Oil (WTI) hit (HIGH) $105 in October?",
+      "yes": 0.98
+    },
+    {
+      "question": "Will Bitcoin reach $82,500 in October?",
+      "yes": 0.01
+    },
+    {
+      "question": "Will Predict.fun launch a token by October 31, 2026?",
+      "yes": 0.01
+    },
+    {
+      "question": "Republican Senate odds dip to 30% by October 31?",
+      "yes": 1.0
+    }
+  ]
+}
