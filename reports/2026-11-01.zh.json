@@ -1,0 +1,60 @@
+{
+  "title": "1win 发币一天从 11% 到 99%",
+  "headline": "1win 在 10/31 前发币的概率一天从 11% 升到 99%，成交 83.9 万美元",
+  "hero": {
+    "value": "11% → 99%",
+    "label": "1win 10/31 前发币，市场一天内大幅改口"
+  },
+  "headlineQuestion": "Will 1win launch a token by October 31, 2026?",
+  "headlineTitle": "1win 10/31 前发币概率",
+  "skip": [],
+  "labels": {
+    "Will 1win launch a token by October 31, 2026?": "1win 10/31 前发币",
+    "U.S. anti-cartel operation outside of the U.S. by October 31?": "美国 10/31 前境外反毒枭行动",
+    "Saudi Arabia military action against Yemen on October 6?": "沙特 10/6 对也门军事行动",
+    "Will Ethereum dip to $2,200 in October?": "以太坊 10 月跌到 2200 美元",
+    "Will Alibaba be the second-best Chinese AI company at the end of October 2026?": "Alibaba 10 月底中国 AI 第二",
+    "Will XRP dip to $1.20 in October?": "XRP 10 月跌到 1.2 美元",
+    "Will the Bank of Canada make no change to the target for the overnight rate at the December interest rate announcement?": "加拿大央行 12 月利率不变",
+    "Will Google have the best AI model at the end of November 2026?": "Google 11 月底最强 AI 模型",
+    "Next French Presidential Election": "法国下届总统选举",
+    "Prime Minister of Israel after the next election?": "以色列下届总理",
+    "What price will Bitcoin hit in October?": "比特币 10 月价格",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年价格",
+    "Which company has best AI model end of 2026?": "2026 年底最强 AI 模型",
+    "Which Senate Swing States will Republicans win?": "共和党赢下哪些摇摆州参院席位",
+    "Largest IPO by market cap in 2026?": "2026 年市值最大的 IPO",
+    "Which company has the best AI model end of November?": "11 月底最强 AI 模型",
+    "Will WTI Crude Oil (WTI) hit (HIGH) $105 in October?": "国际油价 10 月碰到 105 美元",
+    "Will Likud win the most seats in the 2026 Israeli legislative election?": "Likud 成以色列议会第一大党",
+    "Will Likud win 25-29 seats in the 2026 Israeli legislative election?": "Likud 赢 25 到 29 席",
+    "US x Iran ceasefire continues through October 28?": "美伊停火撑过 10/28",
+    "Will Xiaomi have the best Chinese AI model at the end of October 2026?": "Xiaomi 10 月底中国最强 AI 模型",
+    "Will Moonshot be the third-best Chinese AI company at the end of October 2026?": "Moonshot 中国 AI 第三",
+    "Will Meta be the #3 AI Lab at the end of October 2026 (Style Control On)?": "Meta 10 月底 AI 实验室第三",
+    "Will Alibaba be the third-best Math AI lab at the end of October 2026?": "Alibaba 数学 AI 第三"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will 1win launch a token by October 31, 2026?",
+      "yes": 0.99
+    },
+    {
+      "question": "Will WTI Crude Oil (WTI) hit (HIGH) $105 in October?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Ethereum dip to $2,200 in October?",
+      "yes": 0.02
+    },
+    {
+      "question": "U.S. anti-cartel operation outside of the U.S. by October 31?",
+      "yes": 0.56
+    },
+    {
+      "question": "Will Alibaba be the second-best Chinese AI company at the end of October 2026?",
+      "yes": 1.0
+    }
+  ]
+}
