@@ -1,0 +1,56 @@
+{
+  "title": "美国境外反毒枭成真，市场此前只给 15%",
+  "headline": "美国 10/31 前在境外对贩毒集团采取行动，市场 24 小时前只给 15%，现在 99%",
+  "hero": {
+    "value": "15% → 99%",
+    "label": "美国 10/31 前境外反毒枭行动，市场一天内大幅改口"
+  },
+  "headlineQuestion": "U.S. anti-cartel operation outside of the U.S. by October 31?",
+  "headlineTitle": "美国 10/31 前境外反毒枭行动概率",
+  "skip": [],
+  "labels": {
+    "U.S. anti-cartel operation outside of the U.S. by October 31?": "美国 10/31 前境外反毒枭行动",
+    "Will Iliana Iotova win the next Bulgarian presidential election?": "Iotova 赢下保加利亚总统选举",
+    "1win FDV above $70M one day after launch?": "1win 发币一天估值超 7000 万美元",
+    "Will Iliana Iotova win the second round of the 2026 Bulgarian presidential election by at least 12%?": "Iotova 决选领先至少 12 个点",
+    "Will Trump speak to Mark Carney by November 30?": "Trump 11/30 前与 Carney 通话",
+    "Will voter turnout in the second round of the 2026 Bulgaria presidential election be 24% or more?": "保加利亚决选投票率 24% 以上",
+    "Will Vivek Ramaswamy pull the Amy Acton mother ad?": "Ramaswamy 撤下 Acton 母亲广告",
+    "Will Gadi Eizenkot receive the first mandate to form a government after the 2026 Israeli election?": "Eizenkot 获首个组阁授权",
+    "Balance of Power: 2026 Midterms": "2026 期中选举权力格局",
+    "Next French Presidential Election": "法国下届总统选举",
+    "Prime Minister of Israel after the next election?": "以色列下届总理",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年价格",
+    "Fed Decision in December?": "美联储 12 月决议",
+    "What price will Bitcoin hit October 26-November 1?": "比特币 10/26 至 11/1 价格",
+    "Which company has best AI model end of 2026?": "2026 年底最强 AI 模型",
+    "GPT Astra 6.1+ released by...?": "Astra 6.1+ 发布时间",
+    "Iran full airspace closure by October 31, 2026?": "伊朗 10/31 前全面关闭领空",
+    "US imports Russian diesel by October 31?": "美国 10/31 前进口俄罗斯柴油",
+    "Next US-Iran senior diplomatic meeting by October 31, 2026? (copy)": "美伊 10/31 前高层会面",
+    "Iran agrees to surrender enriched uranium stockpile by October 31, 2026?": "伊朗 10/31 前交出浓缩铀",
+    "Will Saudi airspace be closed by October 31?": "沙特 10/31 前关闭领空",
+    "Will the US announce a diesel export ban by October 31?": "美国 10/31 前禁止柴油出口",
+    "Perim Island no longer under Houthi control by October 31?": "Perim 岛 10/31 前脱离 Houthi",
+    "Saudi-Houthi ceasefire agreement announced by October 31?": "沙特与 Houthi 10/31 前停火"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "U.S. anti-cartel operation outside of the U.S. by October 31?",
+      "yes": 0.99
+    },
+    {
+      "question": "Will Iliana Iotova win the next Bulgarian presidential election?",
+      "yes": 1.0
+    },
+    {
+      "question": "1win FDV above $70M one day after launch?",
+      "yes": 0.0
+    },
+    {
+      "question": "Next Astra Model (6.1+) released by November 30, 2026?",
+      "yes": 0.92
+    }
+  ]
+}
