@@ -1,0 +1,65 @@
+{
+  "title": "共和党参院 47 席以下概率升到 57%",
+  "headline": "期中选举还有 2 天，共和党参院席位 47 席或更少的概率一天从 49% 升到 57%，成交 36.5 万美元",
+  "hero": {
+    "value": "49% → 57%",
+    "label": "共和党参院 47 席或更少，期中选举前两天市场一天内上调"
+  },
+  "headlineQuestion": "Will the Republican Party hold 47 or fewer Senate seats after the 2026 midterm elections?",
+  "headlineTitle": "共和党参院 47 席或更少概率",
+  "skip": [],
+  "labels": {
+    "Will the Republican Party hold 47 or fewer Senate seats after the 2026 midterm elections?": "共和党参院 47 席或更少",
+    "Will the Democrats win the Iowa Senate race in 2026?": "民主党赢下 Iowa 参院",
+    "Will WTI Crude Oil (WTI) hit (LOW) $90 in November?": "WTI 原油 11 月跌到 90 美元",
+    "Will Bitcoin reach $82,500 in November?": "比特币 11 月涨到 8.25 万美元",
+    "Will Anthropic have the highest IPO Market Cap 2026?": "Anthropic 拿下最大 IPO 市值",
+    "Callum Turner announced as next James Bond?": "Callum Turner 官宣当 Bond",
+    "US imposes new sanctions on China by October 31, 2026?": "美国 10/31 前新增对华制裁",
+    "Will Dejan Šoškić be the next Prime Minister of Serbia?": "Šoškić 当选塞尔维亚总理",
+    "Houthis capture Taiz city by November 30?": "Houthi 11/30 前攻下 Taiz",
+    "US x Iran ceasefire continues through November 4?": "美伊停火撑到 11/4",
+    "Will Gemini Carbon be released between November 2 and November 8, 2026?": "Gemini Carbon 11/2 至 11/8 发布",
+    "Will Trump speak to Ursula von der Leyen by November 30?": "Trump 11/30 前与冯德莱恩通话",
+    "Balance of Power: 2026 Midterms": "2026 期中选举权力格局",
+    "Next French Presidential Election": "法国下届总统选举",
+    "Fed Decision in December?": "美联储 12 月决议",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年价格",
+    "Which company has best AI model end of 2026?": "2026 年底最强 AI 模型",
+    "Which Senate Swing States will Republicans win? (Build Your Map)": "共和党赢下哪些参院摇摆州",
+    "What price will Bitcoin hit in November?": "比特币 11 月价格",
+    "Measles cases in U.S. in 2026?": "美国 2026 年麻疹病例数",
+    "U.S. anti-cartel operation outside of the U.S. by October 31?": "美国 10/31 前境外反毒枭行动",
+    "Will UKMTO publish 8-11 notices between October 26-November 1?": "UKMTO 10/26 至 11/1 发 8 至 11 条通告",
+    "Will Yisrael Beiteinu win 8-9 seats in the 2026 Knesset elections?": "Yisrael Beiteinu 赢 8 至 9 席",
+    "Will Together win 9-11% of the vote in the 2026 Knesset elections?": "Together 得票 9% 至 11%",
+    "Russia-Ukraine peace talks by October 31, 2026?": "俄乌 10/31 前和谈"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will the Republican Party hold 47 or fewer Senate seats after the 2026 midterm elections?",
+      "yes": 0.57
+    },
+    {
+      "question": "Will the Democrats win the Iowa Senate race in 2026?",
+      "yes": 0.5
+    },
+    {
+      "question": "Will WTI Crude Oil (WTI) hit (LOW) $90 in November?",
+      "yes": 0.67
+    },
+    {
+      "question": "Will Bitcoin reach $82,500 in November?",
+      "yes": 0.48
+    },
+    {
+      "question": "Will Anthropic have the highest IPO Market Cap 2026?",
+      "yes": 0.32
+    },
+    {
+      "question": "Callum Turner announced as next James Bond?",
+      "yes": 0.63
+    }
+  ]
+}
