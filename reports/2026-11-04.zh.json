@@ -1,0 +1,58 @@
+{
+  "title": "美伊停火没撑过选举，前一天市场给 94%",
+  "headline": "美伊停火撑过期中选举的问题结算为否，前一天市场给 94%，成交 210 万美元",
+  "hero": {
+    "value": "94% → 0%",
+    "label": "美伊停火撑过期中选举，市场前一天给 94%，结果没发生"
+  },
+  "headlineQuestion": "US-Iran ceasefire continues through the midterms?",
+  "headlineTitle": "美伊停火撑过期中选举",
+  "skip": [],
+  "labels": {
+    "US-Iran ceasefire continues through the midterms?": "美伊停火撑过期中选举",
+    "US x Iran ceasefire continues through November 8?": "美伊停火撑到 11/8",
+    "Saudi coalition strike in Yemen on November 5?": "沙特联军 11/5 空袭也门",
+    "Will Predict.fun launch a token by November 15, 2026?": "Predict.fun 11/15 前发币",
+    "Will Nicolás Maduro be sentenced to no prison time?": "Maduro 被判不入狱",
+    "Will Gemini Carbon be released on November 10, 2026?": "Gemini Carbon 11/10 发布",
+    "US imports Russian diesel by December 31?": "美国年底前进口俄柴油",
+    "Next Fable Model (5.2+) released by November 4, 2026?": "Fable 下一代 11/4 前发布",
+    "Israel x Iran ceasefire continues through November 15?": "以伊停火撑到 11/15",
+    "Will US GDP growth in Q4 2026 be less than 1.5%?": "美国四季度 GDP 增速低于 1.5%",
+    "Which party will win the House in 2026?": "2026 哪党赢下众院",
+    "Balance of Power: 2026 Midterms": "2026 期中选举权力格局",
+    "Fed Decision in December?": "美联储 12 月决议",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年价格",
+    "Which company has best AI model end of 2026?": "2026 年底最强 AI 模型",
+    "Which Senate Swing States will Republicans win? (Build Your Map)": "共和党赢下哪些参院摇摆州",
+    "What will WTI Crude Oil (WTI) hit in November 2026?": "WTI 原油 11 月价格",
+    "Gemini Carbon released on...?": "Gemini Carbon 发布日",
+    "Will there be no Hormuz agreement?": "霍尔木兹无协议",
+    "US announces end of Iranian blockade by November 2, 2026?": "美国 11/2 前宣布解除对伊封锁",
+    "Turek flips Hinson for Iowa Senate by November 2?": "Turek 翻盘赢下 Iowa 参院",
+    "Will Bitcoin reach $78,000 November 2-8?": "比特币 11/2 至 11/8 涨到 7.8 万美元"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "US-Iran ceasefire continues through the midterms?",
+      "yes": 0.0
+    },
+    {
+      "question": "Israel x Iran ceasefire continues through November 15?",
+      "yes": 0.56
+    },
+    {
+      "question": "US imports Russian diesel by December 31?",
+      "yes": 0.4
+    },
+    {
+      "question": "Will Bitcoin reach $82,500 in November?",
+      "yes": 0.56
+    },
+    {
+      "question": "Gemini Carbon released by November 11, 2026?",
+      "yes": 0.7
+    }
+  ]
+}
