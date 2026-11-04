@@ -1,0 +1,70 @@
+{
+  "title": "Bass 连任概率从 62% 跌到 1%",
+  "headline": "洛杉矶市长 Karen Bass 连任概率前一天还有 62%，现在只剩 1%，Nithya Raman 98%。",
+  "hero": {
+    "value": "62% → 1%",
+    "label": "Karen Bass 赢得洛杉矶市长选举，一天内大跌"
+  },
+  "headlineQuestion": "Will Karen Bass win the 2026 Los Angeles mayoral election?",
+  "headlineTitle": "Karen Bass 能否连任洛杉矶市长",
+  "skip": [],
+  "labels": {
+    "Will the Democratic Party candidate win the 2026 Texas Senate election by 12% or more?": "得州参议院民主党领先 12 点以上",
+    "Will the Democratic Party win the TN-04 House seat?": "田纳西 TN-04 众议院民主党胜",
+    "Will the Republican Party win the NC-06 House seat?": "北卡 NC-06 众议院共和党胜",
+    "Will the Republican Party hold exactly 44 Senate seats after the 2026 midterm elections?": "共和党参议院正好 44 席",
+    "Will the Democratic Party candidate win the 2026 Ohio Senate election by 3%-6%?": "俄亥俄参议院民主党领先 3 到 6 点",
+    "Will the Republicans win the Mississippi Senate race in 2026?": "密西西比参议院共和党胜",
+    "Will the Republican Party candidate win the 2026 Florida gubernatorial election by 0%-3%?": "佛州州长共和党领先 0 到 3 点",
+    "Will the Democratic Party candidate win the 2026 Michigan Senate election by 6%-9%?": "密歇根参议院民主党领先 6 到 9 点",
+    "Which Senate Swing States will Republicans win? (Build Your Map)": "共和党拿下哪些摇摆州",
+    "US-Iran ceasefire continues through...?": "美伊停火能撑到何时",
+    "Fed Decision in December?": "美联储 12 月决议",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年触及价位",
+    "Anthropic IPO Closing Market Cap": "Anthropic 上市收盘市值",
+    "Which company has best AI model end of 2026?": "2026 年底最佳 AI 模型公司",
+    "Republican Presidential Nominee 2028": "2028 共和党总统提名人",
+    "Which company has the best AI model end of November?": "11 月底最佳 AI 模型公司",
+    "US x Iran ceasefire continues through November 3?": "美伊停火撑到 11/3",
+    "Will oil be at least $85 on November 2 and the Democrats win the Senate?": "油价 85 美元以上且民主党胜参院",
+    "Will oil be at least $80 on November 2 and the Democrats win the Senate?": "油价 80 美元以上且民主党胜参院",
+    "Will there be no Hormuz agreement by October 23 or oil at least $80, and the Democrats win the Senate?": "无霍尔木兹协议或油价 80 且民主党胜参院",
+    "Will there be no Hormuz agreement or oil at least $80, and the Democrats win the Senate?": "无霍尔木兹协议或油价 80 且民主党胜参院 B",
+    "Will the Democratic Party win the MI-07 House seat?": "密歇根 MI-07 众议院民主党胜",
+    "Will there be no Hormuz agreement and the Republicans win the Senate?": "无霍尔木兹协议且共和党胜参院",
+    "Will the Democratic Party win the NY-03 House seat?": "纽约 NY-03 众议院民主党胜",
+    "Will Karen Bass win the 2026 Los Angeles mayoral election?": "Karen Bass 连任洛杉矶市长"
+  },
+  "outcomes": {
+    "$1.5–$1.75T": "1.5 到 1.75 万亿美元",
+    "$1.75–$2.0T": "1.75 到 2.0 万亿美元",
+    "$2.0–$2.25T": "2.0 到 2.25 万亿美元",
+    "$1.25–$1.5T": "1.25 到 1.5 万亿美元"
+  },
+  "picked": [
+    {
+      "question": "Will Karen Bass win the 2026 Los Angeles mayoral election?",
+      "yes": 0.01
+    },
+    {
+      "question": "Will the Republicans win the Mississippi Senate race in 2026?",
+      "yes": 0.05
+    },
+    {
+      "question": "Will the Republican Party hold exactly 44 Senate seats after the 2026 midterm elections?",
+      "yes": 0.9
+    },
+    {
+      "question": "Will the Democratic Party candidate win the 2026 Texas Senate election by 12% or more?",
+      "yes": 0.95
+    },
+    {
+      "question": "Will Bitcoin dip to $75,000 in November?",
+      "yes": 0.46
+    },
+    {
+      "question": "Will WTI Crude Oil (WTI) hit (HIGH) $100 in November?",
+      "yes": 0.34
+    }
+  ]
+}
