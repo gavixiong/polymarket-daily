@@ -1,0 +1,65 @@
+{
+  "title": "白宫幕僚长真走了，前一天市场只给 42%",
+  "headline": "白宫幕僚长 Susie Wiles 2027 年前离开政府成真，前一天市场只给 42%",
+  "hero": {
+    "value": "42% → 100%",
+    "label": "Susie Wiles 2027 年前离开政府，市场前一天只给 42%"
+  },
+  "headlineQuestion": "Will Susie Wiles leave the Trump administration before 2027?",
+  "headlineTitle": "Susie Wiles 2027 年前离开政府",
+  "skip": [],
+  "labels": {
+    "Will Susie Wiles be the next to leave the Trump Cabinet before 2027?": "Wiles 是下一个离开内阁的人",
+    "Will Susie Wiles leave the Trump administration before 2027?": "Wiles 2027 年前离开政府",
+    "Susie Wiles out as White House Chief of Staff by December 31?": "Wiles 年底前不再任幕僚长",
+    "Puffpaw FDV above $100M one day after launch?": "Puffpaw 上线首日估值超 1 亿美元",
+    "Will Anthropic IPO by November 17, 2026?": "Anthropic 11 月 17 日前上市",
+    "Will Magdalena Andersson be the next Prime Minister of Sweden?": "Andersson 当选瑞典首相",
+    "Next Astra Model (6.1+) released by November 11, 2026?": "Astra 6.1 以上 11 月 11 日前发布",
+    "Will Predict.fun launch a token by November 15, 2026?": "Predict.fun 11 月 15 日前发币",
+    "Fed Decision in December?": "美联储 12 月利率决议",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年触及价位",
+    "Anthropic IPO Closing Market Cap": "Anthropic 上市收盘市值",
+    "What will WTI Crude Oil (WTI) hit in November 2026?": "WTI 原油 11 月触及价位",
+    "Which company has best AI model end of 2026?": "2026 年底最强 AI 模型公司",
+    "Democratic Presidential Nominee 2028": "2028 民主党总统候选人",
+    "Republican Presidential Nominee 2028": "2028 共和党总统候选人",
+    "Presidential Election Winner 2028": "2028 总统大选赢家",
+    "No change in Bank of Mexico’s interest rates after November 2026 meeting?": "墨西哥央行 11 月利率不变",
+    "Will the US add at least 100k jobs in October?": "美国 10 月新增就业至少 10 万",
+    "Next Astra Model (6.1+) released by November 5, 2026?": "Astra 6.1 以上 11 月 5 日前发布",
+    "Israel x Iran ceasefire continues through November 2?": "以伊停火撑到 11 月 2 日"
+  },
+  "outcomes": {
+    "$1.25–$1.5T": "1.25 到 1.5 万亿美元",
+    "<$1.25T": "低于 1.25 万亿美元",
+    "$1.5–$1.75T": "1.5 到 1.75 万亿美元",
+    "$1.75–$2.0T": "1.75 到 2.0 万亿美元"
+  },
+  "picked": [
+    {
+      "question": "Will Susie Wiles leave the Trump administration before 2027?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Magdalena Andersson be the next Prime Minister of Sweden?",
+      "yes": 0.48
+    },
+    {
+      "question": "No change in Bank of Mexico’s interest rates after November 2026 meeting?",
+      "yes": 0.0
+    },
+    {
+      "question": "Will Anthropic IPO by November 17, 2026?",
+      "yes": 0.06
+    },
+    {
+      "question": "Next Astra Model (6.1+) released by November 11, 2026?",
+      "yes": 0.22
+    },
+    {
+      "question": "Will \"Ramayana\" Opening Weekend Box Office be at least 9m?",
+      "yes": 0.92
+    }
+  ]
+}
