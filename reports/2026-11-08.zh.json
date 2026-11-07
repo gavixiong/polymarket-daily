@@ -1,0 +1,73 @@
+{
+  "title": "美伊停火没撑到周日，市场此前给 80%",
+  "headline": "美伊停火没撑到 11/8，前一天市场给 80%，结果没发生",
+  "hero": {
+    "value": "80% → 0%",
+    "label": "美伊停火撑到 11/8，市场前一天给 80%"
+  },
+  "headlineQuestion": "US x Iran effective ceasefire continues through November 8, 2026?",
+  "headlineTitle": "美伊停火撑到 11/8",
+  "skip": [],
+  "labels": {
+    "Will the National Party win 40-44 seats in the New Zealand House of Representatives in the 2026 New Zealand legislative election?": "国家党赢 40 到 44 席",
+    "US x Iran effective ceasefire continues through November 15, 2026?": "美伊停火撑到 11/15",
+    "Puffpaw FDV above $300M one day after launch?": "Puffpaw 首日估值超 3 亿美元",
+    "Will National Party win the second-most seats in the New Zealand House of Representatives in the 2026 New Zealand legislative election?": "国家党席位排第二",
+    "Will Labour Party win the most seats in the New Zealand House of Representatives in the 2026 New Zealand legislative election?": "工党赢得最多席位",
+    "Will the next governing coalition of New Zealand include National + ACT + NZF?": "新西兰执政联盟含国家党、ACT、NZF",
+    "Pete Hegseth impeached by December 31, 2026?": "Hegseth 年底前被弹劾",
+    "Will Christopher Luxon be the next Prime Minister of New Zealand after the 2026 elections?": "Luxon 连任新西兰总理",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年触及价位",
+    "Anthropic IPO Closing Market Cap": "Anthropic 上市收盘市值",
+    "What will WTI Crude Oil (WTI) hit in November 2026?": "WTI 原油 11 月触及价位",
+    "Fed Decision in December?": "美联储 12 月利率决议",
+    "What price will Bitcoin hit in November?": "比特币 11 月触及价位",
+    "US-Iran effective ceasefire continues through...?": "美伊停火能撑到何时",
+    "Israel x Iran ceasefire continues through...?": "以伊停火能撑到何时",
+    "Democratic Presidential Nominee 2028": "2028 民主党总统候选人",
+    "US x Iran effective ceasefire continues through November 8, 2026?": "美伊停火撑到 11/8",
+    "US x Iran ceasefire continues through October 31?": "美伊停火撑到 10/31",
+    "Will the Democratic Party win the CA-14 House seat?": "民主党赢下加州 14 区众议院席位",
+    "Israel x Iran ceasefire continues through November 3?": "以伊停火撑到 11/3"
+  },
+  "outcomes": {
+    "$1.5–$1.75T": "1.5 到 1.75 万亿美元",
+    "$1.25–$1.5T": "1.25 到 1.5 万亿美元",
+    "$1.75–$2.0T": "1.75 到 2.0 万亿美元",
+    "<$1.25T": "低于 1.25 万亿美元"
+  },
+  "picked": [
+    {
+      "question": "US x Iran effective ceasefire continues through November 8, 2026?",
+      "yes": 0.0
+    },
+    {
+      "question": "Will Labour Party win the most seats in the New Zealand House of Representatives in the 2026 New Zealand legislative election?",
+      "yes": 0.02
+    },
+    {
+      "question": "Next White House Press Secretary announced by November 30, 2026?",
+      "yes": 0.42
+    },
+    {
+      "question": "Puffpaw FDV above $300M one day after launch?",
+      "yes": 0.78
+    },
+    {
+      "question": "Next Fable Model (5.2+) released by November 10, 2026?",
+      "yes": 0.38
+    },
+    {
+      "question": "Gemini Carbon released by November 10, 2026?",
+      "yes": 0.6
+    },
+    {
+      "question": "Will Kai Cenat finish his GTA marathon by November 11?",
+      "yes": 0.68
+    },
+    {
+      "question": "Robert Pattinson announced as next James Bond?",
+      "yes": 0.19
+    }
+  ]
+}
