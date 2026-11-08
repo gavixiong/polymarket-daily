@@ -1,0 +1,69 @@
+{
+  "title": "比特币跌到 7.4 万，此前只给 16%",
+  "headline": "比特币 11 月 2 到 8 日跌到 7.4 万美元，前一天市场只给 16%，结果真发生了",
+  "hero": {
+    "value": "16% → 100%",
+    "label": "比特币 11/2 到 11/8 跌到 7.4 万美元，市场前一天只给 16%"
+  },
+  "headlineQuestion": "Will Bitcoin dip to $74,000 November 2-8?",
+  "headlineTitle": "比特币跌到 7.4 万美元",
+  "skip": [],
+  "labels": {
+    "Will Bitcoin dip to $74,000 November 2-8?": "比特币 11/2 到 11/8 跌到 7.4 万",
+    "Puffpaw FDV above $50M one day after launch?": "Puffpaw 首日估值超 5000 万美元",
+    "Will Kai Cenat finish his GTA marathon by November 11, 2:59 PM ET?": "Kai Cenat GTA 马拉松 11/11 前结束",
+    "Pete Hegseth out as Secretary of Defense by December 31?": "Hegseth 年底前下台",
+    "Will Anthropic IPO by November 23, 2026?": "Anthropic 11/23 前上市",
+    "Next Fable Model (5.2+) released by November 10, 2026?": "Fable 下一代 11/10 前发布",
+    "Will Ethereum dip to $2,000 in November?": "以太坊 11 月跌到 2000 美元",
+    "Will the Republican Party hold between 170 and 174 House seats after the 2026 midterm elections?": "共和党中期选举赢 170 到 174 席",
+    "Will Anthropic IPO by November 20, 2026?": "Anthropic 11/20 前上市",
+    "US imports Russian diesel by March 31?": "美国 3/31 前进口俄罗斯柴油",
+    "Will Bitcoin dip to $70,000 in November?": "比特币 11 月跌到 7 万",
+    "What price will Bitcoin hit in November?": "比特币 11 月触及价位",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年触及价位",
+    "Anthropic IPO Closing Market Cap": "Anthropic 上市收盘市值",
+    "Fed Decision in December?": "美联储 12 月利率决议",
+    "What will WTI Crude Oil (WTI) hit in November 2026?": "WTI 原油 11 月触及价位",
+    "Prime Minister of Israel after the next election?": "下届以色列总理",
+    "Israel x Iran ceasefire continues through...?": "以伊停火能撑到何时",
+    "Next French Presidential Election": "下届法国总统",
+    "Will Gadi Eizenkot receive the first mandate to form a government after the 2026 Israeli election?": "Eizenkot 获首次组阁授权",
+    "Will Trump raise tariffs on Canada by October 31?": "特朗普 10/31 前对加拿大加税",
+    "Will Trump speak to Luiz Inácio Lula da Silva by October 31?": "特朗普 10/31 前与 Lula 通话",
+    "Bab el-Mandeb Strait effectively closed by October 31?": "曼德海峡 10/31 前实际关闭",
+    "Strait of Hormuz traffic returns to normal by October 31?": "霍尔木兹海峡 10/31 前恢复通行"
+  },
+  "outcomes": {
+    "$1.5–$1.75T": "1.5 到 1.75 万亿美元",
+    "$1.25–$1.5T": "1.25 到 1.5 万亿美元",
+    "$1.75–$2.0T": "1.75 到 2.0 万亿美元",
+    "<$1.25T": "低于 1.25 万亿美元"
+  },
+  "picked": [
+    {
+      "question": "Will Bitcoin dip to $74,000 November 2-8?",
+      "yes": 1.0
+    },
+    {
+      "question": "Puffpaw FDV above $50M one day after launch?",
+      "yes": 1.0
+    },
+    {
+      "question": "Pete Hegseth out as Secretary of Defense by December 31?",
+      "yes": 0.46
+    },
+    {
+      "question": "Will Anthropic IPO by November 23, 2026?",
+      "yes": 0.65
+    },
+    {
+      "question": "Next Fable Model (5.2+) released by November 10, 2026?",
+      "yes": 0.26
+    },
+    {
+      "question": "Will Kai Cenat finish his GTA marathon by November 11, 2:59 PM ET?",
+      "yes": 0.53
+    }
+  ]
+}
