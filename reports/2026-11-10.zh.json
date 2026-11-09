@@ -1,0 +1,65 @@
+{
+  "title": "Fable 5.2 来了，此前仅 12%",
+  "headline": "Fable 下一代模型 5.2 终于发布，前一天市场只给 12%，直接结算为是",
+  "hero": {
+    "value": "12% → 100%",
+    "label": "Fable 5.2 在 11/9 前发布，市场前一天只给 12%"
+  },
+  "headlineQuestion": "Next Fable Model (5.2+) released by November 9, 2026?",
+  "headlineTitle": "Fable 5.2 发布",
+  "skip": [
+    "Jensen Huang divorce by December 31, 2026?"
+  ],
+  "labels": {
+    "Next Fable Model (5.2+) released by November 9, 2026?": "Fable 下一代 11/9 前发布",
+    "Israel x Iran ceasefire continues through December 15?": "以伊停火撑到 12/15",
+    "Will Anthropic IPO by November 25, 2026?": "Anthropic 11/25 前上市",
+    "Will WTI Crude Oil (WTI) hit (HIGH) $95 in November?": "WTI 原油 11 月触及 95 美元",
+    "Military action against Saudi Oil Pipeline (East-West) by November 30?": "沙特输油管道 11/30 前遭袭",
+    "Will Kimi K3.1 Pro debut at a score of at least 1470 by June 30, 2027?": "Kimi K3.1 Pro 首秀 1470 分以上",
+    "Next Astra Model (6.1+) released by November 13, 2026?": "Astra 6.1 以上 11/13 前发布",
+    "Will Japan Q3 GDP growth (annualized) be between 0.0% and 0.8%?": "日本三季度 GDP 年化 0 到 0.8%",
+    "Pete Hegseth out as Secretary of Defense by December 31?": "Hegseth 年底前下台",
+    "Will Ulf Kristersson be the next Prime Minister of Sweden?": "Kristersson 出任瑞典首相",
+    "Fed Decision in December?": "美联储 12 月利率决议",
+    "What price will Bitcoin hit in 2026?": "比特币 2026 年触及价位",
+    "Anthropic IPO by __?": "Anthropic 上市日期",
+    "What price will Bitcoin hit in November?": "比特币 11 月触及价位",
+    "What will WTI Crude Oil (WTI) hit in November 2026?": "WTI 原油 11 月触及价位",
+    "Anthropic IPO Closing Market Cap": "Anthropic 上市收盘市值",
+    "Next French Presidential Election": "下届法国总统",
+    "US announces end of Iranian blockade by...?": "美国宣布结束对伊朗封锁",
+    "Will China’s CPI increase by between 0.7% and 0.8% over the 12 month period ending in October 2026?": "中国 10 月 CPI 同比 0.7% 到 0.8%",
+    "Will Miguel Gerardo Cueva Celi win the next Piura mayoral elections?": "Cueva Celi 当选皮乌拉市长",
+    "Israel x Iran ceasefire continues through November 5?": "以伊停火撑到 11/5",
+    "US imports Russian diesel by November 30?": "美国 11/30 前进口俄罗斯柴油"
+  },
+  "outcomes": {
+    "$1.5–$1.75T": "1.5 到 1.75 万亿美元",
+    "$1.25–$1.5T": "1.25 到 1.5 万亿美元",
+    "$1.75–$2.0T": "1.75 到 2.0 万亿美元",
+    "<$1.25T": "低于 1.25 万亿美元"
+  },
+  "picked": [
+    {
+      "question": "Next Fable Model (5.2+) released by November 9, 2026?",
+      "yes": 1.0
+    },
+    {
+      "question": "Israel x Iran ceasefire continues through December 15?",
+      "yes": 0.72
+    },
+    {
+      "question": "Will Anthropic IPO by November 25, 2026?",
+      "yes": 0.93
+    },
+    {
+      "question": "Will WTI Crude Oil (WTI) hit (HIGH) $95 in November?",
+      "yes": 0.41
+    },
+    {
+      "question": "Military action against Saudi Oil Pipeline (East-West) by November 30?",
+      "yes": 0.9
+    }
+  ]
+}
