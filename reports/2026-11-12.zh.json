@@ -1,0 +1,73 @@
+{
+  "title": "黄仁勋下台概率一天从 17% 到 78%",
+  "headline": "黄仁勋年底前辞职或被撤换的概率，一天内从 17% 升到 78%",
+  "hero": {
+    "value": "17% → 78%",
+    "label": "黄仁勋年底前辞职或被撤换，成交 200 万美元"
+  },
+  "headlineQuestion": "Jensen Huang announced resignation or removal by December 31, 2026?",
+  "headlineTitle": "黄仁勋年底前辞职或被撤换",
+  "skip": [],
+  "labels": {
+    "Jensen Huang announced resignation or removal by December 31, 2026?": "黄仁勋年底前辞职或被撤换",
+    "Will Anthropic's IPO valuation be between $1.50T and $1.75T?": "Anthropic 上市估值 1.5 到 1.75 万亿",
+    "Will the next Fable model (5.2+) debut at a score of at least 1500 by June 30, 2027?": "Fable 新版首发得分 1500 以上",
+    "Jensen Huang divorce by December 31, 2026?": "黄仁勋年底前离婚",
+    "Will Predict.fun launch a token by November 30, 2026?": "Predict.fun 11 月底前发币",
+    "Will Trump speak to Elon Musk by November 30?": "特朗普 11 月底前和马斯克通话",
+    "Will Russia target Kyiv on November 11, 2026?": "俄罗斯 11 月 11 日袭击基辅",
+    "Over $10M committed to the Mori Finance public sale?": "Mori Finance 公售募资超 1000 万美元",
+    "Next French Presidential Election": "法国下届总统选举",
+    "Presidential Election Winner 2028": "2028 美国大选赢家",
+    "Democratic Presidential Nominee 2028": "2028 民主党总统提名人",
+    "Fed Decision in December?": "美联储 12 月决议",
+    "Anthropic IPO Closing Market Cap": "Anthropic 上市收盘市值",
+    "Anthropic IPO by __?": "Anthropic 上市日期",
+    "Which company has the best AI model end of November?": "11 月底最强 AI 模型公司",
+    "Measles cases in U.S. in 2026?": "2026 年美国麻疹病例数",
+    "Gemini Carbon released by November 11, 2026?": "Gemini Carbon 11 月 11 日前发布",
+    "Will Kimi K3.1 Pro debut at a score of at least 1480 by June 30, 2027?": "Kimi K3.1 Pro 首发得分 1480 以上",
+    "Will Åsa Johansson be the next Regional Board Chair of Region Värmland?": "瑞典 Värmland 地区新董事长人选",
+    "Will the Houthis successfully target shipping by October 31, 2026?": "胡塞武装 10 月底前袭击航运",
+    "Will Kimi K3.1 Pro debut in the top 10 of the Text Arena leaderboard by June 30, 2027?": "Kimi K3.1 Pro 首发进文本榜前十",
+    "Israel x Iran ceasefire continues through November 7?": "以伊停火持续到 11 月 7 日",
+    "Will Gemini Carbon be released between November 16 and November 22, 2026?": "Gemini Carbon 11 月 16 到 22 日发布",
+    "Will the Houthis enter Saudi Arabia by October 31?": "胡塞武装 10 月底前进入沙特"
+  },
+  "outcomes": {
+    "$1.25–$1.5T": "1.25 到 1.5 万亿美元",
+    "$1.5–$1.75T": "1.5 到 1.75 万亿美元",
+    "<$1.25T": "低于 1.25 万亿美元",
+    "$1.75–$2.0T": "1.75 到 2 万亿美元"
+  },
+  "picked": [
+    {
+      "question": "Jensen Huang announced resignation or removal by December 31, 2026?",
+      "yes": 0.78
+    },
+    {
+      "question": "Will the Fed increase interest rates by 25 bps after the January 2027 meeting?",
+      "yes": 0.54
+    },
+    {
+      "question": "Jensen Huang divorce by December 31, 2026?",
+      "yes": 0.28
+    },
+    {
+      "question": "Will Trump speak to Elon Musk by November 30?",
+      "yes": 0.94
+    },
+    {
+      "question": "Will Anthropic's IPO valuation be between $1.50T and $1.75T?",
+      "yes": 0.47
+    },
+    {
+      "question": "Next Astra Model (6.1+) released by November 15, 2026?",
+      "yes": 0.17
+    },
+    {
+      "question": "Will the next Fable model (5.2+) debut at a score of at least 1500 by June 30, 2027?",
+      "yes": 0.84
+    }
+  ]
+}
