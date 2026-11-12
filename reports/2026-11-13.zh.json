@@ -1,0 +1,68 @@
+{
+  "title": "黄仁勋真的下台了，市场前一天只给 38%",
+  "headline": "黄仁勋 11/12 前宣布辞职或被撤换，前一天市场只给 38%，结果成真",
+  "hero": {
+    "value": "38% → 100%",
+    "label": "黄仁勋 11/12 前辞职或被撤换，成交 610 万美元"
+  },
+  "headlineQuestion": "Jensen Huang announced resignation or removal by November 12, 2026?",
+  "headlineTitle": "黄仁勋 11/12 前辞职或被撤换",
+  "skip": [],
+  "labels": {
+    "Jensen Huang announced resignation or removal by November 12, 2026?": "黄仁勋 11/12 前辞职或被撤换",
+    "Will Pat Gelsinger be the next CEO of NVIDIA?": "Gelsinger 成为英伟达下任 CEO",
+    "Third Jensen Huang affair reported by December 31?": "黄仁勋第三起绯闻被报道",
+    "US x Iran Effective Ceasefire by November 8?": "美伊 11 月 8 日前停火",
+    "Will Gemini Carbon debut with an HLE-Diamond score of 65% or higher?": "Gemini Carbon 首发得分 65% 以上",
+    "Will GPT Astra 6.1+ be released between November 16 and November 22, 2026?": "GPT Astra 6.1 11 月 16 到 22 日发布",
+    "Jensen Huang announced resignation or removal by December 31, 2026?": "黄仁勋年底前辞职或被撤换",
+    "Shipping targeted in Hormuz on October 25, 2026?": "10/25 霍尔木兹航运遇袭",
+    "Will the next Fable model (5.2+) debut with a Humanity's Last Exam score of 65% or higher?": "Fable 新版首发 HLE 65% 以上",
+    "Over $10M committed to the Mori Finance public sale?": "Mori Finance 公售募资超 1000 万美元",
+    "Will the 5-year Treasury yield hit 4.90% before 2027?": "5 年期美债收益率年内触及 4.9%",
+    "Next Gemini Flash Model (3.9+) released by November 30, 2026?": "Gemini Flash 3.9 11 月底前发布",
+    "Will Bitcoin reach $75,000 in November?": "比特币 11 月涨到 7.5 万美元",
+    "Anthropic IPO by __?": "Anthropic 上市日期",
+    "US x Iran Effective Ceasefire begins by...? (2 week pause)": "美伊停火生效日期",
+    "Russia x Ukraine energy ceasefire agreement by...?": "俄乌能源停火协议",
+    "Next CEO of NVIDIA?": "英伟达下任 CEO",
+    "Jensen Huang resigned or removed & Nvidia above $4T end of 2026?": "黄仁勋下台且英伟达市值超 4 万亿",
+    "Will Jensen Huang join SpaceX by December 31, 2026?": "黄仁勋年底前加入 SpaceX",
+    "Jensen Huang divorce by...?": "黄仁勋离婚时间",
+    "Measles cases in U.S. in 2026?": "2026 年美国麻疹病例数",
+    "Will the highest score achieved by an Anthropic Claude model on Humanity’s Last Exam in 2026 be 65% or higher?": "Claude 年内 HLE 最高分 65% 以上",
+    "Will the highest score achieved on Humanity’s Last Exam in 2026 be 65% or higher?": "年内 HLE 最高分 65% 以上",
+    "Will Jensen Huang's resignation or removal not be announced and Nvidia's market cap be below $4T at the end of 2026?": "黄仁勋没下台且英伟达市值低于 4 万亿",
+    "Will the Republican Party candidate win the 2026 OK-03 House election by 25%-30%?": "俄克拉荷马 3 区共和党胜 25 到 30 点"
+  },
+  "outcomes": {
+    "Resigned/removed; Over $4T": "下台且市值超 4 万亿",
+    "Resigned/removed; Under $4T": "下台且市值低于 4 万亿"
+  },
+  "picked": [
+    {
+      "question": "Jensen Huang announced resignation or removal by November 12, 2026?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Pat Gelsinger be the next CEO of NVIDIA?",
+      "yes": 0.0
+    },
+    {
+      "question": "Third Jensen Huang affair reported by December 31?",
+      "yes": 1.0
+    },
+    {
+      "question": "US x Iran Effective Ceasefire by November 8?",
+      "yes": 0.18
+    },
+    {
+      "question": "Will Gemini Carbon debut with an HLE-Diamond score of 65% or higher?",
+      "yes": 0.0
+    },
+    {
+      "question": "Will GPT Astra 6.1+ be released between November 16 and November 22, 2026?",
+      "yes": 0.65
+    }
+  ]
+}
