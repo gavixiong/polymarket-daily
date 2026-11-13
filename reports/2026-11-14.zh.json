@@ -1,0 +1,74 @@
+{
+  "title": "黄仁勋下台成真，市场前一天只给 52%",
+  "headline": "黄仁勋 11/13 前宣布辞职或被撤换，前一天市场给 52%，结果真发生了",
+  "hero": {
+    "value": "52% → 100%",
+    "label": "黄仁勋 11/13 前辞职或被撤换，成交 150 万美元"
+  },
+  "headlineQuestion": "Jensen Huang announced resignation or removal by November 13, 2026?",
+  "headlineTitle": "黄仁勋 11/13 前辞职或被撤换",
+  "skip": [],
+  "labels": {
+    "Jensen Huang announced resignation or removal by November 13, 2026?": "黄仁勋 11/13 前辞职或被撤换",
+    "China ballistic missile launch by December 31?": "中国 12/31 前发射弹道导弹",
+    "Will PPI YoY be 6.5% in October?": "美国 10 月 PPI 同比 6.5%",
+    "Will the chopsticks catch SpaceX Starship Flight Test 15 Super Heavy booster?": "星舰助推器被筷子夹住",
+    "Will Bitcoin reach $72,500 in November?": "比特币 11 月涨到 7.25 万美元",
+    "Will Japan's core CPI increase by between 2.0 and 2.4% in 2026?": "日本 2026 核心通胀 2.0 到 2.4%",
+    "Will Anthropic's valuation hit (LOW) $1.35T by November 30?": "Anthropic 估值 11 月底前达 1.35 万亿",
+    "Will Core PCE YoY be 3.3% in October?": "美国 10 月核心 PCE 同比 3.3%",
+    "Jensen Huang admits to another affair with a woman by December 31?": "黄仁勋年底前再承认一起绯闻",
+    "Anthropic IPO by __?": "Anthropic 上市日期",
+    "US x Iran Effective Ceasefire begins by...? (2 week pause)": "美伊停火生效日期",
+    "Nationwide ground stop lifted by...?": "全国停飞令解除时间",
+    "Next CEO of NVIDIA?": "英伟达下任 CEO",
+    "Jensen Huang rejoins NVIDIA by...?": "黄仁勋回归英伟达时间",
+    "New NVIDIA CEO named by December 31, 2026?": "英伟达年底前任命新 CEO",
+    "Jensen Huang divorce by...?": "黄仁勋离婚时间",
+    "Fourth Jensen Huang affair reported by...?": "黄仁勋第四起绯闻被报道",
+    "Military action against Saudi Oil Pipeline (East-West) by November 30?": "沙特东西输油管遇军事袭击",
+    "Will PPI YoY be 6.8% or more in October?": "美国 10 月 PPI 同比 6.8% 以上",
+    "Next Astra Model (6.1+) released by November 12, 2026?": "Astra 6.1 11/12 前发布",
+    "Will Jensen Huang's resignation or removal not be announced and Nvidia's market cap be above $4T at the end of 2026?": "黄仁勋没下台且英伟达市值超 4 万亿"
+  },
+  "outcomes": {
+    "November 15, 12:00 AM ET": "11/15 午夜（美东）",
+    "November 14, 12:00 PM ET": "11/14 中午（美东）",
+    "November 14, 12:00 AM ET": "11/14 午夜（美东）",
+    "November 13, 10:00 PM ET": "11/13 晚 10 点（美东）"
+  },
+  "picked": [
+    {
+      "question": "Jensen Huang announced resignation or removal by November 13, 2026?",
+      "yes": 1.0
+    },
+    {
+      "question": "Fourth Jensen Huang affair reported by November 13?",
+      "yes": 0.01
+    },
+    {
+      "question": "Will Howard Lutnick leave the Trump administration before 2027?",
+      "yes": 0.51
+    },
+    {
+      "question": "Will the chopsticks catch SpaceX Starship Flight Test 15 Super Heavy booster?",
+      "yes": 0.0
+    },
+    {
+      "question": "Will Anthropic's valuation hit (LOW) $1.35T by November 30?",
+      "yes": 0.7
+    },
+    {
+      "question": "China ballistic missile launch by December 31?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Bitcoin reach $72,500 in November?",
+      "yes": 0.45
+    },
+    {
+      "question": "Robert Pattinson announced as next James Bond?",
+      "yes": 0.49
+    }
+  ]
+}
