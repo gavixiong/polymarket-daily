@@ -1,0 +1,72 @@
+{
+  "title": "比特币跌到 6.4 万，前一天仅 2%",
+  "headline": "比特币本周真的跌到了 6.4 万美元，前一天市场只给 2%，结算为是",
+  "hero": {
+    "value": "2% → 100%",
+    "label": "比特币 11/9 到 11/15 跌到 6.4 万美元，成交 45 万美元"
+  },
+  "headlineQuestion": "Will Bitcoin dip to $64,000 November 9-15?",
+  "headlineTitle": "比特币 11/9 到 11/15 跌到 6.4 万美元",
+  "skip": [],
+  "labels": {
+    "Will Bitcoin dip to $64,000 November 9-15?": "比特币本周跌到 6.4 万美元",
+    "Will the FAA's nationwide ground stop be lifted by November 13, 9:00 PM ET?": "美国全国停飞令 11/13 前解除",
+    "Will there be between 115m and 120m votes cast in the 2026 U.S. House of Representatives midterm elections?": "中期选举众议院投票 1.15 亿到 1.2 亿张",
+    "Will the Starship for SpaceX Starship Flight Test 15 achieve a successful splashdown?": "星舰第 15 次试飞成功溅落",
+    "Will Jensen Huang join SpaceX by December 31, 2027?": "黄仁勋 2027 年底前加入 SpaceX",
+    "Will GPT Astra 6.1+ be released between November 16 and November 22, 2026?": "GPT Astra 6.1 11/16 到 11/22 发布",
+    "Will Philippines be the Jury Winner in the Eurovision Asia 2026 Grand Final?": "Eurovision Asia 评审团冠军菲律宾",
+    "Which countries will join the Mecca Agreement by December 31, 2027?": "2027 年底前加入《麦加协议》的国家",
+    "Will Bitcoin dip to $62,500 in November?": "比特币 11 月跌到 6.25 万美元",
+    "Will Ethereum dip to $1,700 in November?": "以太坊 11 月跌到 1700 美元",
+    "Will Pump.fun dip to $0.0030 by December 31, 2026?": "Pump.fun 年底前跌到 0.003 美元",
+    "Will it be confirmed that maintenance, an upgrade or another planned change to an FAA or contractor system caused the FAA's nationwide ground stop on November 13?": "确认停飞由系统维护升级引起",
+    "Will Solana dip to $70 by December 31, 2026?": "Solana 年底前跌到 70 美元",
+    "Will XRP dip to $0.80 in November?": "XRP 11 月跌到 0.8 美元",
+    "Anthropic IPO by __?": "Anthropic 上市日期",
+    "US x Iran Effective Ceasefire begins by...? (2 week pause)": "美伊停火生效日期",
+    "FAA outage attributed to Iran?": "美国停飞归因于伊朗",
+    "Next CEO of NVIDIA?": "英伟达下任 CEO",
+    "Jensen Huang rejoins NVIDIA by...?": "黄仁勋回归英伟达时间",
+    "Will Jensen Huang join SpaceX by...?": "黄仁勋加入 SpaceX 时间",
+    "Jensen Huang divorce by...?": "黄仁勋离婚时间",
+    "Fourth Jensen Huang affair reported by...?": "黄仁勋第四起绯闻被报道",
+    "Fourth Jensen Huang affair reported by November 13?": "黄仁勋第四起绯闻 11/13 前被报道",
+    "Will Trump speak to Mark Carney by November 30?": "特朗普 11 月底前与 Carney 通话",
+    "Will SpaceX Starship Flight Test 15 launch by November 30, 2026?": "星舰第 15 次试飞 11 月底前发射",
+    "Will Jeremy Matlow win the Tallahassee mayoral election?": "Jeremy Matlow 当选塔拉哈西市长",
+    "Will Eric Jones win the CA-04 House seat?": "Eric Jones 赢得加州第 4 选区",
+    "Will Louisiana use a new congressional map for the 2026 United States midterm elections?": "路易斯安那中期选举用新选区图"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will Bitcoin dip to $64,000 November 9-15?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will the FAA's nationwide ground stop be lifted by November 13, 9:00 PM ET?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will there be between 115m and 120m votes cast in the 2026 U.S. House of Representatives midterm elections?",
+      "yes": 0.76
+    },
+    {
+      "question": "Will the Starship for SpaceX Starship Flight Test 15 achieve a successful splashdown?",
+      "yes": 0.01
+    },
+    {
+      "question": "Will Jensen Huang join SpaceX by December 31, 2027?",
+      "yes": 0.18
+    },
+    {
+      "question": "Will GPT Astra 6.1+ be released between November 16 and November 22, 2026?",
+      "yes": 0.43
+    },
+    {
+      "question": "Will Philippines be the Jury Winner in the Eurovision Asia 2026 Grand Final?",
+      "yes": 1.0
+    }
+  ]
+}
