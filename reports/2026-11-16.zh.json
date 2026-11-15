@@ -1,0 +1,67 @@
+{
+  "title": "瑞典首相概率一天从 32% 到 72%",
+  "headline": "瑞典下任首相人选一天翻盘，Andersson 概率从 32% 升到 72%，成交 30.7 万美元",
+  "hero": {
+    "value": "32% → 72%",
+    "label": "Magdalena Andersson 当瑞典首相，成交 30.7 万美元"
+  },
+  "headlineQuestion": "Will Magdalena Andersson be the next Prime Minister of Sweden?",
+  "headlineTitle": "Andersson 当瑞典下任首相",
+  "skip": [],
+  "labels": {
+    "Will Magdalena Andersson be the next Prime Minister of Sweden?": "Andersson 当瑞典下任首相",
+    "Will the next governing coalition of Sweden include M + KD + L + C?": "瑞典新政府含 M+KD+L+C 四党",
+    "Will Ethereum dip to $1,700 in November?": "以太坊 11 月跌到 1700 美元",
+    "Will the South African Reserve Bank make no change to the repo rate at the January meeting?": "南非央行 1 月利率不变",
+    "Saturn FDV above $50M one day after launch": "Saturn 上线次日估值超 5000 万美元",
+    "Will Jensen Huang be the #1 searched person on Google this year?": "黄仁勋成谷歌年度搜索第一",
+    "Will Anthropic's valuation hit (LOW) $1.4T by November 30?": "Anthropic 11 月底估值触及 1.4 万亿美元",
+    "Will the Bank of Israel make no change to the Bank of Israel Interest Rate at the November meeting?": "以色列央行 11 月利率不变",
+    "Anthropic IPO by __?": "Anthropic 上市日期",
+    "Jensen Huang divorce by...?": "黄仁勋离婚时间",
+    "US x Iran Effective Ceasefire begins by...? (2 week pause)": "美伊停火生效日期",
+    "FAA outage attributed to hack?": "美国航空故障归因于黑客",
+    "Jensen Huang rejoins NVIDIA by...?": "黄仁勋回归英伟达时间",
+    "Next CEO of NVIDIA?": "英伟达下任 CEO",
+    "Largest Company end of November 2026?": "11 月底最大公司",
+    "Fourth Jensen Huang affair reported by...?": "黄仁勋第四起绯闻被报道",
+    "Will Perplexity launch a Muse-like personal agent before 2027?": "Perplexity 推出类 Muse 个人助手",
+    "Will the chopsticks catch the Starship for SpaceX Starship Flight Test 15?": "筷子夹住星舰第 15 次试飞",
+    "Brex IPO before 2027?": "Brex 2027 年前上市",
+    "Pete Hegseth out as Secretary of Defense by November 14?": "Hegseth 11/14 前卸任国防部长",
+    "Will Loranne Ausley win the Tallahassee mayoral election?": "Ausley 当选塔拉哈西市长"
+  },
+  "outcomes": {
+    "Jensen Huang (No Change)": "黄仁勋（不变）"
+  },
+  "picked": [
+    {
+      "question": "Will Magdalena Andersson be the next Prime Minister of Sweden?",
+      "yes": 0.72
+    },
+    {
+      "question": "Will Jensen Huang rejoin NVIDIA by December 31, 2027?",
+      "yes": 0.43
+    },
+    {
+      "question": "Jensen Huang divorce by...?",
+      "yes": 0.1
+    },
+    {
+      "question": "Will the South African Reserve Bank make no change to the repo rate at the January meeting?",
+      "yes": 0.78
+    },
+    {
+      "question": "Will the Bank of Israel make no change to the Bank of Israel Interest Rate at the November meeting?",
+      "yes": 0.77
+    },
+    {
+      "question": "Will Perplexity launch a Muse-like personal agent before 2027?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will \"The Cat in the Hat\" 2nd Weekend Box Office be between 11m and 12m?",
+      "yes": 0.94
+    }
+  ]
+}
