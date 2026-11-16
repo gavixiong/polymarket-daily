@@ -1,0 +1,68 @@
+{
+  "title": "航母开进中东，市场此前只给 24%",
+  "headline": "罗斯福号航母 11/15 前抵达中东，前一天市场只给 24%，结果真发生了，成交 5.3 万美元",
+  "hero": {
+    "value": "24% → 100%",
+    "label": "罗斯福号航母 11/15 前抵达中东，成交 5.3 万美元"
+  },
+  "headlineQuestion": "Will the USS Theodore Roosevelt arrive in CENTCOM by November 15, 2026?",
+  "headlineTitle": "罗斯福号航母抵达中东",
+  "skip": [],
+  "labels": {
+    "Will the USS Theodore Roosevelt arrive in CENTCOM by November 15, 2026?": "罗斯福号航母 11/15 前抵达中东",
+    "USS Theodore Roosevelt arrives in CENTCOM by...?": "罗斯福号航母抵达中东时间",
+    "Howard Lutnick out as Secretary of Commerce by December 31?": "Lutnick 年底前卸任商务部长",
+    "Howard Lutnick out as Secretary of Commerce by...?": "Lutnick 卸任商务部长时间",
+    "Will Jensen Huang rejoin NVIDIA by December 31, 2027?": "黄仁勋 2027 年底前回归英伟达",
+    "US imposes new sanctions on China by November 30, 2026?": "美国 11 月底前新制裁中国",
+    "Will GPT Astra 6.1+ be released between November 16 and November 22, 2026?": "GPT Astra 6.1 本周发布",
+    "Will Bully (Ye) be nominated for Best Rap Album at the 69th Annual GRAMMY Awards?": "Ye《Bully》入围格莱美最佳说唱专辑",
+    "Will Dani win the GMGN GGC Season 1 Grand Final?": "Dani 夺 GMGN GGC 首季总决赛冠军",
+    "US x Iran Effective Ceasefire by November 22?": "美伊停火 11/22 前生效",
+    "Will the South African Reserve Bank make no change to the repo rate at the March meeting?": "南非央行 3 月利率不变",
+    "Will EU emergency diesel stocks be at least 37M tonnes at end of November 2026?": "欧盟 11 月底柴油储备达 3700 万吨",
+    "Will the median home value in the US be between $407,000 and $411,000 on December 31?": "美国年底房价中位数 40.7 万到 41.1 万",
+    "Will the 2-year Treasury yield hit 5.20% before 2027?": "美债 2 年期收益率 2027 前触及 5.2%",
+    "US x Iran Effective Ceasefire begins by...? (2 week pause)": "美伊停火生效日期",
+    "Russia x Ukraine energy ceasefire agreement by...?": "俄乌能源停火协议时间",
+    "Next CEO of NVIDIA?": "英伟达下任 CEO",
+    "Jensen Huang divorce by...?": "黄仁勋离婚时间",
+    "Jensen Huang admits to another affair with a woman by December 31?": "黄仁勋年底前承认再有绯闻",
+    "FAA outage attributed to hack?": "美国航空故障归因于黑客",
+    "Jensen Huang rejoins NVIDIA by...?": "黄仁勋回归英伟达时间",
+    "Largest Company end of November 2026?": "11 月底最大公司",
+    "US announces end of Iranian blockade by November 15, 2026?": "美国 11/15 前宣布结束伊朗封锁",
+    "Will the Republican Party win the NC-07 House seat?": "共和党赢下 NC-07 众议院席位",
+    "SCOTUS grants Trump Birthright Citizenship Rehearing by December 31?": "最高法院年底前重审出生公民权案",
+    "Next GPT Sol (6.2+) released by November 15, 2026?": "GPT Sol 6.2 11/15 前发布",
+    "Will Japan Q3 GDP growth (annualized) be between -0.8% and 0.0%?": "日本三季度 GDP 年化 -0.8% 到 0%",
+    "NATO x Russia military clash by November 15, 2026?": "北约与俄军 11/15 前交火"
+  },
+  "outcomes": {},
+  "picked": [
+    {
+      "question": "Will the USS Theodore Roosevelt arrive in CENTCOM by November 15, 2026?",
+      "yes": 1.0
+    },
+    {
+      "question": "Howard Lutnick out as Secretary of Commerce by December 31?",
+      "yes": 0.2
+    },
+    {
+      "question": "Will Jensen Huang rejoin NVIDIA by December 31, 2027?",
+      "yes": 0.3
+    },
+    {
+      "question": "US imposes new sanctions on China by November 30, 2026?",
+      "yes": 0.84
+    },
+    {
+      "question": "Will GPT Astra 6.1+ be released between November 16 and November 22, 2026?",
+      "yes": 0.69
+    },
+    {
+      "question": "Will Bully (Ye) be nominated for Best Rap Album at the 69th Annual GRAMMY Awards?",
+      "yes": 1.0
+    }
+  ]
+}
