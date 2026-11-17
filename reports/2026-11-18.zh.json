@@ -1,0 +1,67 @@
+{
+  "title": "美伊停火一天从 71% 跌到 42%",
+  "headline": "美伊停火协议 11/22 前生效的概率一天从 71% 跌到 42%，成交 56.6 万美元",
+  "hero": {
+    "value": "71% → 42%",
+    "label": "美伊停火 11/22 前生效，成交 56.6 万美元"
+  },
+  "headlineQuestion": "US x Iran Effective Ceasefire by November 22?",
+  "headlineTitle": "美伊停火 11/22 前生效",
+  "skip": [],
+  "labels": {
+    "Will Predict.fun launch a token by November 30, 2026?": "Predict.fun 11 月底前发币",
+    "Will Jensen Huang post again on X by November 30?": "黄仁勋 11 月底前再发 X 帖子",
+    "Will GPT Astra 6.1+ debut at an output token price of at least $40 by June 30, 2027?": "GPT Astra 6.1 输出价至少 40 美元",
+    "Will GPT Astra 6.1+ be released on November 17, 2026?": "GPT Astra 6.1 11/17 发布",
+    "Will GPT Astra 6.1+ debut with an HLE-Diamond score of 70% or higher?": "GPT Astra 6.1 HLE-Diamond 达 70%",
+    "US x Iran Effective Ceasefire by November 15?": "美伊停火 11/15 前生效",
+    "Democratic trifecta odds dip to 50% by December 31?": "民主党完全执政概率跌到 50%",
+    "Will Steve Witkoff join Trump at APEC in China?": "Witkoff 随特朗普出席 APEC",
+    "US x Iran Effective Ceasefire begins by...? (2 week pause)": "美伊停火生效日期",
+    "Jensen Huang rejoins NVIDIA by...?": "黄仁勋回归英伟达时间",
+    "Next CEO of NVIDIA?": "英伟达下任 CEO",
+    "Jensen Huang admits to another affair with a woman by December 31?": "黄仁勋年底前承认再有绯闻",
+    "Jensen Huang divorce by...?": "黄仁勋离婚时间",
+    "Democratic trifecta odds hit __ by December 31?": "民主党完全执政概率走向",
+    "How long will Xi and Takaichi shake hands?": "习近平与高市握手多久",
+    "Largest Company end of November 2026?": "11 月底最大公司",
+    "US x Iran Effective Ceasefire by November 8?": "美伊停火 11/8 前生效",
+    "Next Astra Model (6.1+) released by November 30, 2026?": "GPT Astra 6.1 11 月底前发布",
+    "Will GPT Astra 6.1+ be released between November 16 and November 22, 2026?": "GPT Astra 6.1 本周发布",
+    "Next GPT Sol (6.2+) released by November 30, 2026?": "GPT Sol 6.2 11 月底前发布",
+    "Will there be no GPT Astra 6.1+ release by November 30, 2026?": "GPT Astra 6.1 11 月底前不发布",
+    "Will Home Depot (HD) Q3 comparable sales growth be 2.5% or more?": "家得宝三季度同店销售增长至少 2.5%",
+    "US x Iran Effective Ceasefire by November 22?": "美伊停火 11/22 前生效"
+  },
+  "outcomes": {
+    "Jensen Huang (No Change)": "黄仁勋留任",
+    "2–6s": "2 到 6 秒",
+    "6–10s": "6 到 10 秒"
+  },
+  "picked": [
+    {
+      "question": "US x Iran Effective Ceasefire by November 22?",
+      "yes": 0.42
+    },
+    {
+      "question": "Democratic trifecta odds dip to 50% by December 31?",
+      "yes": 0.12
+    },
+    {
+      "question": "Next Astra Model (6.1+) released by November 30, 2026?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Anthropic's IPO valuation be between $1.25T and $1.50T?",
+      "yes": 0.7
+    },
+    {
+      "question": "Will Predict.fun launch a token by November 30, 2026?",
+      "yes": 0.12
+    },
+    {
+      "question": "Will Amedeo Modigliani's “Tête” sell for at least $43m at auction?",
+      "yes": 1.0
+    }
+  ]
+}
