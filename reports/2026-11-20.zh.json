@@ -1,0 +1,69 @@
+{
+  "title": "Anthropic 首日收盘，仅 22%",
+  "headline": "Anthropic 上市首日收盘价落在 90 到 100 美元，市场前一天只给 22%，成交 10.6 万美元",
+  "hero": {
+    "value": "22% → 100%",
+    "label": "Anthropic 首日收盘 90 到 100 美元，市场前一天只给 22%"
+  },
+  "headlineQuestion": "Will Anthropic close between $90 and $100 on its first trading day?",
+  "headlineTitle": "Anthropic 首日收盘 90 到 100 美元",
+  "skip": [],
+  "labels": {
+    "Will the Xi and Takaichi handshake last 10–15 seconds during the summit?": "习主席与高市握手 10 到 15 秒",
+    "Will Anthropic close between $90 and $100 on its first trading day?": "Anthropic 首日收盘 90 到 100 美元",
+    "Will Elon Musk join Trump at APEC in China?": "马斯克随特朗普出席 APEC",
+    "Will OpenAI have the best AI model on LiveBench (Overall) at the end of November 2026?": "OpenAI 11 月底 LiveBench 排第一",
+    "Will Anthropic's market cap be between $1.25T and $1.5T at market close on IPO day?": "Anthropic 首日市值 1.25 到 1.5 万亿美元",
+    "Another critical PHP security flaw in 2026?": "2026 年再出严重 PHP 漏洞",
+    "Will the median home value in the US be less than $403,000 on December 31?": "美国房价中位数年底低于 40.3 万美元",
+    "Will Daniela Amodei ring the bell at Anthropic's IPO?": "Daniela Amodei 为 Anthropic 敲钟",
+    "Russia x Ukraine energy ceasefire agreement by...?": "俄乌能源停火协议时间",
+    "US x Iran Effective Ceasefire begins by...? (2 week pause)": "美伊停火生效日期",
+    "Jensen Huang rejoins NVIDIA by...?": "黄仁勋回归英伟达时间",
+    "Next CEO of NVIDIA?": "英伟达下任 CEO",
+    "Fourth Jensen Huang affair reported by...?": "黄仁勋第四次绯闻曝光时间",
+    "How long will Xi and Takaichi shake hands?": "习主席与高市握手多久",
+    "Anthropic IPO: Who will ring the bell?": "Anthropic 上市谁来敲钟",
+    "Largest IPO by market cap in 2026?": "2026 年市值最大的 IPO",
+    "Will Anthropic's IPO valuation be between $1.50T and $1.75T?": "Anthropic 上市估值 1.5 到 1.75 万亿美元",
+    "Will Anthropic open between $110 and $120 on its first trading day?": "Anthropic 首日开盘 110 到 120 美元",
+    "Trump meets with Putin by November 30?": "特朗普 11 月底前会见普京",
+    "Will Anthropic not IPO by December 31 2027?": "Anthropic 2027 年底前不上市",
+    "Will Anthropic raise between $75B and $85B in its IPO?": "Anthropic IPO 融资 750 到 850 亿美元",
+    "Will Bitcoin dip to $62,000 November 16-22?": "比特币 11/16 至 11/22 跌到 6.2 万美元",
+    "Trump endorses China's claim to Taiwan by end of APEC trip?": "特朗普 APEC 行程内支持中国对台主张",
+    "Will Trump meet with Vladimir Putin by November 30, 2026?": "特朗普 11 月底前会见普京（另一题）",
+    "Will IShowSpeed finish GTA VI by November 22?": "IShowSpeed 11/22 前通关 GTA VI"
+  },
+  "outcomes": {
+    "Jensen Huang (No Change)": "黄仁勋留任",
+    "10–15s": "10 到 15 秒",
+    "6–10s": "6 到 10 秒"
+  },
+  "picked": [
+    {
+      "question": "Will Anthropic close between $90 and $100 on its first trading day?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Anthropic open between $110 and $120 on its first trading day?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Anthropic's IPO valuation be between $1.50T and $1.75T?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will the Xi and Takaichi handshake last 10–15 seconds during the summit?",
+      "yes": 0.87
+    },
+    {
+      "question": "Will Elon Musk join Trump at APEC in China?",
+      "yes": 0.31
+    },
+    {
+      "question": "Will IShowSpeed finish GTA VI by November 22?",
+      "yes": 0.9
+    }
+  ]
+}
