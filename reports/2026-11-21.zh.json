@@ -1,0 +1,71 @@
+{
+  "title": "Fable 新模型没达标，前日给 54%",
+  "headline": "Fable 5.2 之后的新模型首秀没拿到 1510 分以上，前一天市场给 54%，结算为否",
+  "hero": {
+    "value": "54% → 0%",
+    "label": "Fable 新模型首秀 1510 分以上，市场前一天给 54%"
+  },
+  "headlineQuestion": "Will the next Fable model (5.2+) debut at a score of at least 1510 by June 30, 2027?",
+  "headlineTitle": "Fable 新模型首秀 1510 分以上",
+  "skip": [],
+  "labels": {
+    "Will the next Fable model (5.2+) debut in the top 10 of the Text Arena leaderboard by June 30, 2027?": "Fable 新模型首秀进前十",
+    "Will an AI lab announce another Millennium Prize solution by December 31, 2026?": "年底前 AI 再解一个千禧年难题",
+    "Will AI solve 0 more Millennium Prize Problems in 2026?": "今年 AI 解不出千禧年难题",
+    "Will the Riemann Hypothesis be the next Millennium Prize Problem solved by AI?": "AI 下一个解出黎曼猜想",
+    "Will AI solve the Riemann Hypothesis in 2026?": "今年 AI 解出黎曼猜想",
+    "Will OpenAI be the third-best Code Arena | WebDev AI lab at the end of November 2026?": "OpenAI 11 月底排编程榜第三",
+    "Will GPT Astra 6.1+ debut at a score of at least 1430 by June 30, 2027?": "GPT Astra 6.1 首秀 1430 分以上",
+    "AI bubble burst in 2026?": "2026 年 AI 泡沫破裂",
+    "US x Iran Effective Ceasefire begins by...? (2 week pause)": "美伊停火何时生效",
+    "Jensen Huang rejoins NVIDIA by...?": "Jensen Huang 回归 NVIDIA",
+    "Next CEO of NVIDIA?": "NVIDIA 下任 CEO",
+    "Fourth Jensen Huang affair reported by...?": "Jensen Huang 第四起传闻曝光",
+    "Will Trump call for Huang's return as NVIDIA CEO by...?": "特朗普呼吁 Huang 回归 NVIDIA",
+    "Largest Company end of November 2026?": "11 月底全球市值最大公司",
+    "How many more Millennium Prize Problems will AI solve in 2026?": "今年 AI 还能解几个千禧年难题",
+    "Which Millennium Prize Problem will AI solve next?": "AI 下一个解哪个千禧年难题",
+    "Will Anthropic's market cap be between $1.25T and $1.5T at market close on IPO day?": "Anthropic 上市日市值 1.25 到 1.5 万亿",
+    "Anthropic IPO closing market cap above $1.1T?": "Anthropic 上市日收盘市值超 1.1 万亿",
+    "Will Anthropic's valuation hit (HIGH) $1.5T by December 31?": "Anthropic 估值年底前冲到 1.5 万亿",
+    "Will Anthropic’s market cap be between 1.2T and 1.5T at market close on IPO day by December 31 2027?": "Anthropic 上市日市值 1.2 到 1.5 万亿",
+    "Will Anthropic have the highest IPO Market Cap 2026?": "Anthropic 是 2026 年最大 IPO",
+    "Will the next Fable model (5.2+) debut at a score of at least 1510 by June 30, 2027?": "Fable 新模型首秀 1510 分以上",
+    "Will GTA VI break the 24-hour sales record?": "GTA VI 打破 24 小时销量纪录",
+    "Anthropic closes below IPO price ($83) by...?": "Anthropic 跌破 83 美元 IPO 价"
+  },
+  "outcomes": {
+    "Jensen Huang (No Change)": "Jensen Huang 留任",
+    "No solution by Dec 31, 2027": "2027 年底前无人解出"
+  },
+  "picked": [
+    {
+      "question": "Will the next Fable model (5.2+) debut at a score of at least 1510 by June 30, 2027?",
+      "yes": 0.0
+    },
+    {
+      "question": "Will AI solve 0 more Millennium Prize Problems in 2026?",
+      "yes": 0.16
+    },
+    {
+      "question": "Will the Riemann Hypothesis be the next Millennium Prize Problem solved by AI?",
+      "yes": 0.74
+    },
+    {
+      "question": "Will Bitcoin dip to $57,500 in November?",
+      "yes": 0.72
+    },
+    {
+      "question": "Will Zcash dip to $700 by December 31, 2026?",
+      "yes": 0.72
+    },
+    {
+      "question": "Anthropic closes below IPO price ($83) by...?",
+      "yes": 0.87
+    },
+    {
+      "question": "Will \"Golden Hour: Part.6\" - ATEEZ first week album sales be between 150k and 200k?",
+      "yes": 1.0
+    }
+  ]
+}
