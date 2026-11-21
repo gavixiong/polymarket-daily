@@ -1,0 +1,60 @@
+{
+  "title": "Fable 新模型没达标，前日给 73%",
+  "headline": "Fable 5.2 之后的新模型首秀没拿到 1500 分以上，前一天市场给 73%，结算为否",
+  "hero": {
+    "value": "73% → 0%",
+    "label": "Fable 新模型首秀 1500 分以上，市场前一天给 73%"
+  },
+  "headlineQuestion": "Will the next Fable model (5.2+) debut at a score of at least 1500 by June 30, 2027?",
+  "headlineTitle": "Fable 新模型首秀 1500 分以上",
+  "skip": [],
+  "labels": {
+    "Will the next Fable model (5.2+) debut at a score of at least 1500 by June 30, 2027?": "Fable 新模型首秀 1500 分以上",
+    "Will GPT Astra 6.1+ debut at a score of at least 1440 by June 30, 2027?": "GPT Astra 6.1 首秀 1440 分以上",
+    "US x Iran Effective Ceasefire begins by...? (2 week pause)": "美伊停火何时生效",
+    "Will the Democratic Progressive Party (DPP) win the most head of local government elections in the 2026 Taiwan local elections?": "民进党拿下最多县市长",
+    "Will the 30-year Treasury yield hit 5.50% before 2027?": "30 年期美债收益率碰 5.50%",
+    "Will Kai Cenat finish his GTA VI marathon by November 22?": "Kai Cenat 完成 GTA VI 马拉松",
+    "Will Navdeep Bains win the 2026 Ontario Liberal Party leadership election?": "Navdeep Bains 当选安省自由党党魁",
+    "Will the median home value in NYC be less than $445,000 on December 31?": "纽约房价中位数年底低于 44.5 万",
+    "Will Gemini Hydrogen debut with an HLE-Diamond score of 45% or higher?": "Gemini Hydrogen 首秀 45% 以上",
+    "Will there be no next Meta Muse Spark model release by November 30, 2026?": "Meta Muse Spark 11 月底前不发新模型",
+    "Over $250k committed to the over.computer public sale?": "over.computer 公募超 25 万美元",
+    "Will US GDP growth in 2026 be between 2.0% and 2.5%?": "美国 2026 年 GDP 增速 2.0% 到 2.5%",
+    "Will Bitcoin reach $62,500 in November?": "比特币 11 月涨到 6.25 万美元",
+    "Jensen Huang rejoins NVIDIA by...?": "Jensen Huang 回归 NVIDIA",
+    "Next CEO of NVIDIA?": "NVIDIA 下任 CEO",
+    "Fourth Jensen Huang affair reported by...?": "Jensen Huang 第四起传闻曝光",
+    "How many more Millennium Prize Problems will AI solve in 2026?": "今年 AI 还能解几个千禧年难题",
+    "Which Millennium Prize Problem will AI solve next?": "AI 下一个解哪个千禧年难题",
+    "Will Anthropic's valuation hit (LOW) $1.25T by December 31?": "Anthropic 估值年底前到 1.25 万亿",
+    "Will Elon Musk join Trump at APEC in China?": "Elon Musk 随特朗普出席 APEC",
+    "Will the next GPT Terra model (5.7+) debut at a score of at least 1440 by June 30, 2027?": "GPT Terra 新模型首秀 1440 分以上",
+    "Will Gemini Hydrogen debut with an HLE-Diamond score of 50% or higher?": "Gemini Hydrogen 首秀 50% 以上"
+  },
+  "outcomes": {
+    "Jensen Huang (No Change)": "Jensen Huang 留任"
+  },
+  "picked": [
+    {
+      "question": "Will the next Fable model (5.2+) debut at a score of at least 1500 by June 30, 2027?",
+      "yes": 0.0
+    },
+    {
+      "question": "US x Iran Effective Ceasefire begins by...? (2 week pause)",
+      "yes": 0.44
+    },
+    {
+      "question": "Will the Democratic Progressive Party (DPP) win the most head of local government elections in the 2026 Taiwan local elections?",
+      "yes": 0.23
+    },
+    {
+      "question": "Will the 30-year Treasury yield hit 5.50% before 2027?",
+      "yes": 0.3
+    },
+    {
+      "question": "Will Kai Cenat finish his GTA VI marathon by November 22?",
+      "yes": 1.0
+    }
+  ]
+}
