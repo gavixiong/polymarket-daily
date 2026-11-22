@@ -1,0 +1,69 @@
+{
+  "title": "Anthropic 破发概率降到 44%",
+  "headline": "Anthropic 11/27 前收盘跌破发行价的概率，一天从 55% 降到 44%",
+  "hero": {
+    "value": "55% → 44%",
+    "label": "Anthropic 11/27 前收盘跌破发行价 83 美元的概率"
+  },
+  "headlineQuestion": "Will Anthropic close below its IPO price by November 27, 2026?",
+  "headlineTitle": "Anthropic 11/27 前破发的概率",
+  "skip": [],
+  "labels": {
+    "Will Z.ai be the third-best Chinese AI company at the end of November 2026?": "Z.ai 11 月底中国 AI 第三强",
+    "Will the median home value in NYC be less than $445,000 on December 31?": "纽约房价年底低于 44.5 万美元",
+    "Will Hy4 debut at a score of at least 1480 by June 30, 2027?": "Hy4 首发得分达 1480",
+    "Will Microsoft launch a Muse-like personal agent before 2027?": "微软 2027 前推个人 AI 助理",
+    "Will Bitcoin dip to $57,500 in November?": "比特币 11 月跌到 5.75 万",
+    "Will the US Section 232 tariff rate on Canadian primary aluminum be >40-50% on December 31, 2027?": "加拿大铝关税 2027 年底 40%–50%",
+    "Will Ethereum reach $1,800 in November?": "以太坊 11 月涨到 1800 美元",
+    "Will any AI model reach 1580 Coding Arena Score by December 31, 2026?": "年底前有 AI 编程得分达 1580",
+    "US x Iran Effective Ceasefire begins by...? (2 week pause)": "美伊停火何时生效",
+    "Next CEO of NVIDIA?": "英伟达下一任 CEO",
+    "Jensen Huang rejoins NVIDIA by...?": "Jensen Huang 何时回归英伟达",
+    "Canadian unwrought aluminum duty rate on December 31, 2027?": "加拿大铝关税 2027 年底税率",
+    "Alexandria Ocasio-Cortez 2028 election exact outcome?": "AOC 2028 大选结果",
+    "Anthropic announces bankruptcy by...?": "Anthropic 何时宣布破产",
+    "Which Millennium Prize Problem will AI solve next?": "AI 下一个解出哪道千禧难题",
+    "Which math problems will AI solve in 2026?": "2026 年 AI 会解出哪些数学难题",
+    "Will Navdeep Bains win the 2026 Ontario Liberal Party leadership election?": "安大略自由党党魁 Navdeep Bains 胜出",
+    "Pete Hegseth out as Secretary of Defense by November 21?": "Pete Hegseth 11/21 前卸任国防部长",
+    "Will Anthropic close below its IPO price by November 27, 2026?": "Anthropic 11/27 前破发"
+  },
+  "outcomes": {
+    "Jensen Huang (No Change)": "Jensen Huang（不变）",
+    "Runs and loses Dem nomination": "参选但输掉民主党提名",
+    "Doesn't announce Dem run before 2028": "2028 前不宣布参选",
+    "Wins presidency": "赢得总统大选",
+    "No solution by Dec 31, 2027": "2027 年底前无人解出"
+  },
+  "picked": [
+    {
+      "question": "Will Anthropic close below its IPO price by November 27, 2026?",
+      "yes": 0.44
+    },
+    {
+      "question": "Will AI determine the Ramsey number R(5,5) in 2026?",
+      "yes": 0.08
+    },
+    {
+      "question": "Will Benjamin Netanyahu be the next Prime Minister of Israel?",
+      "yes": 0.28
+    },
+    {
+      "question": "Will Navdeep Bains win the 2026 Ontario Liberal Party leadership election?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Bitcoin dip to $57,500 in November?",
+      "yes": 0.46
+    },
+    {
+      "question": "Will Z.ai be the third-best Chinese AI company at the end of November 2026?",
+      "yes": 0.2
+    },
+    {
+      "question": "Will HoneyMad finish GTA VI by November 24?",
+      "yes": 0.15
+    }
+  ]
+}
