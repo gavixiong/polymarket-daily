@@ -1,0 +1,70 @@
+{
+  "title": "英伟达换帅成真，市场前一天只给 16%",
+  "headline": "英伟达年底前任命新 CEO，市场前一天只给 16%，结果成真",
+  "hero": {
+    "value": "16% → 100%",
+    "label": "英伟达年底前任命新 CEO，市场前一天只给 16%"
+  },
+  "headlineQuestion": "New NVIDIA CEO named by December 31, 2026?",
+  "headlineTitle": "英伟达年底前任命新 CEO",
+  "skip": [],
+  "labels": {
+    "Will Jensen Huang rejoin NVIDIA by November 30, 2026?": "Jensen Huang 11/30 前回归英伟达",
+    "Will no new permanent NVIDIA CEO be named by December 31, 2028?": "2028 年前不任命英伟达新 CEO",
+    "New NVIDIA CEO named by December 31, 2026?": "英伟达年底前任命新 CEO",
+    "Will Jensen Huang join NVIDIA next?": "Jensen Huang 下一站是英伟达",
+    "Jensen Huang rejoins NVIDIA before divorce?": "Jensen Huang 离婚前回归英伟达",
+    "Will Trump speak to Emmanuel Macron by November 30?": "特朗普 11/30 前与马克龙通话",
+    "AI bubble burst in 2026?": "AI 泡沫 2026 年破裂",
+    "Will Jensen Huang publicly testify before Congress by December 31, 2026?": "Jensen Huang 年底前国会作证",
+    "US x Iran Effective Ceasefire begins by...? (2 week pause)": "美伊停火何时生效",
+    "Democratic 2028 presidential odds on November 27?": "11/27 民主党 2028 热门支持率",
+    "Marco Rubio out as Secretary of State by...?": "Marco Rubio 何时卸任国务卿",
+    "B200 average rental price in December 2026?": "B200 12 月平均租价",
+    "Jensen Huang out as NVIDIA CEO again by...?": "Jensen Huang 何时再卸任英伟达 CEO",
+    "Anthropic closes below IPO price ($83) by...?": "Anthropic 何时收盘跌破发行价",
+    "Which math problems will AI solve in 2026?": "2026 年 AI 会解出哪些数学难题",
+    "Will there be no new be CEO of NVIDIA by December 31, 2028?": "2028 年前英伟达没有新 CEO",
+    "Will Trump call for Jensen Huang's return as NVIDIA CEO by November 30?": "特朗普 11/30 前呼吁 Huang 回归",
+    "Will Anthropic close below its IPO price by November 20, 2026?": "Anthropic 11/20 前破发",
+    "Will Alpöge's Lean proof of the Riemann Hypothesis pass independent verification by December 31, 2026?": "黎曼猜想 Lean 证明年底前通过验证",
+    "Will Jensen Huang not join any company by December 31, 2027?": "Jensen Huang 2027 年前不加入任何公司"
+  },
+  "outcomes": {
+    "Above $8.60": "高于 8.60 美元",
+    "Above $8.80": "高于 8.80 美元",
+    "Above $7.40": "高于 7.40 美元",
+    "Above $9.00": "高于 9.00 美元",
+    "P versus NP": "P 与 NP 问题"
+  },
+  "picked": [
+    {
+      "question": "New NVIDIA CEO named by December 31, 2026?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Jensen Huang rejoin NVIDIA by November 30, 2026?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Trump call for Jensen Huang's return as NVIDIA CEO by November 30?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Trump speak to Emmanuel Macron by November 30?",
+      "yes": 0.26
+    },
+    {
+      "question": "Will Anthropic close below its IPO price by November 27, 2026?",
+      "yes": 0.54
+    },
+    {
+      "question": "Will Jensen Huang publicly testify before Congress by December 31, 2026?",
+      "yes": 0.94
+    },
+    {
+      "question": "Will HoneyMad finish GTA VI by November 28?",
+      "yes": 0.99
+    }
+  ]
+}
