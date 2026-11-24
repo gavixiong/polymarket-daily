@@ -1,0 +1,58 @@
+{
+  "title": "黄仁勋回归英伟达成真，前一天只给 6%",
+  "headline": "Jensen Huang 年底前回归英伟达，市场前一天只给 6%，结果成真",
+  "hero": {
+    "value": "6% → 100%",
+    "label": "Jensen Huang 年底前回归英伟达，市场前一天只给 6%"
+  },
+  "headlineQuestion": "Will Jensen Huang rejoin NVIDIA by December 31, 2026?",
+  "headlineTitle": "Jensen Huang 年底前回归英伟达",
+  "skip": [],
+  "labels": {
+    "Will Jensen Huang rejoin NVIDIA by December 31, 2026?": "Jensen Huang 年底前回归英伟达",
+    "Fourth Jensen Huang affair reported by November 30?": "Jensen Huang 第四件传闻 11/30 前曝光",
+    "Will Anthropic close below its IPO price by November 25, 2026?": "Anthropic 11/25 前收盘破发",
+    "Will Trump speak to Mark Rutte by November 30?": "特朗普 11/30 前与 Rutte 通话",
+    "Will Bitcoin reach $62,500 in November?": "比特币 11 月触及 6.25 万美元",
+    "Will Anthropic's valuation hit (LOW) $1.0T by December 31?": "Anthropic 年底前估值触及 1 万亿美元",
+    "Will Claude go down fewer than 5 times in November 2026?": "Claude 11 月宕机少于 5 次",
+    "Will the next Claude Opus model (5.6+) debut with an HLE-Diamond score of 60% or higher?": "下一代 Claude Opus HLE 得分 60% 以上",
+    "Will the Bank of Canada make no change to the target for the overnight rate at the December interest rate announcement?": "加拿大央行 12 月利率不变",
+    "US x Iran Effective Ceasefire begins by...? (2 week pause)": "美伊停火何时生效",
+    "Anthropic closes below IPO price ($83) by...?": "Anthropic 何时收盘跌破发行价",
+    "Which math problems will AI solve in 2026?": "2026 年 AI 会解出哪些数学难题",
+    "How many more Millennium Prize Problems will AI solve in 2026?": "2026 年 AI 再解出几道千禧年难题",
+    "Which Millennium Prize Problem will AI solve next?": "AI 下一个解出哪道千禧年难题",
+    "Will a turkey audibly gobble during the Thanksgiving Turkey Pardon?": "感恩节火鸡赦免时火鸡会叫吗",
+    "Strait of Hormuz traffic returns to normal by...?": "霍尔木兹海峡通行何时恢复正常",
+    "New NVIDIA CEO named by December 31, 2026?": "英伟达年底前任命新 CEO",
+    "Will Colette Kress be the next CEO of NVIDIA?": "Colette Kress 出任英伟达下任 CEO",
+    "Will NVIDIA's next CEO be an external candidate?": "英伟达下任 CEO 来自外部",
+    "Will Anthropic close below its IPO price by November 23, 2026?": "Anthropic 11/23 前收盘破发"
+  },
+  "outcomes": {
+    "No solution by Dec 31, 2027": "2027 年底前无人解出"
+  },
+  "picked": [
+    {
+      "question": "Will Jensen Huang rejoin NVIDIA by December 31, 2026?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Anthropic close below its IPO price by November 25, 2026?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will the average Ornn H100 rental price in January 2027 be above $2.90?",
+      "yes": 0.56
+    },
+    {
+      "question": "Will Trump speak to Mark Rutte by November 30?",
+      "yes": 0.96
+    },
+    {
+      "question": "US x Iran Effective Ceasefire by November 22?",
+      "yes": 0.51
+    }
+  ]
+}
