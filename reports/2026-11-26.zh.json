@@ -1,0 +1,66 @@
+{
+  "title": "H100 租价破 3 美元，升到 54%",
+  "headline": "英伟达 H100 显卡 2027 年 2 月平均租价高于 3 美元，概率一天从 44% 升到 54%",
+  "hero": {
+    "value": "44% → 54%",
+    "label": "H100 显卡 2027 年 2 月平均租价高于 3 美元"
+  },
+  "headlineQuestion": "Will the average Ornn H100 rental price in February 2027 be above $3.00?",
+  "headlineTitle": "H100 显卡 2027 年 2 月租价高于 3 美元",
+  "skip": [],
+  "labels": {
+    "Will the average Ornn H100 rental price in February 2027 be above $3.00?": "H100 租价 2027 年 2 月高于 3 美元",
+    "Will the average Ornn B200 rental price in December 2026 be above $9.00?": "B200 租价 12 月高于 9 美元",
+    "Will the average Ornn H100 rental price in December 2026 be above $3.00?": "H100 租价 12 月高于 3 美元",
+    "Will the next Claude Opus model (5.6+) debut with an HLE-Diamond score of 60% or higher?": "下一代 Claude Opus HLE 得分 60% 以上",
+    "Next Israeli government formed by December 15, 2026?": "以色列 12/15 前组成新政府",
+    "Will Benjamin Netanyahu be the next leader out before 2027?": "Netanyahu 年底前成下一个下台的领导人",
+    "Which math problems will AI solve in 2026?": "2026 年 AI 会解出哪些数学难题",
+    "How many more Millennium Prize Problems will AI solve in 2026?": "2026 年 AI 再解出几道千禧年难题",
+    "Which Millennium Prize Problem will AI solve next?": "AI 下一个解出哪道千禧年难题",
+    "Will Core PCE YoY be 3.3% in October?": "10 月核心 PCE 同比 3.3%",
+    "Will the 30-year Treasury yield dip below 5.25% before 2027?": "30 年美债收益率年内跌破 5.25%",
+    "Will Afghanistan be last in the World Happiness Report 2027?": "阿富汗垫底 2027 世界幸福报告",
+    "Will there be exactly 2 North Korea tests in November 2026?": "朝鲜 11 月恰好试射 2 次",
+    "Will the Ornn B200 Index be between $8.50 and $9.00 on November 30, 2026?": "B200 租价指数 11/30 在 8.5 到 9 美元",
+    "Will a turkey audibly gobble during the Thanksgiving Turkey Pardon on November 24?": "11/24 赦免火鸡会叫吗",
+    "Will the Ornn RTX 5090 Index be between $0.60 and $0.65 on November 30, 2026?": "RTX 5090 租价指数 11/30 在 0.6 到 0.65 美元",
+    "Will a turkey audibly gobble during the Thanksgiving Turkey Pardon?": "感恩节赦免火鸡会叫吗",
+    "New NVIDIA CEO named by December 31, 2026?": "英伟达年底前任命新 CEO",
+    "H100 average rental price in January 2027?": "H100 租价 2027 年 1 月",
+    "Jensen Huang out as NVIDIA CEO again by...?": "Jensen Huang 何时再卸任英伟达 CEO",
+    "Will Core PCE YoY be 3.2% in October?": "10 月核心 PCE 同比 3.2%",
+    "Israel x Iran ceasefire continues through November 22?": "以伊停火持续到 11/22",
+    "Will Alabama use a new congressional map for the 2026 United States midterm elections?": "阿拉巴马中期选举用新选区图"
+  },
+  "outcomes": {
+    "P versus NP": "P 对 NP",
+    "Birch and Swinnerton-Dyer": "BSD 猜想",
+    "Above $2.80": "高于 2.80 美元",
+    "Above $2.90": "高于 2.90 美元",
+    "Above $3.00": "高于 3.00 美元",
+    "Above $3.10": "高于 3.10 美元"
+  },
+  "picked": [
+    {
+      "question": "Will the average Ornn H100 rental price in February 2027 be above $3.00?",
+      "yes": 0.54
+    },
+    {
+      "question": "Will the average Ornn B200 rental price in December 2026 be above $9.00?",
+      "yes": 0.54
+    },
+    {
+      "question": "Will the average Ornn H100 rental price in December 2026 be above $3.00?",
+      "yes": 0.54
+    },
+    {
+      "question": "Will the next Claude Opus model (5.6+) debut with an HLE-Diamond score of 60% or higher?",
+      "yes": 0.92
+    },
+    {
+      "question": "Next Israeli government formed by December 15, 2026?",
+      "yes": 0.58
+    }
+  ]
+}
