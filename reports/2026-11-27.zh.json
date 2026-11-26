@@ -1,0 +1,70 @@
+{
+  "title": "B200 租价破 9 美元，升到 60%",
+  "headline": "英伟达 B200 显卡 2027 年 1 月平均租价高于 9 美元，概率一天从 48% 升到 60%",
+  "hero": {
+    "value": "48% → 60%",
+    "label": "B200 显卡 2027 年 1 月平均租价高于 9 美元"
+  },
+  "headlineQuestion": "Will the average Ornn B200 rental price in January 2027 be above $9.00?",
+  "headlineTitle": "B200 显卡 2027 年 1 月租价高于 9 美元",
+  "skip": [],
+  "labels": {
+    "Will the average Ornn B200 rental price in January 2027 be above $9.00?": "B200 租价 2027 年 1 月高于 9 美元",
+    "Will the average Ornn B200 rental price in December 2026 be above $9.20?": "B200 租价 12 月高于 9.2 美元",
+    "Will the next governing coalition of Sweden include M + KD + L + C?": "瑞典执政联盟含 M + KD + L + C",
+    "Will Dejan Šoškić be the next Prime Minister of Serbia?": "Šoškić 成塞尔维亚下任总理",
+    "Will Mistral AI be acquired before 2028?": "Mistral AI 2028 年前被收购",
+    "Will \"Focker-In-Law\" 5-Day Opening Weekend Box Office be less than 40m?": "《Focker-In-Law》首映周末低于 4000 万",
+    "Will it be confirmed that a software or configuration error caused the FAA's nationwide ground stop on November 13?": "FAA 11/13 停飞确认是软件故障",
+    "Will the UK’s 2026 inflation be between 3.5% and 3.9%?": "英国 2026 年通胀在 3.5% 到 3.9%",
+    "Will Google have the best Image-to-Video AI at the end of November 2026?": "11 月底谷歌图生视频 AI 最强",
+    "Will the Ornn B200 Index be at least $9.00 on November 30, 2026?": "B200 租价指数 11/30 至少 9 美元",
+    "Next Israeli government a minority government?": "以色列下届政府是少数政府",
+    "Which math problems will AI solve in 2026?": "2026 年 AI 会解出哪些数学难题",
+    "Which Millennium Prize Problem will AI solve next?": "AI 下一个解出哪道千禧年难题",
+    "Who will Trump speak to by December 31?": "年底前特朗普会和谁通话",
+    "B200 average rental price in June 2027?": "B200 租价 2027 年 6 月",
+    "B200 average rental price in March 2027?": "B200 租价 2027 年 3 月",
+    "Jensen Huang out as NVIDIA CEO again by...?": "Jensen Huang 何时再卸任英伟达 CEO",
+    "Will the US confirm that aliens exist by...?": "美国年底前确认外星人存在",
+    "Will Anthropic's valuation hit (LOW) $1.0T by December 31?": "Anthropic 年底前估值触及 1 万亿美元",
+    "Will Anthropic close below its IPO price by March 31, 2027?": "Anthropic 2027 年 3 月前跌破发行价",
+    "Military action against Saudi Oil Pipeline (East-West) by October 31?": "10/31 前沙特东西输油管遭袭"
+  },
+  "outcomes": {
+    "P versus NP": "P 对 NP",
+    "No solution by Dec 31, 2027": "2027 年底前无人解出",
+    "Above $6.00": "高于 6 美元",
+    "Above $7.00": "高于 7 美元",
+    "Above $8.00": "高于 8 美元",
+    "Above $8.50": "高于 8.5 美元",
+    "Above $9.00": "高于 9 美元",
+    "Above $9.50": "高于 9.5 美元"
+  },
+  "picked": [
+    {
+      "question": "Will the average Ornn B200 rental price in January 2027 be above $9.00?",
+      "yes": 0.6
+    },
+    {
+      "question": "Will the average Ornn B200 rental price in December 2026 be above $9.20?",
+      "yes": 0.52
+    },
+    {
+      "question": "Will the next governing coalition of Sweden include M + KD + L + C?",
+      "yes": 0.79
+    },
+    {
+      "question": "Will Dejan Šoškić be the next Prime Minister of Serbia?",
+      "yes": 0.63
+    },
+    {
+      "question": "Will Mistral AI be acquired before 2028?",
+      "yes": 0.16
+    },
+    {
+      "question": "Will \"Focker-In-Law\" 5-Day Opening Weekend Box Office be less than 40m?",
+      "yes": 0.72
+    }
+  ]
+}
