@@ -1,0 +1,81 @@
+{
+  "title": "B200 租价一天从 42% 到 52%",
+  "headline": "英伟达 B200 芯片 12 月平均租价高于 9.4 美元，概率一天从 42% 升到 52%",
+  "hero": {
+    "value": "42% → 52%",
+    "label": "B200 芯片 12 月平均租价高于 9.4 美元"
+  },
+  "headlineQuestion": "Will the average Ornn B200 rental price in December 2026 be above $9.40?",
+  "headlineTitle": "B200 租价 12 月高于 9.4 美元",
+  "skip": [],
+  "labels": {
+    "Will the average Ornn B200 rental price in December 2026 be above $9.40?": "B200 租价 12 月高于 9.4 美元",
+    "Will Benjamin Netanyahu be the next leader out before 2027?": "Netanyahu 2027 年前最先下台",
+    "Will Chris Hipkins be the next Prime Minister of New Zealand after the 2026 elections?": "Hipkins 成新西兰下任总理",
+    "Will Iran target Kuwait by November 30, 2026?": "伊朗 11/30 前对科威特动手",
+    "Will Afghanistan be last in the World Happiness Report 2027?": "Afghanistan 幸福报告垫底",
+    "Will Anthropic (ANT) Q4 revenue be above $23B?": "Anthropic 四季度营收高于 230 亿",
+    "Will Jynxzi finish GTA VI by December 10?": "Jynxzi 12/10 前通关 GTA VI",
+    "Will it be confirmed that a software or configuration error caused the FAA's nationwide ground stop on November 13?": "FAA 11/13 停飞确认是软件故障",
+    "Will Microsoft be the second-largest company in the world by market cap on November 30, 2026?": "微软 11/30 市值全球第二",
+    "Will Bitcoin reach $62,500 in November?": "比特币 11 月触及 6.25 万美元",
+    "Will Elon Musk’s net worth be between $700B and $800B on November 30?": "马斯克 11/30 身家 7000 到 8000 亿",
+    "Will Greens win the third-most seats in the next Victorian state election?": "绿党成维州第三大党",
+    "Will US gas hit $3.50 (Low) in November?": "美国油价 11 月跌到 3.5 美元",
+    "B300 average rental price in January 2027?": "B300 租价 2027 年 1 月",
+    "B200 average rental price in December 2026?": "B200 租价 2026 年 12 月",
+    "Which math problems will AI solve in 2026?": "2026 年 AI 会解出哪些数学难题",
+    "Which Millennium Prize Problem will AI solve next?": "AI 下一个解出哪道千禧年难题",
+    "How many more Millennium Prize Problems will AI solve in 2026?": "2026 年 AI 还会解出几道千禧年难题",
+    "H100 average rental price in January 2027?": "H100 租价 2027 年 1 月",
+    "New NVIDIA CEO named by December 31, 2026?": "英伟达年底前任命新 CEO",
+    "Will Herman Mashaba be the next mayor of Johannesburg?": "Mashaba 当选约翰内斯堡市长",
+    "Jensen Huang admits to another affair with a woman by December 31?": "Jensen Huang 年底前承认又一段婚外情",
+    "Fourth Jensen Huang affair reported by November 30?": "Jensen Huang 第四段婚外情 11/30 前曝光"
+  },
+  "outcomes": {
+    "Above $10.00": "高于 10 美元",
+    "Above $10.50": "高于 10.5 美元",
+    "Above $11.00": "高于 11 美元",
+    "Above $11.50": "高于 11.5 美元",
+    "Above $8.80": "高于 8.8 美元",
+    "Above $9.00": "高于 9 美元",
+    "Above $9.20": "高于 9.2 美元",
+    "Above $9.40": "高于 9.4 美元",
+    "P versus NP": "P 对 NP",
+    "Above $2.80": "高于 2.8 美元",
+    "Above $2.90": "高于 2.9 美元",
+    "Above $3.00": "高于 3 美元",
+    "Above $3.10": "高于 3.1 美元"
+  },
+  "picked": [
+    {
+      "question": "Will the average Ornn B200 rental price in December 2026 be above $9.40?",
+      "yes": 0.52
+    },
+    {
+      "question": "Will Benjamin Netanyahu be the next leader out before 2027?",
+      "yes": 0.7
+    },
+    {
+      "question": "Will Chris Hipkins be the next Prime Minister of New Zealand after the 2026 elections?",
+      "yes": 0.08
+    },
+    {
+      "question": "Will Iran target Kuwait by November 30, 2026?",
+      "yes": 1.0
+    },
+    {
+      "question": "Will Afghanistan be last in the World Happiness Report 2027?",
+      "yes": 0.82
+    },
+    {
+      "question": "Will Anthropic (ANT) Q4 revenue be above $23B?",
+      "yes": 0.09
+    },
+    {
+      "question": "Will Jynxzi finish GTA VI by December 10?",
+      "yes": 0.18
+    }
+  ]
+}
